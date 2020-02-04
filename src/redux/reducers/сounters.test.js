@@ -1,11 +1,12 @@
 import {
-  сounters,
   addCounterAC,
   editCounterAC,
   removeCounterAC,
   startCountingAC,
   stopCountingAC,
-} from './сounters';
+} from '../actions';
+
+import {сounters} from './сounters';
 
 describe('test сounters', () => {
   it('add сounter', () => {
@@ -116,9 +117,13 @@ describe('test store', () => {
     }];
     const action = stopCountingAC(0, 30);
     const test = сounters(initialState, action);
-    expect(test[0].story.length).toEqual(finalState[0].story.length);
-    expect(test[0].story[0].limit).toEqual(finalState[0].story[0].limit);
-    expect(test[0].story[0].isActive).toEqual(finalState[0].story[0].isActive);
-    expect(test[0].story[0].currentCount).toEqual(finalState[0].story[0].currentCount);
+    expect(test[0].story.length)
+        .toEqual(finalState[0].story.length);
+    expect(test[0].story[0].limit)
+        .toEqual(finalState[0].story[0].limit);
+    expect(test[0].story[0].isActive)
+        .toEqual(finalState[0].story[0].isActive);
+    expect(test[0].story[0].currentCount)
+        .toEqual(finalState[0].story[0].currentCount);
   });
 });
