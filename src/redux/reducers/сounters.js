@@ -1,19 +1,6 @@
 import {TypeActions} from '../actions';
 import {story} from './story';
 
-export const SizeLevel = {
-  1: 0,
-  2: 25,
-  3: 50,
-  4: 100,
-  5: 500,
-  6: 1000,
-  7: 1500,
-  8: 2000,
-  9: 5000,
-  10: 10000,
-};
-
 export const сounters = (state = [], action) => {
   switch (action.type) {
     case TypeActions.ADD_COUNTER:

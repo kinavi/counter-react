@@ -5,10 +5,8 @@ import {useInterval} from '../hooks/useInterval';
 
 export const TestApp = () => {
   const [count, setCount] = useState(0);
-  const [delay, setDelay] = useState(0);
+  const [delay] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
-
-  // const value = useContext(ClockContext);
 
   useInterval(() => {
     // Your custom logic here

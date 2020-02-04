@@ -27,9 +27,9 @@ const Second = () =>{
   );
 };
 
-export const Clock = () => {
+export const SimpleClock = () => {
   return (
-    <div className="current-count">
+    <div className="left-count">
       {/* <Day/> */}
       <Hour/>
       <Minut/>
