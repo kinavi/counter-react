@@ -1,20 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {FaPlay} from 'react-icons/fa';
-
-import {ProgressBar} from './ProgressBar';
-
+import Count from './Count';
 
 const CountList = ({counts}) =>{
   return (
     counts.map((count, i)=>
-      <div key={i} className='container flex-container '>
-        <span className='title'>
-          {count.name}
-        </span>
-        <ProgressBar count={count.count}/>
-        <FaPlay className='btn'/>
-      </div>,
+      <Count key={i} {...count}/>,
     )
   );
 };
@@ -23,11 +14,7 @@ const mapStateToProps = (state) =>({
   counts: state,
 });
 
-const mapDispatchToProps = (dispatch) =>({
-
-});
-
 export default connect(
     mapStateToProps,
-    mapDispatchToProps,
+    null,
 )(CountList);

@@ -1,31 +1,32 @@
 import React, {useState, useEffect} from 'react';
+
 import {Clock} from './Clock';
 import {SimpleClock} from './SimpleClock';
 import {ClockContext} from '../context';
 import {SizeLevel} from '../SizeLevel';
 
 export const ProgressBar = ({count}) =>{
-  const [level, setLevel] = useState(0);
+  const [level, setLevel] = useState();
   const [nextLevel, setNextLevel] = useState();
   const [leftCount, setLeftCount] = useState();
   const [percentBar, setPercentBar] = useState();
 
   useEffect(()=>{
-    const countToHour = Math.trunc(count/60/60);
-    console.log(countToHour);
-    let newLevel=level;
-
+    let curLevel;
     for (const key in SizeLevel) {
-      if (countToHour>SizeLevel[key]) {
-        newLevel=key;
+      if (count>SizeLevel[key]) {
+        curLevel=key;
       }
     }
-    setLevel(newLevel);
-    if (newLevel<10) {
-      const nextLevel = ++newLevel;
+    setLevel(curLevel);
+    if (curLevel<10) {
+      const nextLevel = +curLevel+1;
+      const percent = Math.trunc(
+          (count - SizeLevel[curLevel])/(SizeLevel[nextLevel] - SizeLevel[curLevel])*100,
+      );
       setNextLevel(nextLevel);
-      setLeftCount((SizeLevel[nextLevel]-countToHour)*60*60);
-      setPercentBar(Math.trunc(countToHour/SizeLevel[nextLevel]*100));
+      setLeftCount((SizeLevel[nextLevel]) - count);
+      setPercentBar(percent);
     } else {
       setNextLevel('Max');
       setLeftCount(0);

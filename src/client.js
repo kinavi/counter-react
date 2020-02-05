@@ -27,7 +27,7 @@ const initialState = [{
 {
   id: 2,
   name: 'HTML',
-  count: 150000,
+  count: 87000,
   dateCreate: null,
   story: [{
     isActive: true,
