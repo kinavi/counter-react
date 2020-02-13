@@ -1,8 +1,37 @@
-import {createStore} from 'redux';
+import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {сounters} from './reducers/сounters';
 
-export const storeFactory = (initialState = {}) =>
-  createStore(
+// export const storeFactory = (initialState = {}) =>
+//   createStore(
+//       сounters,
+//       initialState,
+//   );
+
+const clientLogger = (store) => (next) => (action) => {
+  let result;
+  console.groupCollapsed('dispatching', action.type);
+  console.log('prev state', store.getState());
+  console.log('action', action);
+  result = next(action);
+  console.log('next state', store.getState());
+  console.groupEnd();
+  return result;
+};
+
+const serverLogger = (store) => (next) => (action) => {
+  console.log('\n dispatching server action\n');
+  console.log(action);
+  console.log('\n');
+  return next(action);
+};
+
+const middleware = (server) =>
+(server) ? serverLogger : clientLogger;
+
+const storeFactory = (server = false, initialState = {}) =>
+  applyMiddleware(middleware)(createStore)(
       сounters,
       initialState,
   );
+
+export default storeFactory;

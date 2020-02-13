@@ -6,10 +6,10 @@ import {ClockContext} from '../context';
 import {SizeLevel} from '../SizeLevel';
 
 export const ProgressBar = ({count}) =>{
-  const [level, setLevel] = useState();
-  const [nextLevel, setNextLevel] = useState();
-  const [leftCount, setLeftCount] = useState();
-  const [percentBar, setPercentBar] = useState();
+  const [level, setLevel] = useState(0);
+  const [nextLevel, setNextLevel] = useState(0);
+  const [leftCount, setLeftCount] = useState(0);
+  const [percentBar, setPercentBar] = useState(0);
 
   useEffect(()=>{
     let curLevel;
@@ -32,7 +32,7 @@ export const ProgressBar = ({count}) =>{
       setLeftCount(0);
       setPercentBar(100);
     }
-  }, [count]);
+  }, []);
 
   return (
     <div className='progress-bar-block'>

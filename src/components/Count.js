@@ -18,6 +18,7 @@ const Count = ({name, count}) =>{
   }, isRunning ? delay : null);
 
   const onStart = () =>{
+    console.log('Click')
     setIsRunning(true);
   };
   const onStop = () =>{

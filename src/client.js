@@ -1,16 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-import {
-  BrowserRouter,
-  Route,
-  Switch,
-} from 'react-router-dom';
+import {BrowserRouter} from 'react-router-dom';
 
 import './style/main.css';
 
-import {CountList, NoMatch, TestApp} from './components';
-import {storeFactory} from './redux/store';
+import storeFactory from './redux/store';
+
+import {App} from './components';
 
 const initialState = [{
   id: 1,
@@ -37,22 +34,16 @@ const initialState = [{
   }],
 }];
 
-const store = storeFactory(initialState);
+// client
+const store = storeFactory(false, initialState);
+// server
+// const store = storeFactory(false, window.__INITIAL_STATE__);
+
 
 ReactDOM.render(
     <Provider store={store}>
       <BrowserRouter >
-        <Switch>
-          <Route exact path="/">
-            <TestApp/>
-          </Route>
-          <Route path="/list">
-            <CountList/>
-          </Route>
-          <Route>
-            <NoMatch />
-          </Route>
-        </Switch>
+        <App/>
       </BrowserRouter>
     </Provider>
     ,
