@@ -27,12 +27,16 @@ export const ProgressBar = ({count}) =>{
       setNextLevel(nextLevel);
       setLeftCount((SizeLevel[nextLevel]) - count);
       setPercentBar(percent);
+    } else if (count==0) {
+      setLevel(1);
+      setNextLevel(2);
+      setLeftCount((SizeLevel[2]));
     } else {
       setNextLevel('Max');
       setLeftCount(0);
       setPercentBar(100);
     }
-  }, []);
+  }, [count]);
 
   return (
     <div className='progress-bar-block'>

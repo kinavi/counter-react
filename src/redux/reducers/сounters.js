@@ -3,13 +3,26 @@ import {story} from './story';
 
 export const сounters = (state = [], action) => {
   switch (action.type) {
-    case TypeActions.ADD_COUNTER:
-      return [{
-        id: action.id,
+    case TypeActions.ADD_TIMER:
+      return [...state, {
+        id: action._id,
         name: action.name,
-        dateCreate: new Date(),
-        story: [],
-      }, ...state];
+        count: action.count,
+        dateCreate: action.dateCreate,
+        story: action.story,
+      }];
+
+    case TypeActions.STOP_COUNTING:
+      return state.map((counter)=>
+        (counter.id==action.id)?
+        {
+          ...counter,
+          count: action.count,
+          story: story(counter.story, action),
+        }:
+          counter,
+      );
+
     case TypeActions.EDIT_COUNTER:
       return state.map((counter)=>
       (counter.id==action.id)?
@@ -28,19 +41,13 @@ export const сounters = (state = [], action) => {
       (counter.id==action.id)?
       {
         ...counter,
-        story: story([], action),
+        story: story(counter.story = [], action),
       }:
         counter,
       );
-    case TypeActions.STOP_COUNTING:
-      return state.map((counter)=>
-      (counter.id==action.id)?
-      {
-        ...counter,
-        story: story(counter.story, action),
-      }:
-        counter,
-      );
+
+    // case TypeActions.FETCH_TIMERS:
+    //   return action;
     default:
       return state;
   }

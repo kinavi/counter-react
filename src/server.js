@@ -1,5 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
+
+import bodyParser from 'body-parser';
 
 import React from 'react';
 import {renderToString} from 'react-dom/server';
@@ -13,6 +16,8 @@ import {compose} from 'redux';
 import storeFactory from './redux/store';
 
 import {App} from './components';
+
+import api from './server-api';
 
 const app = express();
 
@@ -28,13 +33,13 @@ const timerScheme = new Schema(
       story: [{
         isActive: Boolean,
         limit: Number,
-        currentCount: Number,
         dateStart: Date,
+        dateStop: Date,
       }],
     },
     {versionKey: false});
 
-const Timer = mongoose.model('Timer', timerScheme);
+export const Timer = mongoose.model('Timer', timerScheme);
 
 const url = 'mongodb://localhost:27017/time-counter';
 
@@ -48,36 +53,33 @@ mongoose.connect(url, {useUnifiedTopology: true, useNewUrlParser: true})
       console.log(err);
     });
 
-Timer.find({}, (err, timers)=>{
-  if (err) return console.log(err);
-  console.log(timers);
-  const serverStore = storeFactory(true, timers);
-  const logger = (req, res, next) => {
-    console.log(`${req.method} request for '${req.url}'`);
-    next();
-  };
-  const addStoreToRequestPipeline = (req, res, next) => {
-    req.store = serverStore;
-    next();
-  };
-  const makeClientStoreFrom = (store) => (url) =>
-    ({
-      store: storeFactory(false, store.getState()),
-      url,
-    });
-  const renderComponentsToHTML = ({url, store}) =>
-    ({
-      state: store.getState(),
-      // css: defaultStyles,
-      html: renderToString(
-          <Provider store={store}>
-            <StaticRouter location={url} context={{}}>
-              <App/>
-            </StaticRouter>
-          </Provider>,
-      ),
-    });
-  const buildHTMLPage = ({html, state}) => `
+const logger = (req, res, next) => {
+  console.log(`${req.method} request for '${req.url}'`);
+  next();
+};
+const addStoreToRequestPipeline = async (req, res, next) => {
+  const timers = await Timer.find({});
+  req.store = storeFactory(true, timers);
+  next();
+};
+const makeClientStoreFrom = (store) => (url, timers) =>
+  ({
+    store: storeFactory(false, timers),
+    url,
+  });
+const renderComponentsToHTML = ({url, store}) =>
+  ({
+    state: store.getState(),
+    // css: defaultStyles,
+    html: renderToString(
+        <Provider store={store}>
+          <StaticRouter location={url} context={{}}>
+            <App/>
+          </StaticRouter>
+        </Provider>,
+    ),
+  });
+const buildHTMLPage = ({html, state}) => `
   <!DOCTYPE html>
   <html>
   <head>
@@ -95,54 +97,32 @@ Timer.find({}, (err, timers)=>{
   </body>
   </html>
   `;
-  const htmlResponse = compose(
-      buildHTMLPage,
-      renderComponentsToHTML,
-      makeClientStoreFrom(serverStore),
-  );
+const htmlResponse = compose(
+    buildHTMLPage,
+    renderComponentsToHTML,
+    makeClientStoreFrom(storeFactory),
+);
 
-  const respond = (req, res) =>
-    res.status(200).send(htmlResponse(req.url));
+const respond = async (req, res) =>{
+  const timers = await Timer.find({});
+  return res.status(200).send(htmlResponse(req.url, timers));
+};
 
-  app.get('/api/users', (req, res)=>{
-    User.find({}, (err, users)=>{
-      if (err) return console.log(err);
-      res.send(users);
-    });
+app.get('/api/users', (req, res)=>{
+  User.find({}, (err, users)=>{
+    if (err) return console.log(err);
+    res.send(users);
   });
-
-  app.use(express.static('public'))
-      .use('/list', express.static('public'))
-      .use(logger)
-  // .use(fileAssets)
-      .use(addStoreToRequestPipeline)
-      .use(respond);
 });
 
-// const initialState = [{
-//   id: 1,
-//   name: 'React',
-//   count: 250000,
-//   dateCreate: null,
-//   story: [{
-//     isActive: true,
-//     limit: 45,
-//     currentCount: 30,
-//     dateStart: null,
-//   }],
-// },
-// {
-//   id: 2,
-//   name: 'HTML',
-//   count: 87000,
-//   dateCreate: null,
-//   story: [{
-//     isActive: true,
-//     limit: 45,
-//     currentCount: 30,
-//     dateStart: null,
-//   }],
-// }];
+app.use(express.static('public'))
+    .use(cookieParser())
+// .use('/list', express.static('public'))
+    .use(logger)
+// .use(fileAssets)
+// .use(bodyParser.json())
+    .use(addStoreToRequestPipeline)
+    .use('/api', api)
+    .use(respond);
 
-// const serverStore = await storeFactory(true, getPreload);
 

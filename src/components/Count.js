@@ -7,22 +7,25 @@ import {ProgressBar} from './ProgressBar';
 
 import {useInterval} from '../hooks/useInterval';
 
-const Count = ({name, count}) =>{
+import {stopTimer, startTimer} from '../redux/actions';
+
+const Count = ({id, name, count, onStop, onStart}) =>{
   const [_count, setCount] = useState(count);
   const [delay] = useState(1000);
   const [isRunning, setIsRunning] = useState(false);
-
+  // Math.trunc((y-x)/1000)
   useInterval(() => {
     // Your custom logic here
     setCount(_count + 1);
   }, isRunning ? delay : null);
 
-  const onStart = () =>{
-    console.log('Click')
+  const handlerStartBtn = () =>{
     setIsRunning(true);
+    onStart(id, new Date());
   };
-  const onStop = () =>{
+  const handlerStopBtn = () =>{
     setIsRunning(false);
+    onStop(id, _count, new Date());
   };
 
   return (
@@ -33,10 +36,10 @@ const Count = ({name, count}) =>{
       <ProgressBar count={_count}/>
       {(isRunning)?
         <IconContext.Provider value={{color: '#6F4D46'}}>
-          <FaStop onClick={onStop} className='btn'/>
+          <FaStop onClick={handlerStopBtn} className='btn-timer'/>
         </IconContext.Provider> :
          <IconContext.Provider value={{color: '#6F4D46'}}>
-           <FaPlay onClick={onStart} className='btn'/>
+           <FaPlay onClick={handlerStartBtn} className='btn-timer'/>
          </IconContext.Provider>
       }
     </div>
@@ -44,7 +47,12 @@ const Count = ({name, count}) =>{
 };
 
 const mapDispatchToProps = (dispatch) =>({
-
+  onStop: (id, count, dateStop) =>{
+    dispatch(stopTimer(id, count, dateStop));
+  },
+  onStart: (id, dateStart) =>{
+    dispatch(startTimer(id, dateStart));
+  },
 });
 
 export default connect(

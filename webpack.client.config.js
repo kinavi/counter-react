@@ -1,5 +1,5 @@
 const path = require('path');
-
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 // const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // const {StatsWriterPlugin} = require('webpack-stats-plugin');
@@ -12,6 +12,11 @@ module.exports = {
     path: path.resolve(__dirname, 'public'),
     filename: 'client.js',
   },
+  // optimization: {
+  //   splitChunks: {
+  //     chunks: 'all',
+  //   },
+  // },
   module: {
     rules: [
       {
@@ -45,7 +50,7 @@ module.exports = {
     ],
   },
   plugins: [
-
+    new CleanWebpackPlugin(),
     // new webpack.IgnorePlugin(/jsdom$/),
 
     // new CompressionPlugin(),

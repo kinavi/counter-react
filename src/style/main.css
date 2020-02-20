@@ -1,3 +1,9 @@
+.container-timers {
+    display: grid;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .container {
     /* position: relative; */
     width: 300px;
@@ -6,6 +12,8 @@
     border-radius: 10px;
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
     margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
 }
 /* .progress-bar>span{
     align-self: center;
@@ -137,7 +145,7 @@
     text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
 }
 
-.btn {
+.btn-timer {
     flex-grow: 0.3;
     /* position: absolute;
     left: 100%;
@@ -148,4 +156,50 @@
     /* background: #6F4D46; */
     /* box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25); */
 
+}
+
+.btn-add {
+    width: 35px;
+    height: 35px;
+    margin: auto;
+}
+
+.add-form-container {
+    width: 300px;
+    height: auto;
+    background: #DF9077;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+}
+.add-form-container>div {
+    margin: 10px;
+    display: flex;
+}
+.add-form-container>div>div {
+    margin: auto;
+    align-self: center;
+    font-family: Quantico;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 26px;
+    align-items: stretch;
+    text-align: center;
+    color: #422E2A;
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+
+}
+.add-form-container>div>input {
+    box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 6px;
+    margin: auto 5px;
+
+    
+}
+
+.btn-add-inside {
+    width: 25px;
+    height: 25px;
+    margin: auto;
 }

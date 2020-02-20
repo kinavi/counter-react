@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import {BrowserRouter} from 'react-router-dom';
 
-import './style/main.css';
+// import './style/main.css';
+// import Routes from './Routes';
+// import { renderRoutes } from 'react-router-config';
 
 import storeFactory from './redux/store';
-
+// import '@babel/polyfill';
+import './style/main.css';
 import {App} from './components';
 
 const initialState = [{
@@ -35,14 +38,15 @@ const initialState = [{
 }];
 
 // client
-const store = storeFactory(false, initialState);
+// const store = storeFactory(false, initialState);
 // server
-// const store = storeFactory(false, window.__INITIAL_STATE__);
+const store = storeFactory(false, window.__INITIAL_STATE__);
 
 
 ReactDOM.render(
     <Provider store={store}>
       <BrowserRouter >
+        {/* <div>{renderRoutes(Routes)}</div> */}
         <App/>
       </BrowserRouter>
     </Provider>

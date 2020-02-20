@@ -1,11 +1,13 @@
 const path = require('path');
 
-// const webpack = require('webpack');
+
+
+const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
   mode: 'production',
-  entry: './src/server.js',
+  entry: ['babel-polyfill', './src/server.js'],
   target: 'node',
   devtool: 'source-map',
   externals: [nodeExternals({
@@ -24,7 +26,7 @@ module.exports = {
       },
       // {
       //   test: /\.css$/,
-      //   use: 'null-loader',
+      //   use: ['style-loader', 'css-loader'],
       // },
       // {
       //   test: /\.(png|svg|jpg|gif)$/,
@@ -33,11 +35,11 @@ module.exports = {
     ],
   },
   plugins: [
-    // new webpack.BannerPlugin({
-    //   banner: 'require("source-map-support").install();',
-    //   raw: true,
-    //   entryOnly: false,
-    // }),
+    new webpack.BannerPlugin({
+      banner: 'require("source-map-support").install();',
+      raw: true,
+      entryOnly: false,
+    }),
 
   ],
 };
