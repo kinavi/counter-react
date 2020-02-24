@@ -1,5 +1,6 @@
-import {createStore, applyMiddleware} from 'redux';
+import {createStore, applyMiddleware, combineReducers} from 'redux';
 import {сounters} from './reducers/сounters';
+import {story} from './reducers/story';
 import thunk from 'redux-thunk';
 // export const storeFactory = (initialState = {}) =>
 //   createStore(
@@ -31,9 +32,9 @@ const middleware = (server) =>[
 ];
 
 
-const storeFactory = (server = false, initialState = []) =>
+const storeFactory = (server = false, initialState = {}) =>
   applyMiddleware(...middleware(server))(createStore)(
-      сounters,
+      combineReducers({сounters, story}),
       initialState,
   );
 

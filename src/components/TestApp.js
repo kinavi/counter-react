@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {ClockContext} from '../context';
-import {Clock} from './Clock';
+import {Сounter} from './Сounter';
 import {useInterval} from '../hooks/useInterval';
 
 export const TestApp = () => {
@@ -28,7 +28,7 @@ export const TestApp = () => {
   return (
     <div>
       <ClockContext.Provider value={count}>
-        <Clock/>
+        <Сounter/>
       </ClockContext.Provider>
       <button onClick={onStart}>start</button>
       <button onClick={onStop}>stop</button>

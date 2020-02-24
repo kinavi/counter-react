@@ -30,22 +30,26 @@ const timerScheme = new Schema(
       name: String,
       count: Number,
       dateCreate: Date,
-      story: [{
-        isActive: Boolean,
-        limit: Number,
-        dateStart: Date,
-        dateStop: Date,
-      }],
+      isHide: Boolean,
     },
     {versionKey: false});
 
+const storyScheme = new Schema({
+  idTimer: String,
+  isActive: Boolean,
+  limit: Number,
+  dateStart: Date,
+  dateStop: Date,
+}, {versionKey: false});
+
 export const Timer = mongoose.model('Timer', timerScheme);
+export const Story = mongoose.model('Story', storyScheme);
 
 const url = 'mongodb://localhost:27017/time-counter';
 
 mongoose.connect(url, {useUnifiedTopology: true, useNewUrlParser: true})
     .then(()=>{
-      app.listen(3000, ()=>{
+      app.listen(3030, ()=>{
         console.log('Сервер ожидает подключения - http://localhost:3000/');
       });
     })
@@ -59,12 +63,14 @@ const logger = (req, res, next) => {
 };
 const addStoreToRequestPipeline = async (req, res, next) => {
   const timers = await Timer.find({});
-  req.store = storeFactory(true, timers);
+  console.log('timers - ', timers)
+  const storys = await Story.find({});
+  req.store = storeFactory(true, {сounters: timers, story: storys});
   next();
 };
-const makeClientStoreFrom = (store) => (url, timers) =>
+const makeClientStoreFrom = (store) => (url, timers, storys) =>
   ({
-    store: storeFactory(false, timers),
+    store: storeFactory(false, {сounters: timers, story: storys}),
     url,
   });
 const renderComponentsToHTML = ({url, store}) =>
@@ -105,7 +111,8 @@ const htmlResponse = compose(
 
 const respond = async (req, res) =>{
   const timers = await Timer.find({});
-  return res.status(200).send(htmlResponse(req.url, timers));
+  const storys = await Story.find({});
+  return res.status(200).send(htmlResponse(req.url, timers, storys));
 };
 
 app.get('/api/users', (req, res)=>{

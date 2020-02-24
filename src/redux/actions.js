@@ -11,6 +11,8 @@ export const TypeActions = {
 
   UPDATE_LAST_ID: 'UPDATE_LAST_ID',
 
+  SHOW_ONLY_COUNTER: 'SHOW_ONLY_COUNTER',
+  SHOW_ALL_COUNTER: 'SHOW_ALL_COUNTER',
   // FETCH_TIMERS: 'FETCH_TIMERS',
 };
 
@@ -28,6 +30,29 @@ export const TypeActions = {
 const parseResponse = (response) => response.json();
 
 const logError = (error) => console.error(error);
+
+export const setShowAll = () => (dispatch) =>{
+  fetch('/api/show', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+  })
+      .then(parseResponse)
+      // .then(console.log)
+      .then(dispatch)
+      .catch(logError);
+}
+
+export const setShowOnlyThis = (id) => (dispatch) =>{
+  fetch('/api/show', {
+    method: 'PUT',
+    body: JSON.stringify({id}),
+    headers: {'Content-Type': 'application/json'},
+  })
+      .then(parseResponse)
+      // .then(console.log)
+      .then(dispatch)
+      .catch(logError);
+}
 
 export const addTimer = (title) => (dispatch)=>
   fetch('/api/add', {

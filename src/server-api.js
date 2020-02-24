@@ -1,7 +1,7 @@
 import {Router} from 'express';
 import {TypeActions} from './redux/actions';
 const express = require('express');
-import {Timer} from './server';
+import {Timer, Story} from './server';
 // import {FaGofore} from 'react-icons/fa';
 require('babel-core/register');
 require('babel-polyfill');
@@ -18,48 +18,59 @@ const dispatchAndRespond = (req, res, action) => {
 //   res.status(200).json(req.store.getState().ListNews);
 // });
 
-router.post('/add', jsonParser, (req, res) =>{
+router.post('/add', jsonParser, async (req, res) =>{
   if (!req.body) return res.sendStatus(400);
 
   const timerName = req.body.title;
-  const timer = new Timer({name: timerName, count: 0, dateCreate: new Date()});
-  timer.save()
-      .then(()=>{
-        dispatchAndRespond(req, res, {
-          type: TypeActions.ADD_TIMER,
-          ...timer._doc,
-        });
-      })
-      .catch((e)=>{
-        console.log('Error --> ', e);
-        res.sendStatus(500).send(e);
-      });
+  const timer = new Timer({name: timerName, count: 0, dateCreate: new Date(), isHide: false});
+
+  try {
+    const product = await timer.save();
+    dispatchAndRespond(req, res, {
+      type: TypeActions.ADD_TIMER,
+      _id: product._id,
+      name: product.name,
+      count: product.count,
+      dateCreate: product.dateCreate,
+    });
+  } catch (e) {
+    console.log('Error --> ', e);
+    res.sendStatus(500).send(e);
+  }
+});
+
+
+router.post('/show', jsonParser, (req, res)=>{
+  dispatchAndRespond(req, res, {
+    type: TypeActions.SHOW_ALL_COUNTER,
+  });
+});
+
+router.put('/show', jsonParser, (req, res)=>{
+  dispatchAndRespond(req, res, {
+    type: TypeActions.SHOW_ONLY_COUNTER,
+    id: req.body.id,
+  });
 });
 
 router.put('/start', jsonParser, async (req, res)=>{
   try {
     console.log('start');
     if (!req.body) return res.sendStatus(400);
-
     const Id = req.body.id;
     const dateStart = req.body.dateStart;
-    const note = {
-      isActive: true,
-      limit: 2700,
-      dateStart: dateStart,
-    };
-    const timer = await Timer.findById(Id);
-    const register = await Timer.findByIdAndUpdate({_id: Id}, {
-      story: [note, ...timer.story],
-    }, {new: true});
-    res.cookie('idActiveNote', register.story[0]._id);
+    const story = new Story({idTimer: Id, isActive: true, limit: 2700, dateStart: dateStart});
+ 
+    const product = await story.save();
+    res.cookie('idActiveNote', product._id);
 
     dispatchAndRespond(req, res, {
       type: TypeActions.START_COUNTING,
-      id: Id,
+      id: product._id,
+      idTimer: product.idTimer,
       isActive: true,
       limit: 2700,
-      dateStart: dateStart,
+      dateStart: product.dateStart,
     });
   } catch (e) {
     console.log('Error --> ', e);
@@ -72,35 +83,25 @@ router.put('/stop', jsonParser, async (req, res)=>{
     console.log('stop');
     if (!req.body) return res.sendStatus(400);
 
-    const Id = req.body.id;
-    const count = req.body.count;
+    const Id = req.cookies.idActiveNote;
     const dateStop = req.body.dateStop;
-    const idNote = req.cookies.idActiveNote;
+    const IdTimer = req.body.id;
+    const count = req.body.count;
 
-    const timer = await Timer.findOne({_id: Id});
-    const register = await Timer.findByIdAndUpdate({
-      _id: Id,
-    }, {
-      count: count,
-      story: timer.story.map((st)=>{
-        if (st._id==idNote) {
-          st.isActive=false;
-          st.dateStop=dateStop;
-          return st;
-        }
-        return st;
-      }),
-    }, {new: true});
-    console.log(register);
-
-
-    dispatchAndRespond(req, res, {
-      type: TypeActions.STOP_COUNTING,
-      id: Id,
-      idTimer: idNote,
-      count: count,
+    const story = await Story.findByIdAndUpdate(Id, {
       isActive: false,
       dateStop: dateStop,
+    }, {new: true});
+    const timer = await Timer.findByIdAndUpdate(IdTimer, {
+      count,
+    }, {new: true});
+    dispatchAndRespond(req, res, {
+      type: TypeActions.STOP_COUNTING,
+      id: story._id,
+      isActive: story.isActive,
+      dateStop: story.dateStop,
+      idTime: timer._id,
+      count: timer.count,
     });
   } catch (e) {
     console.log('Error --> ', e);

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 
-import {Clock} from './Clock';
-import {SimpleClock} from './SimpleClock';
+import {Сounter} from './Сounter';
+import {SmallCounter} from './SmallCounter';
 import {ClockContext} from '../context';
 import {SizeLevel} from '../SizeLevel';
 
@@ -39,11 +39,11 @@ export const ProgressBar = ({count}) =>{
   }, [count]);
 
   return (
-    <div className='progress-bar-block'>
+    <div className='container-progress-bar'>
       <ClockContext.Provider value={count}>
-        <Clock/>
+        <Сounter/>
       </ClockContext.Provider>
-      <div className='progress-bar'>
+      <div className='bar-bg'>
         <div className='bar' style={{width: `${percentBar}%`}}>
 
         </div>
@@ -51,7 +51,7 @@ export const ProgressBar = ({count}) =>{
       <div className='level-panel'>
         <span className='level'>{level}</span>
         <ClockContext.Provider value={leftCount}>
-          <SimpleClock/>
+          <SmallCounter/>
         </ClockContext.Provider>
         <span className='level'>{nextLevel}</span>
       </div>

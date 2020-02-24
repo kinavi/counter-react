@@ -1,39 +1,30 @@
-import React, {useContext} from 'react';
-import {ClockContext} from '../context';
+import React from 'react';
+import {useClock} from '../hooks/useClock';
+// hour
+// min
 
-// const Day = () =>{
-//   const value = useContext(ClockContext);
-//   return (
-//     <span>{Math.trunc(value/60/60/24)}d</span>
-//   );
-// };
-const Hour = () =>{
-  const value = useContext(ClockContext);
-  return (
-    <span>{Math.trunc(value/60/60)}h</span>
-  );
-};
-const Minut = () =>{
-  const value = useContext(ClockContext);
-  return (
-    <span>{Math.trunc(value/60)%60}m</span>
-  );
-};
+export const Clock = () =>{
+  const timer = useClock(new Date());
 
-const Second = () =>{
-  const value = useContext(ClockContext);
+  const getMinutes = () =>{
+    if (timer.getMinutes()<10) {
+      return `0${timer.getMinutes()}`;
+    } else {
+      return timer.getMinutes().toLocaleString();
+    }
+  };
+  const getHours = () =>{
+    if (timer.getHours()<10) {
+      return `0${timer.getHours()}`;
+    } else {
+      return timer.getHours().toLocaleString();
+    }
+  };// 
   return (
-    <span>{value%60}s</span>
-  );
-};
-
-export const Clock = () => {
-  return (
-    <div className="current-count">
-      {/* <Day/> */}
-      <Hour/>
-      <Minut/>
-      <Second/>
+    <div className="container-clock">
+      <div>{getHours()}</div>
+      <div>:</div>
+      <div>{getMinutes()}</div>
     </div>
   );
 };
