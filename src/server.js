@@ -49,7 +49,7 @@ const url = 'mongodb://localhost:27017/time-counter';
 
 mongoose.connect(url, {useUnifiedTopology: true, useNewUrlParser: true})
     .then(()=>{
-      app.listen(3030, ()=>{
+      app.listen(3000, ()=>{
         console.log('Сервер ожидает подключения - http://localhost:3000/');
       });
     })
@@ -63,7 +63,7 @@ const logger = (req, res, next) => {
 };
 const addStoreToRequestPipeline = async (req, res, next) => {
   const timers = await Timer.find({});
-  console.log('timers - ', timers)
+  // console.log('timers - ', timers)
   const storys = await Story.find({});
   req.store = storeFactory(true, {сounters: timers, story: storys});
   next();

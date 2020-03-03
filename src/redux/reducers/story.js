@@ -4,14 +4,14 @@ export const story = (state = [], action) =>{
   switch (action.type) {
     case TypeActions.START_COUNTING:
       return [...state, {
-        id: action.id,
+        _id: action.id,
         idTimer: action.idTimer,
         isActive: action.isActive,
         limit: action.limit,
         dateStart: action.dateStart,
       }];
     case TypeActions.STOP_COUNTING:
-      return state.map((el)=>(el.id==action.id)?{
+      return state.map((el)=>(el._id==action.id)?{
         ...el,
         isActive: action.isActive,
         dateStop: action.dateStop,

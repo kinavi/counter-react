@@ -22,7 +22,7 @@ router.post('/add', jsonParser, async (req, res) =>{
   if (!req.body) return res.sendStatus(400);
 
   const timerName = req.body.title;
-  const timer = new Timer({name: timerName, count: 0, dateCreate: new Date(), isHide: false});
+  const timer = new Timer({name: timerName, count: 0, dateCreate: new Date()});
 
   try {
     const product = await timer.save();
@@ -40,18 +40,18 @@ router.post('/add', jsonParser, async (req, res) =>{
 });
 
 
-router.post('/show', jsonParser, (req, res)=>{
-  dispatchAndRespond(req, res, {
-    type: TypeActions.SHOW_ALL_COUNTER,
-  });
-});
+// router.post('/show', jsonParser, (req, res)=>{
+//   dispatchAndRespond(req, res, {
+//     type: TypeActions.SHOW_ALL_COUNTER,
+//   });
+// });
 
-router.put('/show', jsonParser, (req, res)=>{
-  dispatchAndRespond(req, res, {
-    type: TypeActions.SHOW_ONLY_COUNTER,
-    id: req.body.id,
-  });
-});
+// router.put('/show', jsonParser, (req, res)=>{
+//   dispatchAndRespond(req, res, {
+//     type: TypeActions.SHOW_ONLY_COUNTER,
+//     id: req.body.id,
+//   });
+// });
 
 router.put('/start', jsonParser, async (req, res)=>{
   try {
@@ -83,12 +83,12 @@ router.put('/stop', jsonParser, async (req, res)=>{
     console.log('stop');
     if (!req.body) return res.sendStatus(400);
 
-    const Id = req.cookies.idActiveNote;
+    const IdStory = req.body.idStory; // req.cookies.idActiveNote;
     const dateStop = req.body.dateStop;
     const IdTimer = req.body.id;
     const count = req.body.count;
 
-    const story = await Story.findByIdAndUpdate(Id, {
+    const story = await Story.findByIdAndUpdate(IdStory, {
       isActive: false,
       dateStop: dateStop,
     }, {new: true});

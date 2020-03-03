@@ -1,79 +1,94 @@
-import React, {useState} from 'react';
-import {IconContext} from 'react-icons';
-import {FaPlay, FaStop} from 'react-icons/fa';
+import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
+import {useHistory} from 'react-router-dom';
 
 import {ProgressBar} from './ProgressBar';
-
 import {useInterval} from '../hooks/useInterval';
+import {stopTimer, startTimer} from '../redux/actions';
+import {ButtonPlay, ButtonStop} from './UI';
 
-import {stopTimer, startTimer, setShowOnlyThis} from '../redux/actions';
-
-const Count = ({_id, name, count, onStop, onStart, isHide, printOnlyThis}) =>{
+// eslint-disable-next-line react/prop-types
+const Count = ({storys, _id, name, count, onStop, onPlay}) =>{
   const [_count, setCount] = useState(count);
   const [delay] = useState(1000);
-  const [isRunning, setIsRunning] = useState(false);
-  // console.log('isHidde - ', isHide)
-  // const [Hidde, setHidde] = useState(false);
-  // Math.trunc((y-x)/1000)
+  const [isRun, setStateRun] = useState(false);
+
+  const history = useHistory();
+
+  useEffect(()=>{
+    const story = getActiveStory();
+    if (story) {
+      onСontinue(story.dateStart);
+    }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useInterval(() => {
     // Your custom logic here
     setCount(_count + 1);
-  }, isRunning ? delay : null);
+  }, isRun ? delay : null);
 
-  const handlerStartBtn = (e) =>{
-    setIsRunning(true);
-    onStart(_id, new Date());
-    e.stopPropagation();
-  };
-  const handlerStopBtn = (e) =>{
-    setIsRunning(false);
-    onStop(_id, _count, new Date());
+  const playHandler = (e) =>{
+    setStateRun(true);
+    onPlay(_id, new Date());
     e.stopPropagation();
   };
 
-  const handlerClickCount = (e) =>{
-    printOnlyThis(_id);
+  const stopHandler = (e) =>{
+    setStateRun(false);
+    onStop(_id, getActiveStory()._id, _count, new Date());
     e.stopPropagation();
-    // e.preventDefault();
   };
 
+  const clickHandler = (e) =>{
+    history.push(`/${_id}`);
+    e.stopPropagation();
+  };
 
-  // container flex-container
+  const onСontinue = (lastDate) =>{
+    setCount(getTotalCount(_count, getLastCount(lastDate)));
+    setStateRun(true);
+  };
+
+  const getActiveStory = () =>
+    storys.find((it) =>(it.idTimer==_id)&&(it.isActive));
+
+  const getLastCount = (lastDate) =>
+    Math.round((new Date() - new Date(lastDate))/1000);
+
+  const getTotalCount = (count, lastCount) =>
+    +count+lastCount;
+
   return (
-    isHide||
-    <div className='timer ' hidden={isHide} onClick={handlerClickCount}>
+    <div className='timer ' onClick={clickHandler}>
       <span className='title'>
         {name}
       </span>
       <ProgressBar count={_count}/>
       <div className='btn-start-timer'>
-        {(isRunning)?
-        <IconContext.Provider value={{color: '#6F4D46'}}>
-          <FaStop onClick={handlerStopBtn} className='btn-timer'/>
-        </IconContext.Provider> :
-         <IconContext.Provider value={{color: '#6F4D46'}}>
-           <FaPlay onClick={handlerStartBtn} className='btn-timer'/>
-         </IconContext.Provider>
-        }
+        {(isRun)?
+          <ButtonStop onClick={stopHandler}/>:
+          <ButtonPlay onClick={playHandler}/>}
       </div>
     </div>
   );
 };
 
 const mapDispatchToProps = (dispatch) =>({
-  onStop: (id, count, dateStop) =>{
-    dispatch(stopTimer(id, count, dateStop));
+  onStop: (id, idStory, count, dateStop) =>{
+    dispatch(stopTimer(id, idStory, count, dateStop));
   },
-  onStart: (id, dateStart) =>{
+  onPlay: (id, dateStart) =>{
     dispatch(startTimer(id, dateStart));
   },
-  printOnlyThis: (id)=>{
-    dispatch(setShowOnlyThis(id));
-  }
+});
+
+const mapStateToProps = (state) =>({
+  storys: state.story,
 });
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps,
 )(Count);

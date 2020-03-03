@@ -75,10 +75,10 @@ export const startTimer = (id, dateStart) => (dispatch) =>
       .then(dispatch)
       .catch(logError);
 
-export const stopTimer = (id, count, dateStop) => (dispatch) =>
+export const stopTimer = (id, idStory, count, dateStop) => (dispatch) =>
   fetch('/api/stop', {
     method: 'PUT',
-    body: JSON.stringify({id, count, dateStop}),
+    body: JSON.stringify({id, idStory, count, dateStop}),
     headers: {'Content-Type': 'application/json'},
 
     credentials: 'include',

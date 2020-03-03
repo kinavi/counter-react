@@ -44,9 +44,7 @@ export const ProgressBar = ({count}) =>{
         <Сounter/>
       </ClockContext.Provider>
       <div className='bar-bg'>
-        <div className='bar' style={{width: `${percentBar}%`}}>
-
-        </div>
+        <div className='bar' style={{width: `${percentBar}%`}}/>
       </div>
       <div className='level-panel'>
         <span className='level'>{level}</span>
