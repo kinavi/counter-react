@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from 'react';
 
 
-export const StoryProgressBar = ({count, limit}) =>{
-//   const {_id, idTimer, isActive, limit, dateStart, dateStop} = props;
+export const ProgressBarStory = ({count, limit}) =>{
   const [percentBar, setPercentBar] = useState(0);
 
+  const calculatePercent = () => Math.trunc(count/limit*100);
+
   useEffect(()=>{
-    const percent = Math.trunc(count/limit*100);
-    setPercentBar(percent);
+    setPercentBar(calculatePercent);
   }, [count, limit]);
 
   return (

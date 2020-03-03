@@ -12,8 +12,6 @@ import {
   Switch,
 } from 'react-router-dom';
 
-// import {withRouter} from 'react-router';
-// import {futimes} from 'fs';
 
 const Page = (props) =>{
   return (

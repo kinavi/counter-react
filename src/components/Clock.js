@@ -1,7 +1,5 @@
 import React from 'react';
 import {useClock} from '../hooks/useClock';
-// hour
-// min
 
 export const Clock = () =>{
   const timer = useClock(new Date());
@@ -19,7 +17,7 @@ export const Clock = () =>{
     } else {
       return timer.getHours().toLocaleString();
     }
-  };// 
+  };
   return (
     <div className="container-clock">
       <div>{getHours()}</div>

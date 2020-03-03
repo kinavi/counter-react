@@ -1,15 +1,13 @@
-import React, {useState} from 'react';
-import {
-  useParams,
-  Redirect,
-} from 'react-router-dom';
-
-import {StorysList, Count, Story} from '.';
+import React from 'react';
 import {connect} from 'react-redux';
+import {useParams} from 'react-router-dom';
+
+import {Story} from '.';
 
 const SelectStorys = ({storys}) =>{
   const {id} = useParams();
   const result = storys.filter((item)=>id==item.idTimer); // <--------- rename
+
   return (
     <div className='container-story'>
       {result.map((item, i)=>
@@ -17,6 +15,7 @@ const SelectStorys = ({storys}) =>{
     </div>
   );
 };
+
 const mapStateToProps = (state) =>({
   storys: state.story,
 });

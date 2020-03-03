@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {ClockContext} from '../context';
+import {ClockContext} from '../../context';
 
 // const Day = () =>{
 //   const value = useContext(ClockContext);
@@ -7,20 +7,20 @@ import {ClockContext} from '../context';
 //     <span>{Math.trunc(value/60/60/24)}d</span>
 //   );
 // };
-const Hour = () =>{
+export const Hour = () =>{
   const value = useContext(ClockContext);
   return (
     <span>{Math.trunc(value/60/60)}h</span>
   );
 };
-const Minut = () =>{
+export const Minut = () =>{
   const value = useContext(ClockContext);
   return (
     <span>{Math.trunc(value/60)%60}m</span>
   );
 };
 
-const Second = () =>{
+export const Second = () =>{
   const value = useContext(ClockContext);
   return (
     <span>{value%60}s</span>
@@ -29,11 +29,11 @@ const Second = () =>{
 
 export const Сounter = () => {
   return (
-    <div className="current-count">
+    <div>
       {/* <Day/> */}
       <Hour/>
       <Minut/>
       <Second/>
     </div>
   );
-};
+}

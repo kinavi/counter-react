@@ -16,7 +16,6 @@ export const App = () =>{
       </Route>
       <Route path="/">
         <MainPage/>
-
       </Route>
     </Switch>
   );

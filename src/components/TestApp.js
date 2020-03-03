@@ -1,12 +1,8 @@
 import React, {useState} from 'react';
 import {ClockContext} from '../context';
-import {Сounter} from './Сounter';
+import {Сounter} from './UI';
 import {useInterval} from '../hooks/useInterval';
-import {
-  Route,
-  Switch,
-  Router,
-} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 
 export const TestApp = () => {
   const [count, setCount] = useState(0);
@@ -32,9 +28,9 @@ export const TestApp = () => {
 
   return (
     <div>
-              <Route path="/test/1">
-          <div>Hello</div>
-        </Route>
+      <Route path="/test/1">
+        <div>Hello</div>
+      </Route>
       <ClockContext.Provider value={count}>
         <Сounter/>
       </ClockContext.Provider>

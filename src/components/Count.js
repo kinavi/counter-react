@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 
-import {ProgressBar} from './ProgressBar';
+import {ProgressBarCount} from './ProgressBarCount';
 import {useInterval} from '../hooks/useInterval';
 import {stopTimer, startTimer} from '../redux/actions';
 import {ButtonPlay, ButtonStop} from './UI';
@@ -65,7 +65,7 @@ const Count = ({storys, _id, name, count, onStop, onPlay}) =>{
       <span className='title'>
         {name}
       </span>
-      <ProgressBar count={_count}/>
+      <ProgressBarCount count={_count}/>
       <div className='btn-start-timer'>
         {(isRun)?
           <ButtonStop onClick={stopHandler}/>:

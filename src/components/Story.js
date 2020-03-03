@@ -1,31 +1,31 @@
 import React, {useState, useEffect} from 'react';
-import {connect} from 'react-redux';
-import {
-  Route,
-  Switch,
-} from 'react-router-dom';
 
-import {withRouter} from 'react-router';
+import {ProgressBarStory} from '.';
+import {Second, Minut} from './UI';
+import {ClockContext} from '../context';
 
-import {StoryProgressBar} from '.';
-
-export const Story = ({_id, idTimer, isActive, limit, dateStart, dateStop}) =>{
+export const Story = ({isActive, limit, dateStart, dateStop}) =>{
   const [currentCount, setCurCount] = useState(0);
+
+  const calculateCount = () =>
+    Math.trunc((new Date(dateStop) - new Date(dateStart))/1000);
 
   useEffect(()=>{
     if (!isActive) {
-      const tmp = Math.trunc((new Date(dateStop) - new Date(dateStart))/1000);
-      setCurCount(tmp);
+      setCurCount(calculateCount());
     }
   }, [dateStart, dateStop, isActive]);
 
   return (
     !isActive&&<div className='story'>
       <div className='container-bar-story'>
-        <StoryProgressBar count={currentCount} limit={limit}/>
+        <ProgressBarStory count={currentCount} limit={limit}/>
       </div>
       <div className='container-info-story'>
-        <span>{currentCount} sec</span>
+        <ClockContext.Provider value={currentCount}>
+          <Minut/>
+          <Second/>
+        </ClockContext.Provider>
         <div className='container-date-story'>
           <span>{new Date(dateStart).getDate()}</span>
           <span>.</span>
@@ -33,7 +33,9 @@ export const Story = ({_id, idTimer, isActive, limit, dateStart, dateStop}) =>{
           <span>.</span>
           <span>{new Date(dateStart).getUTCFullYear()}</span>
         </div>
-        <span>{limit/60} min</span>
+        <ClockContext.Provider value={limit}>
+          <Minut/>
+        </ClockContext.Provider>
       </div>
     </div>
   );
