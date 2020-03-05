@@ -40,10 +40,10 @@ const storyScheme = new Schema({
   dateStop: Date,
 }, {versionKey: false});
 
-export const Count = mongoose.model('Timer', timerScheme);
+export const Count = mongoose.model('Count', timerScheme);
 export const Story = mongoose.model('Story', storyScheme);
 
-const url = 'mongodb://localhost:27017/time-counter';
+const url = 'mongodb://localhost:27017/counter-react';
 
 mongoose.connect(url, {useUnifiedTopology: true, useNewUrlParser: true})
     .then(()=>{
