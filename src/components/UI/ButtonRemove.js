@@ -36,7 +36,11 @@ const ButtonRemove = ({onRemove}) =>{
       <IconContext.Provider value={{color: '#DF9077'}}>
         <FaTimesCircle onClick={handlerClick} className='btn'/>
       </IconContext.Provider>
-      <ModalRemove isOpen={open} onSubmit={handlerSubmit} onCancel={handlerCancel} />
+      <ModalRemove
+        isOpen={open}
+        onSubmit={handlerSubmit}
+        onCancel={handlerCancel}
+      />
     </di>
   );
 };

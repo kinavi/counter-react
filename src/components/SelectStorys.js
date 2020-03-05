@@ -6,7 +6,7 @@ import {Story} from '.';
 
 const SelectStorys = ({storys}) =>{
   const {id} = useParams();
-  const result = storys.filter((item)=>id==item.idTimer); // <--------- rename
+  const result = storys.filter((item)=>id==item.idCount); // <--------- rename
 
   return (
     <div className='container-story'>

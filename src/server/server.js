@@ -9,8 +9,6 @@ import {renderToString} from 'react-dom/server';
 import {Provider} from 'react-redux';
 import {
   StaticRouter,
-  Route,
-  Switch,
 } from 'react-router-dom';
 import {compose} from 'redux';
 import storeFactory from '../redux/store';
@@ -28,21 +26,21 @@ const Schema = mongoose.Schema;
 const timerScheme = new Schema(
     {
       name: String,
-      count: Number,
+      value: Number,
       dateCreate: Date,
       isHide: Boolean,
     },
     {versionKey: false});
 
 const storyScheme = new Schema({
-  idTimer: String,
+  idCount: String,
   isActive: Boolean,
   limit: Number,
   dateStart: Date,
   dateStop: Date,
 }, {versionKey: false});
 
-export const Timer = mongoose.model('Timer', timerScheme);
+export const Count = mongoose.model('Timer', timerScheme);
 export const Story = mongoose.model('Story', storyScheme);
 
 const url = 'mongodb://localhost:27017/time-counter';
@@ -62,15 +60,14 @@ const logger = (req, res, next) => {
   next();
 };
 const addStoreToRequestPipeline = async (req, res, next) => {
-  const timers = await Timer.find({});
-  // console.log('timers - ', timers)
+  const counts = await Count.find({});
   const storys = await Story.find({});
-  req.store = storeFactory(true, {сounters: timers, story: storys});
+  req.store = storeFactory(true, {сounters: counts, story: storys});
   next();
 };
-const makeClientStoreFrom = (store) => (url, timers, storys) =>
+const makeClientStoreFrom = (store) => (url, counts, storys) =>
   ({
-    store: storeFactory(false, {сounters: timers, story: storys}),
+    store: storeFactory(false, {сounters: counts, story: storys}),
     url,
   });
 const renderComponentsToHTML = ({url, store}) =>
@@ -110,7 +107,7 @@ const htmlResponse = compose(
 );
 
 const respond = async (req, res) =>{
-  const timers = await Timer.find({});
+  const timers = await Count.find({});
   const storys = await Story.find({});
   return res.status(200).send(htmlResponse(req.url, timers, storys));
 };
@@ -124,10 +121,7 @@ app.get('/api/users', (req, res)=>{
 
 app.use(express.static('public'))
     .use(cookieParser())
-// .use('/list', express.static('public'))
     .use(logger)
-// .use(fileAssets)
-// .use(bodyParser.json())
     .use(addStoreToRequestPipeline)
     .use('/api', api)
     .use(respond);

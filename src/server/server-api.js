@@ -1,8 +1,7 @@
 import {Router} from 'express';
 import {TypeActions} from '../redux/actions';
 const express = require('express');
-import {Timer, Story} from './server';
-// import {FaGofore} from 'react-icons/fa';
+import {Count, Story} from './server';
 require('babel-core/register');
 require('babel-polyfill');
 const jsonParser = express.json();
@@ -19,19 +18,23 @@ const dispatchAndRespond = (req, res, action) => {
 // });
 
 router.post('/add', jsonParser, async (req, res) =>{
-  if (!req.body) return res.sendStatus(400);
-
-  const timerName = req.body.title;
-  const timer = new Timer({name: timerName, count: 0, dateCreate: new Date()});
-
   try {
-    const product = await timer.save();
+    if (!req.body) return res.sendStatus(400);
+
+    const nameCount = req.body.name;
+    const count = new Count({
+      name: nameCount,
+      value: 0,
+      dateCreate: new Date(),
+    });
+
+    const result = await count.save();
     dispatchAndRespond(req, res, {
       type: TypeActions.ADD_COUNTER,
-      _id: product._id,
-      name: product.name,
-      count: product.count,
-      dateCreate: product.dateCreate,
+      _id: result._id,
+      name: result.name,
+      value: result.value,
+      dateCreate: result.dateCreate,
     });
   } catch (e) {
     console.log('Error --> ', e);
@@ -39,38 +42,27 @@ router.post('/add', jsonParser, async (req, res) =>{
   }
 });
 
-
-// router.post('/show', jsonParser, (req, res)=>{
-//   dispatchAndRespond(req, res, {
-//     type: TypeActions.SHOW_ALL_COUNTER,
-//   });
-// });
-
-// router.put('/show', jsonParser, (req, res)=>{
-//   dispatchAndRespond(req, res, {
-//     type: TypeActions.SHOW_ONLY_COUNTER,
-//     id: req.body.id,
-//   });
-// });
-
 router.put('/start', jsonParser, async (req, res)=>{
   try {
-    console.log('start');
+    // console.log('start');
     if (!req.body) return res.sendStatus(400);
-    const Id = req.body.id;
-    const dateStart = req.body.dateStart;
-    const story = new Story({idTimer: Id, isActive: true, limit: 2700, dateStart: dateStart});
-
-    const product = await story.save();
-    res.cookie('idActiveNote', product._id);
-
-    dispatchAndRespond(req, res, {
-      type: TypeActions.START_COUNTING,
-      id: product._id,
-      idTimer: product.idTimer,
+    const id = req.body.id;
+    const datestart = req.body.dateStart;
+    const story = new Story({
+      idCount: id,
       isActive: true,
       limit: 2700,
-      dateStart: product.dateStart,
+      dateStart: datestart,
+    });
+
+    const result = await story.save();
+    dispatchAndRespond(req, res, {
+      type: TypeActions.START_COUNTING,
+      id: result._id,
+      idCount: result.idCount,
+      isActive: true,
+      limit: 2700,
+      dateStart: result.dateStart,
     });
   } catch (e) {
     console.log('Error --> ', e);
@@ -80,28 +72,28 @@ router.put('/start', jsonParser, async (req, res)=>{
 
 router.put('/stop', jsonParser, async (req, res)=>{
   try {
-    console.log('stop');
+    // console.log('stop');
     if (!req.body) return res.sendStatus(400);
 
-    const IdStory = req.body.idStory; // req.cookies.idActiveNote;
-    const dateStop = req.body.dateStop;
-    const IdTimer = req.body.id;
-    const count = req.body.count;
+    const idStory = req.body.idStory;
+    const datestop = req.body.dateStop;
+    const idCount = req.body.idCount;
+    const valueCount = req.body.value;
 
-    const story = await Story.findByIdAndUpdate(IdStory, {
+    const story = await Story.findByIdAndUpdate(idStory, {
       isActive: false,
-      dateStop: dateStop,
+      dateStop: datestop,
     }, {new: true});
-    const timer = await Timer.findByIdAndUpdate(IdTimer, {
-      count,
+    const count = await Count.findByIdAndUpdate(idCount, {
+      value: valueCount,
     }, {new: true});
     dispatchAndRespond(req, res, {
       type: TypeActions.STOP_COUNTING,
       id: story._id,
       isActive: story.isActive,
       dateStop: story.dateStop,
-      idTime: timer._id,
-      count: timer.count,
+      idCount: count._id,
+      value: count.value,
     });
   } catch (e) {
     console.log('Error --> ', e);
@@ -109,30 +101,16 @@ router.put('/stop', jsonParser, async (req, res)=>{
   }
 });
 
-// router.put('/cms', (req, res) =>
-//   dispatchAndRespond(req, res, {
-//     type: TypeActions.EDIT_NEWS,
-//     id: req.body.id,
-//     title: req.body.title,
-//     description: req.body.description,
-//     fileName: req.body.fileName,
-//   }),
-// );
-
 router.delete('/remove', jsonParser, async (req, res) => {
   try {
-    console.log('remove');
+    // console.log('remove');
     if (!req.body) return res.sendStatus(400);
 
     const idCount = req.body.id;
 
-    const count = await Timer.deleteOne({_id: idCount});
+    await Count.deleteOne({_id: idCount});
 
-    console.log('count - ', count);
-
-    const story = await Story.deleteMany({idTimer: idCount});
-
-    console.log('story - ', story);
+    await Story.deleteMany({idCount: idCount});
 
     dispatchAndRespond(req, res, {
       type: TypeActions.REMOVE_COUNTER,
@@ -146,25 +124,22 @@ router.delete('/remove', jsonParser, async (req, res) => {
 
 router.put('/edit', jsonParser, async (req, res) => {
   try {
-    console.log('edit');
+    // console.log('edit');
     if (!req.body) return res.sendStatus(400);
 
     const idCount = req.body.id;
-    const titleCount = req.body.title;
+    const nameCount = req.body.name;
 
-    const count = await Timer.findByIdAndUpdate(idCount, {name: titleCount})//deleteOne({_id: idCount});
-    // const count = await Timer.deleteOne({_id: idCount});
-
-    console.log('count - ', count);
-
-    // const story = await Story.deleteMany({idTimer: idCount});
-
-    // console.log('story - ', story);
-
+    const result = await Count.findByIdAndUpdate(
+        idCount,
+        {name: nameCount},
+        {new: true},
+    );
+    console.log('result -', result );
     dispatchAndRespond(req, res, {
       type: TypeActions.EDIT_COUNTER,
-      id: idCount,
-      title: titleCount,
+      id: result._id,
+      name: result.name,
     });
   } catch (e) {
     console.log('Error --> ', e);

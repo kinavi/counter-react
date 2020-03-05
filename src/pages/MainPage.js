@@ -26,7 +26,6 @@ const Page = (props) =>{
 const Menu = (props) =>{
   return (
     <div className="menu">
-      {/* <BackListBtn/> */}
       {props.children}
       <Clock/>
     </div>
@@ -65,7 +64,6 @@ export const MainPage = () =>{
           <Body>
             <SelectCount/>
             <SelectStorys/>
-            {/* <CountList counts={counts}/> */}
           </Body>
           <Footer>
 
@@ -88,17 +86,3 @@ export const MainPage = () =>{
 
   );
 };
-// const mapDispatchToProps = (dispatch) =>({
-//   // printAll: ()=>{
-//   //   dispatch(setShowAll());
-//   // },
-// });
-// const mapStateToProps = (state) =>({
-//   counts: state.сounters,
-//   storys: state.story,
-// });
-
-// export default connect(
-//     mapStateToProps,
-//     mapDispatchToProps,
-// )(MainPage);

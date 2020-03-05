@@ -4,14 +4,14 @@ import {useHistory} from 'react-router-dom';
 
 import {ProgressBarCount} from './ProgressBarCount';
 import {useInterval} from '../hooks/useInterval';
-import {stopTimer, startTimer} from '../redux/actions';
+import {stopCounter, startCounter} from '../redux/actions';
 import {ButtonPlay, ButtonStop} from './UI';
 
 // eslint-disable-next-line react/prop-types
-const Count = ({storys, _id, name, count, onStop, onPlay}) =>{
-  const [_count, setCount] = useState(count);
+const Count = ({storys, _id, name, value, onStop, onPlay}) =>{
+  const [_value, setValue] = useState(value);
   const [delay] = useState(1000);
-  const [isRun, setStateRun] = useState(false);
+  const [isRun, setRun] = useState(false);
 
   const history = useHistory();
 
@@ -26,18 +26,18 @@ const Count = ({storys, _id, name, count, onStop, onPlay}) =>{
 
   useInterval(() => {
     // Your custom logic here
-    setCount(_count + 1);
+    setValue(_value + 1);
   }, isRun ? delay : null);
 
   const playHandler = (e) =>{
-    setStateRun(true);
+    setRun(true);
     onPlay(_id, new Date());
     e.stopPropagation();
   };
 
   const stopHandler = (e) =>{
-    setStateRun(false);
-    onStop(_id, getActiveStory()._id, _count, new Date());
+    setRun(false);
+    onStop(_id, getActiveStory()._id, _value, new Date());
     e.stopPropagation();
   };
 
@@ -47,12 +47,12 @@ const Count = ({storys, _id, name, count, onStop, onPlay}) =>{
   };
 
   const onСontinue = (lastDate) =>{
-    setCount(getTotalCount(_count, getLastCount(lastDate)));
-    setStateRun(true);
+    setValue(getTotalCount(_value, getLastCount(lastDate)));
+    setRun(true);
   };
 
   const getActiveStory = () =>
-    storys.find((it) =>(it.idTimer==_id)&&(it.isActive));
+    storys.find((it) =>(it.idCount==_id)&&(it.isActive));
 
   const getLastCount = (lastDate) =>
     Math.round((new Date() - new Date(lastDate))/1000);
@@ -65,7 +65,7 @@ const Count = ({storys, _id, name, count, onStop, onPlay}) =>{
       <span className='title'>
         {name}
       </span>
-      <ProgressBarCount count={_count}/>
+      <ProgressBarCount count={_value}/>
       <div className='btn-start-timer'>
         {(isRun)?
           <ButtonStop onClick={stopHandler}/>:
@@ -76,11 +76,11 @@ const Count = ({storys, _id, name, count, onStop, onPlay}) =>{
 };
 
 const mapDispatchToProps = (dispatch) =>({
-  onStop: (id, idStory, count, dateStop) =>{
-    dispatch(stopTimer(id, idStory, count, dateStop));
+  onStop: (idCount, idStory, value, dateStop) =>{
+    dispatch(stopCounter(idCount, idStory, value, dateStop));
   },
-  onPlay: (id, dateStart) =>{
-    dispatch(startTimer(id, dateStart));
+  onPlay: (idCount, dateStart) =>{
+    dispatch(startCounter(idCount, dateStart));
   },
 });
 

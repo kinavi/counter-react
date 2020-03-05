@@ -3,7 +3,7 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
-import {TestApp, Clock, ControllPanel, CountList} from '.';
+import {TestApp, Clock} from '.';
 import {MainPage} from '../pages/MainPage';
 
 

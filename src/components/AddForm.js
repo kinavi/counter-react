@@ -22,8 +22,8 @@ const AddForm = ({onAdd, onHideAddForm}) =>{
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  onAdd: (title)=>{
-    dispatch(addCounter(title));
+  onAdd: (name)=>{
+    dispatch(addCounter(name));
   },
 });
 

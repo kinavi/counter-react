@@ -1,10 +1,6 @@
-import {disconnect} from 'mongoose';
-
 export const TypeActions = {
 
   ADD_COUNTER: 'ADD_COUNTER',
-
-  // ADD_COUNTER: 'ADD_COUNTER',
   EDIT_COUNTER: 'EDIT_COUNTER',
   REMOVE_COUNTER: 'REMOVE_COUNTER',
 
@@ -15,51 +11,16 @@ export const TypeActions = {
 
   SHOW_ONLY_COUNTER: 'SHOW_ONLY_COUNTER',
   SHOW_ALL_COUNTER: 'SHOW_ALL_COUNTER',
-  // FETCH_TIMERS: 'FETCH_TIMERS',
 };
-
-// import {Timer} from '../server-v2';
-
-// export const fetchTimer = () => async (dispatch) => {
-//   const res = await Timer.find({});
-//   console.log(res);
-//   dispatch({
-//     type: FETCH_TIMERS,
-//     payload: res,
-//   });
-// };
 
 const parseResponse = (response) => response.json();
 
 const logError = (error) => console.error(error);
 
-export const setShowAll = () => (dispatch) =>{
-  fetch('/api/show', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-  })
-      .then(parseResponse)
-      // .then(console.log)
-      .then(dispatch)
-      .catch(logError);
-};
-
-export const setShowOnlyThis = (id) => (dispatch) =>{
-  fetch('/api/show', {
-    method: 'PUT',
-    body: JSON.stringify({id}),
-    headers: {'Content-Type': 'application/json'},
-  })
-      .then(parseResponse)
-      // .then(console.log)
-      .then(dispatch)
-      .catch(logError);
-};
-
-export const addCounter = (title) => (dispatch)=>
+export const addCounter = (name) => (dispatch)=>
   fetch('/api/add', {
     method: 'POST',
-    body: JSON.stringify({title}),
+    body: JSON.stringify({name}),
     headers: {'Content-Type': 'application/json'},
   })
       .then(parseResponse)
@@ -76,17 +37,17 @@ export const removeCounter = (id) => (dispatch) =>
       .then(dispatch)
       .catch(logError);
 
-export const editeCounter = (id, title) => (dispatch) =>
+export const editeCounter = (id, name) => (dispatch) =>
   fetch('/api/edit', {
     method: 'PUT',
-    body: JSON.stringify({id, title}),
+    body: JSON.stringify({id, name}),
     headers: {'Content-Type': 'application/json'},
   })
       .then(parseResponse)
       .then(dispatch)
       .catch(logError);
 
-export const startTimer = (id, dateStart) => (dispatch) =>
+export const startCounter = (id, dateStart) => (dispatch) =>
   fetch('/api/start', {
     method: 'PUT',
     body: JSON.stringify({id, dateStart}),
@@ -97,10 +58,10 @@ export const startTimer = (id, dateStart) => (dispatch) =>
       .then(dispatch)
       .catch(logError);
 
-export const stopTimer = (id, idStory, count, dateStop) => (dispatch) =>
+export const stopCounter = (idCount, idStory, value, dateStop) => (dispatch) =>
   fetch('/api/stop', {
     method: 'PUT',
-    body: JSON.stringify({id, idStory, count, dateStop}),
+    body: JSON.stringify({idCount, idStory, value, dateStop}),
     headers: {'Content-Type': 'application/json'},
 
     credentials: 'include',
@@ -109,46 +70,3 @@ export const stopTimer = (id, idStory, count, dateStop) => (dispatch) =>
       .then(dispatch)
       .catch(logError);
 
-// export const startCountingAC = (id, limit) => (
-//   {
-//     type: TypeActions.START_COUNTING,
-//     id,
-//     limit,
-
-//   }
-// );
-
-
-// export const stopCountingAC = (id, count) => (
-//   {
-//     type: TypeActions.STOP_COUNTING,
-//     id,
-//     count,
-
-//   }
-// );
-
-
-// export const addCounterAC = (id, name) => (
-//   {
-//     type: TypeActions.ADD_COUNTER,
-//     id,
-//     name,
-//   }
-// );
-
-// export const editCounterAC = (id, name) => (
-//   {
-//     type: TypeActions.EDIT_COUNTER,
-//     id,
-//     name,
-//   }
-// );
-
-// export const removeCounterAC = (id) => (
-//   {
-//     type: TypeActions.REMOVE_COUNTER,
-//     id,
-//     name,
-//   }
-// );
