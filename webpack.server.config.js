@@ -7,7 +7,7 @@ const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
   mode: 'production',
-  entry: ['babel-polyfill', './src/server.js'],
+  entry: ['babel-polyfill', './src/server/server.js'],
   target: 'node',
   devtool: 'source-map',
   externals: [nodeExternals({

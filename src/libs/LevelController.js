@@ -54,5 +54,3 @@ export class LevelController {
     );
   }
 }
-
-// export {LevelController};

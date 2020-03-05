@@ -117,6 +117,8 @@
 
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
     border-radius: 50%;
+
+    margin-right: 10px;
 }
 .container-add-form {
     /* width: 300px;
@@ -223,6 +225,100 @@
 ::-webkit-scrollbar {width: 3px; height: 3px;}
 ::-webkit-scrollbar-thumb{background-color: #422E2A; border-radius: 8px;}
 
+.modal {
+    position: fixed; /* фиксированное положение */
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.5); /* цвет фона */
+    z-index: 1050;
+    opacity: 1; /* по умолчанию модальное окно прозрачно */
+    -webkit-transition: opacity 200ms ease-in; 
+    -moz-transition: opacity 200ms ease-in;
+    transition: opacity 200ms ease-in; /* анимация перехода */
+    /* pointer-events: none; элемент невидим для событий мыши */
+    margin: 0;
+    padding: 0;
+}
+
+.modal:target {
+    opacity: 1; /* делаем окно видимым */
+    pointer-events: auto; /* элемент видим для событий мыши */
+    overflow-y: auto; /* добавляем прокрутку по y, когда элемент не помещается на страницу */
+}
+
+/* ширина модального окна и его отступы от экрана */
+.modal-dialog {
+    position: relative;
+    width: auto;
+    margin: 40%;
+    margin-top: 50px;
+}
+
+h4 {
+    font-family: Quantico;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    /* line-height: 9px; */
+    color: #422E2A;
+
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+}
+.modal-dialog span{
+    font-family: Quantico;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    /* line-height: 9px; */
+    color: #422E2A;
+
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+}
+.modal-content {
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: .3rem;
+    outline: 0;
+}
+.modal-footer button{
+    border-radius: 4px;
+    background: #DF9077;
+    border: none;
+    padding: 5px;
+    margin: 5px; 
+
+    font-family: Quantico;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    /* line-height: 9px; */
+    color: rgb(255, 255, 255);
+
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+}
+.modal-header,
+.modal-footer
+{
+    margin: 6px;
+}
+.modal-body{
+    margin: 10px;
+}
 /* ::-webkit-scrollbar-button {
     background-image:url('');
     background-repeat:no-repeat;

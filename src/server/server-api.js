@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import {TypeActions} from './redux/actions';
+import {TypeActions} from '../redux/actions';
 const express = require('express');
 import {Timer, Story} from './server';
 // import {FaGofore} from 'react-icons/fa';
@@ -27,7 +27,7 @@ router.post('/add', jsonParser, async (req, res) =>{
   try {
     const product = await timer.save();
     dispatchAndRespond(req, res, {
-      type: TypeActions.ADD_TIMER,
+      type: TypeActions.ADD_COUNTER,
       _id: product._id,
       name: product.name,
       count: product.count,
@@ -60,7 +60,7 @@ router.put('/start', jsonParser, async (req, res)=>{
     const Id = req.body.id;
     const dateStart = req.body.dateStart;
     const story = new Story({idTimer: Id, isActive: true, limit: 2700, dateStart: dateStart});
- 
+
     const product = await story.save();
     res.cookie('idActiveNote', product._id);
 
@@ -119,16 +119,58 @@ router.put('/stop', jsonParser, async (req, res)=>{
 //   }),
 // );
 
-// router.delete('/cms', (req, res) =>
-// {
-//   console.log(req.body);
-//   dispatchAndRespond(req, res, {
-//     type: TypeActions.REMOVE_NEWS,
-//     id: req.body.id,
-//   });
-// },
+router.delete('/remove', jsonParser, async (req, res) => {
+  try {
+    console.log('remove');
+    if (!req.body) return res.sendStatus(400);
 
-// );
+    const idCount = req.body.id;
+
+    const count = await Timer.deleteOne({_id: idCount});
+
+    console.log('count - ', count);
+
+    const story = await Story.deleteMany({idTimer: idCount});
+
+    console.log('story - ', story);
+
+    dispatchAndRespond(req, res, {
+      type: TypeActions.REMOVE_COUNTER,
+      id: idCount,
+    });
+  } catch (e) {
+    console.log('Error --> ', e);
+    req.sendStatus(500).send(e);
+  }
+});
+
+router.put('/edit', jsonParser, async (req, res) => {
+  try {
+    console.log('edit');
+    if (!req.body) return res.sendStatus(400);
+
+    const idCount = req.body.id;
+    const titleCount = req.body.title;
+
+    const count = await Timer.findByIdAndUpdate(idCount, {name: titleCount})//deleteOne({_id: idCount});
+    // const count = await Timer.deleteOne({_id: idCount});
+
+    console.log('count - ', count);
+
+    // const story = await Story.deleteMany({idTimer: idCount});
+
+    // console.log('story - ', story);
+
+    dispatchAndRespond(req, res, {
+      type: TypeActions.EDIT_COUNTER,
+      id: idCount,
+      title: titleCount,
+    });
+  } catch (e) {
+    console.log('Error --> ', e);
+    req.sendStatus(500).send(e);
+  }
+});
 
 export default router;
 

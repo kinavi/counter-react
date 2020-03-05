@@ -1,16 +1,18 @@
 import React from 'react';
 import {
+  Route,
+  Switch,
+} from 'react-router-dom';
+
+import {
   Clock,
-  ButtonBack,
   ControllPanel,
   CountList,
   SelectCount,
   SelectStorys,
 } from '../components';
-import {
-  Route,
-  Switch,
-} from 'react-router-dom';
+
+import {ButtonRemove, ButtonBack, ButtonEdit} from '../components/UI';
 
 
 const Page = (props) =>{
@@ -57,6 +59,8 @@ export const MainPage = () =>{
         <Page>
           <Menu>
             <ButtonBack/>
+            <ButtonEdit/>
+            <ButtonRemove/>
           </Menu>
           <Body>
             <SelectCount/>

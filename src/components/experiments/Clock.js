@@ -1,5 +1,5 @@
 import React from 'react';
-import {useClock} from '../hooks/useClock';
+import {useClock} from '../../hooks/useClock';
 
 export const Clock = () =>{
   const timer = useClock(new Date());

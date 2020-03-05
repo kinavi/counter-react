@@ -16,6 +16,8 @@ export const story = (state = [], action) =>{
         isActive: action.isActive,
         dateStop: action.dateStop,
       }: el);
+    case TypeActions.REMOVE_COUNTER:
+      return state.filter((item)=>item.idTimer!=action.id);
     default:
       return state;
   }

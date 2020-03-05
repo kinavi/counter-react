@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import {ClockContext} from '../context';
-import {Сounter} from './UI';
-import {useInterval} from '../hooks/useInterval';
+import {ClockContext} from '../../context';
+import {Сounter} from '../UI';
+import {useInterval} from '../../hooks/useInterval';
 import {Route} from 'react-router-dom';
 
 export const TestApp = () => {

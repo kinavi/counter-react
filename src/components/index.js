@@ -1,9 +1,8 @@
-import {TestApp} from './TestApp';
+import {TestApp} from './experiments/TestApp';
 import Count from './Count';
 import {App} from './App';
-import {Clock} from './Clock';
+import {Clock} from './experiments/Clock';
 import {ControllPanel} from './ControllPanel';
-import {ButtonBack} from './UI/ButtonBack';
 import CountList from './CountList';
 import {ProgressBarStory} from './ProgressBarStory';
 import SelectCount from './SelectCount';
@@ -16,7 +15,6 @@ export {
   App,
   Clock,
   ControllPanel,
-  ButtonBack,
   ProgressBarStory,
   SelectCount,
   Story,

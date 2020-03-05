@@ -13,9 +13,9 @@ import {
   Switch,
 } from 'react-router-dom';
 import {compose} from 'redux';
-import storeFactory from './redux/store';
+import storeFactory from '../redux/store';
 
-import {App} from './components';
+import {App} from '../components';
 
 import api from './server-api';
 

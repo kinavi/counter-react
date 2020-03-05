@@ -2,7 +2,7 @@ import React, {useRef} from 'react';
 import {connect} from 'react-redux';
 import {FaPlus} from 'react-icons/fa';
 import {IconContext} from 'react-icons';
-import {addTimer} from '../redux/actions';
+import {addCounter} from '../redux/actions';
 
 const AddForm = ({onAdd, onHideAddForm}) =>{
   const inputEl = useRef(null);
@@ -23,7 +23,7 @@ const AddForm = ({onAdd, onHideAddForm}) =>{
 
 const mapDispatchToProps = (dispatch) => ({
   onAdd: (title)=>{
-    dispatch(addTimer(title));
+    dispatch(addCounter(title));
   },
 });
 

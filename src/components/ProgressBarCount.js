@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 
 import {Сounter} from './UI';
 import {ClockContext} from '../context';
-import {LevelController} from '../SizeLevel';
+import {LevelController} from '../libs/LevelController';
 
 export const ProgressBarCount = ({count}) =>{
   const [level, setLevel] = useState(0);

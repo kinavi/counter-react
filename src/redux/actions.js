@@ -1,8 +1,10 @@
+import {disconnect} from 'mongoose';
+
 export const TypeActions = {
 
-  ADD_TIMER: 'ADD_TIMER',
-
   ADD_COUNTER: 'ADD_COUNTER',
+
+  // ADD_COUNTER: 'ADD_COUNTER',
   EDIT_COUNTER: 'EDIT_COUNTER',
   REMOVE_COUNTER: 'REMOVE_COUNTER',
 
@@ -40,7 +42,7 @@ export const setShowAll = () => (dispatch) =>{
       // .then(console.log)
       .then(dispatch)
       .catch(logError);
-}
+};
 
 export const setShowOnlyThis = (id) => (dispatch) =>{
   fetch('/api/show', {
@@ -52,12 +54,32 @@ export const setShowOnlyThis = (id) => (dispatch) =>{
       // .then(console.log)
       .then(dispatch)
       .catch(logError);
-}
+};
 
-export const addTimer = (title) => (dispatch)=>
+export const addCounter = (title) => (dispatch)=>
   fetch('/api/add', {
     method: 'POST',
     body: JSON.stringify({title}),
+    headers: {'Content-Type': 'application/json'},
+  })
+      .then(parseResponse)
+      .then(dispatch)
+      .catch(logError);
+
+export const removeCounter = (id) => (dispatch) =>
+  fetch('/api/remove', {
+    method: 'DELETE',
+    body: JSON.stringify({id}),
+    headers: {'Content-Type': 'application/json'},
+  })
+      .then(parseResponse)
+      .then(dispatch)
+      .catch(logError);
+
+export const editeCounter = (id, title) => (dispatch) =>
+  fetch('/api/edit', {
+    method: 'PUT',
+    body: JSON.stringify({id, title}),
     headers: {'Content-Type': 'application/json'},
   })
       .then(parseResponse)
@@ -87,46 +109,46 @@ export const stopTimer = (id, idStory, count, dateStop) => (dispatch) =>
       .then(dispatch)
       .catch(logError);
 
-export const startCountingAC = (id, limit) => (
-  {
-    type: TypeActions.START_COUNTING,
-    id,
-    limit,
+// export const startCountingAC = (id, limit) => (
+//   {
+//     type: TypeActions.START_COUNTING,
+//     id,
+//     limit,
 
-  }
-);
-
-
-export const stopCountingAC = (id, count) => (
-  {
-    type: TypeActions.STOP_COUNTING,
-    id,
-    count,
-
-  }
-);
+//   }
+// );
 
 
-export const addCounterAC = (id, name) => (
-  {
-    type: TypeActions.ADD_COUNTER,
-    id,
-    name,
-  }
-);
+// export const stopCountingAC = (id, count) => (
+//   {
+//     type: TypeActions.STOP_COUNTING,
+//     id,
+//     count,
 
-export const editCounterAC = (id, name) => (
-  {
-    type: TypeActions.EDIT_COUNTER,
-    id,
-    name,
-  }
-);
+//   }
+// );
 
-export const removeCounterAC = (id) => (
-  {
-    type: TypeActions.REMOVE_COUNTER,
-    id,
-    name,
-  }
-);
+
+// export const addCounterAC = (id, name) => (
+//   {
+//     type: TypeActions.ADD_COUNTER,
+//     id,
+//     name,
+//   }
+// );
+
+// export const editCounterAC = (id, name) => (
+//   {
+//     type: TypeActions.EDIT_COUNTER,
+//     id,
+//     name,
+//   }
+// );
+
+// export const removeCounterAC = (id) => (
+//   {
+//     type: TypeActions.REMOVE_COUNTER,
+//     id,
+//     name,
+//   }
+// );
