@@ -24,6 +24,7 @@ The module is currently under development.
 - [ ] Аdd and configure limit
 - [ ] Time analysis
 - [ ] Autotest
+- [ ] CSS refactoring
 
 PS. The list may change as the project develops. 
 
