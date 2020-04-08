@@ -38,8 +38,8 @@ You must have installed [mongoDB](https://docs.mongodb.com/manual/administration
 
 url - `mongodb://localhost:27017/counter-react`
 
-server build - `npm run build:server`
 client build - `npm run build:client`
+server build - `npm run build:server`
 client start - `npm start`
 
 
