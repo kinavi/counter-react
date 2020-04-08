@@ -1,8 +1,12 @@
 # About counter-react
 A module for keeping track of the time you spend.
 
+![Main](/images/counter-main.png)
+
 # How it works? 
 First add the skill you want to develop. Then note the time spent on it. The more time you spend, the greater the level
+
+![Main](/images/counter-count.png)
 
 Only 10 levels
 1. 0

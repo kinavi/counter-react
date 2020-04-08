@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 
-import bodyParser from 'body-parser';
+// import bodyParser from 'body-parser';
 
 import React from 'react';
 import {renderToString} from 'react-dom/server';
@@ -19,7 +19,7 @@ import api from './server-api';
 
 const app = express();
 
-const jsonParser = express.json();
+// const jsonParser = express.json();
 
 const Schema = mongoose.Schema;
 
