@@ -1,38 +1,38 @@
-import React, {useState, useRef} from 'react';
-import {connect} from 'react-redux';
-import {useParams} from 'react-router-dom';
-import {IconContext} from 'react-icons';
-import {FaRegCircle} from 'react-icons/fa';
+import React, { useState, useRef } from 'react';
+import { connect } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { IconContext } from 'react-icons';
+import { FaRegCircle } from 'react-icons/fa';
 
-import {ModalEdit} from '.';
-import {editeCounter} from '../../redux/actions';
+import { ModalEdit } from '.';
+import { editeCounter } from '../../redux/actions';
 
-const ButtonEdit = ({onEdit}) =>{
+const ButtonEdit = ({ onEdit }) => {
   const input = useRef(null);
   const [open, setOpen] = useState(false);
 
-  const {id} = useParams();
+  const { id } = useParams();
 
-  const handlerClick = (e) =>{
+  const handlerClick = (e) => {
     setOpen(true);
     e.stopPropagation();
   };
 
-  const handlerSubmit = (e) =>{
+  const handlerSubmit = (e) => {
     onEdit(id, input.current.value);
     e.stopPropagation();
     setOpen(false);
   };
 
-  const handlerCancel = (e) =>{
+  const handlerCancel = (e) => {
     setOpen(false);
     e.stopPropagation();
   };
 
   return (
     <di>
-      <IconContext.Provider value={{color: '#DF9077'}}>
-        <FaRegCircle onClick={handlerClick} className='btn'/>
+      <IconContext.Provider value={{ color: '#DF9077' }}>
+        <FaRegCircle onClick={handlerClick} className="btn" />
       </IconContext.Provider>
       <ModalEdit
         input={input}
@@ -44,13 +44,13 @@ const ButtonEdit = ({onEdit}) =>{
   );
 };
 
-const mapDispatchToProps = (dispatch) =>({
-  onEdit: (id, name)=>{
+const mapDispatchToProps = (dispatch) => ({
+  onEdit: (id, name) => {
     dispatch(editeCounter(id, name));
   },
 });
 
 export default connect(
-    null,
-    mapDispatchToProps,
+  null,
+  mapDispatchToProps,
 )(ButtonEdit);

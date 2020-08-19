@@ -1,5 +1,5 @@
-import React, {useContext} from 'react';
-import {ClockContext} from '../../context';
+import React, { useContext } from 'react';
+import { ClockContext } from '../../context';
 
 // const Day = () =>{
 //   const value = useContext(ClockContext);
@@ -7,33 +7,40 @@ import {ClockContext} from '../../context';
 //     <span>{Math.trunc(value/60/60/24)}d</span>
 //   );
 // };
-export const Hour = () =>{
+export const Hour = () => {
   const value = useContext(ClockContext);
   return (
-    <span>{Math.trunc(value/60/60)}h</span>
+    <span>
+      {Math.trunc(value / 60 / 60)}
+      h
+    </span>
   );
 };
-export const Minut = () =>{
+export const Minut = () => {
   const value = useContext(ClockContext);
   return (
-    <span>{Math.trunc(value/60)%60}m</span>
+    <span>
+      {Math.trunc(value / 60) % 60}
+      m
+    </span>
   );
 };
 
-export const Second = () =>{
+export const Second = () => {
   const value = useContext(ClockContext);
   return (
-    <span>{value%60}s</span>
+    <span>
+      {value % 60}
+      s
+    </span>
   );
 };
 
-export const Сounter = () => {
-  return (
-    <div>
-      {/* <Day/> */}
-      <Hour/>
-      <Minut/>
-      <Second/>
-    </div>
-  );
-}
+export const Сounter = () => (
+  <div>
+    {/* <Day/> */}
+    <Hour />
+    <Minut />
+    <Second />
+  </div>
+);

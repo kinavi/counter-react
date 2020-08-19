@@ -1,16 +1,16 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
-import {Сounter} from './UI';
-import {ClockContext} from '../context';
-import {LevelController} from '../libs/LevelController';
+import { Сounter } from './UI';
+import { ClockContext } from '../context';
+import { LevelController } from '../libs/LevelController';
 
-export const ProgressBarCount = ({count}) =>{
+export const ProgressBarCount = ({ count }) => {
   const [level, setLevel] = useState(0);
   const [nextLevel, setNextLevel] = useState(0);
   const [leftCount, setRestCount] = useState(0);
   const [percentBar, setPercentBar] = useState(0);
 
-  useEffect(()=>{
+  useEffect(() => {
     const levelController = new LevelController(count);
 
     setLevel(levelController.level);
@@ -20,24 +20,24 @@ export const ProgressBarCount = ({count}) =>{
   }, [count]);
 
   return (
-    <div className='container-progress-bar'>
+    <div className="container-progress-bar">
       <div className="current-count">
         <ClockContext.Provider value={count}>
-          <Сounter/>
+          <Сounter />
         </ClockContext.Provider>
       </div>
 
-      <div className='bar-bg'>
-        <div className='bar' style={{width: `${percentBar}%`}}/>
+      <div className="bar-bg">
+        <div className="bar" style={{ width: `${percentBar}%` }} />
       </div>
-      <div className='level-panel'>
-        <span className='level'>{level}</span>
+      <div className="level-panel">
+        <span className="level">{level}</span>
         <div className="left-count">
           <ClockContext.Provider value={leftCount}>
-            <Сounter/>
+            <Сounter />
           </ClockContext.Provider>
         </div>
-        <span className='level'>{nextLevel}</span>
+        <span className="level">{nextLevel}</span>
       </div>
     </div>
   );

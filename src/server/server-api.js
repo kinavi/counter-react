@@ -1,9 +1,12 @@
-import {Router} from 'express';
-import {TypeActions} from '../redux/actions';
+import { Router } from 'express';
+import { TypeActions } from '../redux/actions';
+
+import { Count, Story } from './server';
+
 const express = require('express');
-import {Count, Story} from './server';
 require('babel-core/register');
 require('babel-polyfill');
+
 const jsonParser = express.json();
 
 const router = Router();
@@ -17,7 +20,7 @@ const dispatchAndRespond = (req, res, action) => {
 //   res.status(200).json(req.store.getState().ListNews);
 // });
 
-router.post('/add', jsonParser, async (req, res) =>{
+router.post('/add', jsonParser, async (req, res) => {
   try {
     if (!req.body) return res.sendStatus(400);
 
@@ -42,11 +45,11 @@ router.post('/add', jsonParser, async (req, res) =>{
   }
 });
 
-router.put('/start', jsonParser, async (req, res)=>{
+router.put('/start', jsonParser, async (req, res) => {
   try {
     // console.log('start');
     if (!req.body) return res.sendStatus(400);
-    const id = req.body.id;
+    const { id } = req.body;
     const datestart = req.body.dateStart;
     const story = new Story({
       idCount: id,
@@ -70,23 +73,23 @@ router.put('/start', jsonParser, async (req, res)=>{
   }
 });
 
-router.put('/stop', jsonParser, async (req, res)=>{
+router.put('/stop', jsonParser, async (req, res) => {
   try {
     // console.log('stop');
     if (!req.body) return res.sendStatus(400);
 
-    const idStory = req.body.idStory;
+    const { idStory } = req.body;
     const datestop = req.body.dateStop;
-    const idCount = req.body.idCount;
+    const { idCount } = req.body;
     const valueCount = req.body.value;
 
     const story = await Story.findByIdAndUpdate(idStory, {
       isActive: false,
       dateStop: datestop,
-    }, {new: true});
+    }, { new: true });
     const count = await Count.findByIdAndUpdate(idCount, {
       value: valueCount,
-    }, {new: true});
+    }, { new: true });
     dispatchAndRespond(req, res, {
       type: TypeActions.STOP_COUNTING,
       id: story._id,
@@ -108,9 +111,9 @@ router.delete('/remove', jsonParser, async (req, res) => {
 
     const idCount = req.body.id;
 
-    await Count.deleteOne({_id: idCount});
+    await Count.deleteOne({ _id: idCount });
 
-    await Story.deleteMany({idCount: idCount});
+    await Story.deleteMany({ idCount });
 
     dispatchAndRespond(req, res, {
       type: TypeActions.REMOVE_COUNTER,
@@ -124,18 +127,16 @@ router.delete('/remove', jsonParser, async (req, res) => {
 
 router.put('/edit', jsonParser, async (req, res) => {
   try {
-    // console.log('edit');
     if (!req.body) return res.sendStatus(400);
 
     const idCount = req.body.id;
     const nameCount = req.body.name;
 
     const result = await Count.findByIdAndUpdate(
-        idCount,
-        {name: nameCount},
-        {new: true},
+      idCount,
+      { name: nameCount },
+      { new: true },
     );
-    console.log('result -', result );
     dispatchAndRespond(req, res, {
       type: TypeActions.EDIT_COUNTER,
       id: result._id,
@@ -148,4 +149,3 @@ router.put('/edit', jsonParser, async (req, res) => {
 });
 
 export default router;
-
