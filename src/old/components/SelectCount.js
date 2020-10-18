@@ -2,7 +2,7 @@ import React from 'react';
 import {
   useParams,
 } from 'react-router-dom';
-import {Count} from '.';
+import {Count} from './index';
 import {connect} from 'react-redux';
 
 const SelectCount = ({counts} ) =>{

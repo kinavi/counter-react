@@ -25,4 +25,5 @@ module.exports = merge(baseConfig, {
   plugins: [
 
   ],
+  devtool: 'inline-source-map',
 });

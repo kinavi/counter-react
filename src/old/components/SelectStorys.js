@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {useParams} from 'react-router-dom';
 
-import {Story} from '.';
+import {Story} from './index';
 
 const SelectStorys = ({storys}) =>{
   const {id} = useParams();

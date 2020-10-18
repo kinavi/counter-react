@@ -4,7 +4,7 @@ import {useHistory, useParams} from 'react-router-dom';
 import {IconContext} from 'react-icons';
 import {FaTimesCircle} from 'react-icons/fa';
 
-import {ModalRemove} from '.';
+import {ModalRemove} from './index';
 
 import {removeCounter} from '../../redux/actions';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { TrackPropsType } from '../types';
-import Button from '../UI/Button';
-import Icons from '../UI/Icons';
+import { Button } from '../UI/Button';
+import { Icons } from '../UI/Icons';
 
 const Track = (props: TrackPropsType): JSX.Element => {
   const {

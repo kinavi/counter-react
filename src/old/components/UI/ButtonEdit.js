@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { IconContext } from 'react-icons';
 import { FaRegCircle } from 'react-icons/fa';
 
-import { ModalEdit } from '.';
+import { ModalEdit } from './index';
 import { editeCounter } from '../../redux/actions';
 
 const ButtonEdit = ({ onEdit }) => {

@@ -1,19 +1,19 @@
 import React from 'react';
 
 type ButtonPropsType = {
-    label: string | JSX.Element;
     onClick?: () => void;
+    children: JSX.Element | JSX.Element[] | string;
     mix?: string;
 }
 
-const Button = (props: ButtonPropsType): JSX.Element => {
+export const Button = (props: ButtonPropsType): JSX.Element => {
   const {
-    mix, onClick, label,
+    mix, onClick, children,
   } = props;
+
   return (
     <div className={`button ${mix}`}>
-      <button type="submit" onClick={onClick} className="btn">{label}</button>
+      <button type="submit" onClick={onClick} className="btn">{children}</button>
     </div>
   );
 };
-export default Button;

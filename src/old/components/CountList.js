@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {Count} from '.';
+import {Count} from './index';
 
 const CountList = ({counts}) =>{
   return (

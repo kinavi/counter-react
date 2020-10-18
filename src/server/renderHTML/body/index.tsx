@@ -10,12 +10,15 @@ const Body = (props: BodyPropsType): JSX.Element => {
     reactId, children,
   } = props;
   const renderModule = () => <div>тут модуль</div>;
+  const renderScript = () => <script src="index.js" />;
+
   return (
     <body>
       <div>server</div>
       <div id={reactId}>
         {children}
         {/* {renderModule()} */}
+        {renderScript()}
       </div>
     </body>
   );

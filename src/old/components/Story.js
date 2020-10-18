@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 
-import {ProgressBarStory} from '.';
+import {ProgressBarStory} from './index';
 import {Second, Minut} from './UI';
 import {ClockContext} from '../context';
 

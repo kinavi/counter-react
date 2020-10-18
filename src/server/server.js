@@ -6,9 +6,9 @@ import {
   StaticRouter,
 } from 'react-router-dom';
 import { compose } from 'redux';
-import storeFactory from '../redux/store';
+import storeFactory from '../old/redux/store';
 
-import { App } from '../components';
+import { App } from '../old/components';
 
 import api from './server-api';
 

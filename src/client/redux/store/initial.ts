@@ -5,7 +5,17 @@ export const TRACKS_INITIAL_STATE: ITracksState = {
 };
 
 export const APP_INITIAL_STATE: IAppState = {
+  userId: 0,
   readOnly: false,
+  form: {
+    fields: {
+      password: '',
+      name: '',
+      repeatPassword: '',
+      email: '',
+    },
+    error: null,
+  },
 };
 
 export const INITIAL_STATE: IState = {

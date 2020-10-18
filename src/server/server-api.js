@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { TypeActions } from '../redux/actions';
+import { TypeActions } from '../old/redux/actions';
 
 import { Count, Story } from './server';
 
