@@ -1,4 +1,4 @@
-import { SchemaOptions, SchemaDefinition } from 'mongoose';
+import { SchemaOptions, SchemaDefinition, ConnectionOptions } from 'mongoose';
 
 export const COMMON_OPTIONS: SchemaOptions = {
   versionKey: false,
@@ -26,7 +26,15 @@ export const USER: SchemaDefinition = {
 };
 
 export enum MODELS {
-  track = 'Track',
-  road = 'Road',
-  user = 'User'
+  track = 'track',
+  road = 'road',
+  user = 'user'
 }
+
+export const getConnectOptions = (dbName: string): ConnectionOptions => ({
+  dbName,
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+  keepAlive: true,
+  keepAliveInitialDelay: 300000,
+});

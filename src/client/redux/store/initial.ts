@@ -10,7 +10,7 @@ export const APP_INITIAL_STATE: IAppState = {
   form: {
     fields: {
       password: '',
-      name: '',
+      login: '',
       repeatPassword: '',
       email: '',
     },

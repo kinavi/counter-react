@@ -7,7 +7,7 @@ import { Button } from '../../UI/Button';
 
 export const LoginForm = (props: LoginFormType): JSX.Element => {
   const {
-    title, mix, fields, updateFields,
+    title, mix, fields, updateFields, onSwitch,
     onLogin,
   } = props;
   // const [email, setEmail] = useState<string>('');
@@ -41,6 +41,12 @@ export const LoginForm = (props: LoginFormType): JSX.Element => {
         mix="login-form__button show-form"
       >
         Login
+      </Button>
+      <Button
+        onClick={onSwitch}
+        mix="login-form__button login-form__button_switch show-form"
+      >
+        Switch
       </Button>
     </div>
   );

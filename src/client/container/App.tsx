@@ -37,7 +37,7 @@ const App = (): JSX.Element => {
           </div>
         </Page>
       </Route>
-      <Route path="/register">
+      <Route path="/auth">
         <AuthentionPageWithState />
       </Route>
     </Switch>

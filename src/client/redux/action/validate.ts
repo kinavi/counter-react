@@ -35,12 +35,12 @@ export const validateForm = (fields: IFieldsForm | null): IValidateResult => {
   if (fields) {
     const errors: IErrors = {
       email: validateEmail(fields.email),
-      name: validateName(fields.name as string),
+      login: validateName(fields.login as string),
       password: validatePassword(fields.password),
       repeatPassword: validateRepeatPassword(fields.repeatPassword),
     };
     return {
-      isValide: errors.name === ''
+      isValide: errors.login === ''
         || errors.email === ''
         || errors.password === ''
         || errors.repeatPassword === '',
@@ -51,7 +51,7 @@ export const validateForm = (fields: IFieldsForm | null): IValidateResult => {
     isValide: false,
     errors: {
       password: 'Поле не заполнено',
-      name: 'Поле не заполнено',
+      login: 'Поле не заполнено',
       email: 'Поле не заполнено',
       repeatPassword: 'Поле не заполнено',
     },

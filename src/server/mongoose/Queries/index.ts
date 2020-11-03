@@ -34,7 +34,9 @@ export class Queries {
     //   return test;
     // }
 
-    public isLoginBusy = (login: string) => this.models[MODELS.user].findOne({ login })
+    public isLoginBusy = (login: string, token) => this.models[MODELS.user].findOne({ login }, (err, user) => {
+      token = user.generateJWT();
+    })
     // this.models[Models.user].insertMany([
     //   { name: 'vova' },
     // ])

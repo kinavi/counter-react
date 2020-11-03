@@ -27,7 +27,7 @@ export interface IErrors extends IFieldsForm{
 
 export interface IFieldsForm {
     email: string;
-    name?: string;
+    login?: string;
     password: string;
     repeatPassword?: string;
 }

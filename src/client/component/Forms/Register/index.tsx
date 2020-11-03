@@ -7,16 +7,16 @@ import { RegisterFormType } from '../types';
 
 export const RegisterForm = (props: RegisterFormType) => {
   const {
-    onRegister, title, mix, errors, fields, updateFields,
+    onRegister, title, mix, errors, fields, updateFields, onSwitch,
   } = props;
 
   const {
-    email, name = '', password, repeatPassword = '',
+    email, login = '', password, repeatPassword = '',
   } = fields;
 
   const handleRegister = () => {
     onRegister({
-      email, name, password,
+      email, login, password,
     });
   };
 
@@ -33,11 +33,11 @@ export const RegisterForm = (props: RegisterFormType) => {
       />
       <Field
         Icon={Icons.profile}
-        value={name}
-        onChange={(value) => updateFields({ ...fields, name: value })}
+        value={login}
+        onChange={(value) => updateFields({ ...fields, login: value })}
         mix="register-form__field"
         placeholder="name"
-        hasError={errors ? errors.name : ''}
+        hasError={errors ? errors.login : ''}
       />
       <Field
         Icon={Icons.password}
@@ -60,6 +60,12 @@ export const RegisterForm = (props: RegisterFormType) => {
         mix="register-form__button"
       >
         Register
+      </Button>
+      <Button
+        onClick={onSwitch}
+        mix="register-form__button register-form__button_switch show-form"
+      >
+        Switch
       </Button>
     </div>
   );

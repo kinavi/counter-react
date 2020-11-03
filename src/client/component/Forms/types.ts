@@ -3,7 +3,7 @@ import * as Actions from '../../redux/action/index';
 
 export interface IRegisterFieldsForm {
     email: string;
-    name: string;
+    login: string;
     password: string;
 }
 
@@ -16,6 +16,7 @@ export type LoginFormType = {
     fields: IFieldsForm;
     updateFields: typeof Actions.updateFields;
     onLogin: (fields: ILoginFieldsForm) => void;
+    onSwitch: () => void;
 } & FormPropsType;
 
 export type RegisterFormType = {
@@ -23,6 +24,7 @@ export type RegisterFormType = {
     errors: IErrors;
     onRegister: (fields: IRegisterFieldsForm) => void;
     updateFields: typeof Actions.updateFields;
+    onSwitch: () => void;
 } & FormPropsType;
 
 export type FormPropsType = {
