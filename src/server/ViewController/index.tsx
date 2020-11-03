@@ -14,7 +14,6 @@ export class ViewController {
           </StaticRouter>
         </Provider>
       </Html>,
-
     )
 
     public renderTestPage = () => renderToString(

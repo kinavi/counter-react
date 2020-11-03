@@ -22,7 +22,6 @@ export const USER: SchemaDefinition = {
   hash: String,
   salt: String,
   name: String,
-  // trackId: String,
 };
 
 export enum MODELS {
