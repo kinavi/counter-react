@@ -1,36 +1,56 @@
-import { AnyAction } from 'redux';
-import { Actions, ActionsForm } from './enum.actions';
+import { FormActions, AppActions } from './enum.actions';
 import {
-  IAppState, IErrors, IFieldsForm, IState, ITrack,
+  IErrors, IFieldsForm, IState,
 } from '../types';
 import { ApiController } from '../../utils/fetchs';
 import {
   validateForm,
 } from './validate';
-import { IAppActions } from '../reducers/types';
 import { ENDPOINTS } from '../api/endpoints';
+import { FormActionsType, AppActionsType } from './types';
 
-export const addTrack = (track: ITrack): AnyAction => ({ type: Actions.addTrack, payload: track });
-export const updateTrack = (number: number, track: ITrack): AnyAction => ({
-  type: Actions.updateTrack,
-  payload: { number, track },
-});
-export const remuveTrack = (number: number): AnyAction => ({
-  type: Actions.removeTrack,
-  payload: number,
-});
-export const start = (): AnyAction => ({ type: Actions.start });
-export const stop = (): AnyAction => ({ type: Actions.stop });
-
-export const setErrors = (errors: IErrors): IAppActions => ({
-  type: ActionsForm.setErrors,
+// form actions
+export const setErrors = (errors: IErrors): FormActionsType => ({
+  type: FormActions.setErrors,
   payload: errors,
 });
 
-export const updateFields = (fields: IFieldsForm): IAppActions => ({
-  type: ActionsForm.updateField,
+export const updateFields = (fields: IFieldsForm): FormActionsType => ({
+  type: FormActions.updateField,
   payload: fields,
 });
+
+// app actions
+export const setUserId = (id: number): AppActionsType => ({
+  type: AppActions.updateUserId,
+  payload: id,
+});
+
+export const initialApp = () => (
+  dispatch: (action: any) => void,
+  getState: () => IState,
+) => {
+  ApiController.get(ENDPOINTS.initial)
+    .then((data) => {
+      // TODO: if (status)
+      dispatch(data);
+    })
+    .catch((error) => console.log('error', error));
+};
+
+// task actions
+// export const addTrack = (track: ITrack): AnyAction => ({ type: Actions.addTrack, payload: track });
+// export const updateTrack = (number: number, track: ITrack): AnyAction => ({
+//   type: Actions.updateTrack,
+//   payload: { number, track },
+// });
+//
+// export const remuveTrack = (number: number): AnyAction => ({
+//   type: Actions.removeTrack,
+//   payload: number,
+// });
+// export const start = (): AnyAction => ({ type: Actions.start });
+// export const stop = (): AnyAction => ({ type: Actions.stop });
 
 export const register = () => (
   dispatch: (action: any) => void,

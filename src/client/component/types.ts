@@ -1,12 +1,11 @@
-export interface ITimer {
-    id: number;
-    label: string;
-    value: number;
-    // dateStart: string;
-    // dateStop: string;
-}
+import { ITrack } from '../redux/types';
 
-export type TrackPropsType = ITimer
+export type TrackPropsType = {
+    leftIcon: JSX.Element;
+    rightIcon: JSX.Element;
+    onLeftButtonClick: () => void;
+    onRightButtonClick: () => void;
+} & ITrack
 
 export interface ITimerContext {
     value: number;

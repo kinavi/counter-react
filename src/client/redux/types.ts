@@ -1,24 +1,35 @@
-import { Reducer, AnyAction } from 'redux';
+import { Reducer } from 'redux';
+import { Moment } from 'moment';
+import { AppActionsType, FormActionsType, TaskActionsType } from './action/types';
 
-export interface ITrack {
-    name: string;
-    dateStart: Date;
-    dateStop: Date;
-}
-
-export interface ITracksState {
+export interface ITask {
+    id: string;
+    label: string;
+    timeTotal: string;
     tracks: ITrack[];
 }
 
+export interface ITrack {
+    id: string;
+    label: string;
+    value: string;
+    left: string;
+    dateStart: Moment;
+    dateStop: Moment;
+}
+
+export interface ITaskState {
+    tasks: ITask[];
+}
+
 export interface IAppState {
-    userId: number;
-    form: IForm;
+    userId: string;
     readOnly: boolean;
 }
 
-interface IForm {
+export interface IFormState {
     fields: IFieldsForm;
-    error: IErrors;
+    error: IErrors | null;
 }
 
 export interface IErrors extends IFieldsForm{
@@ -32,23 +43,14 @@ export interface IFieldsForm {
     repeatPassword?: string;
 }
 
-// interface IFieldRegisterForm {
-//     email: string;
-//     name: string;
-//     password: string;
-// }
-//
-// interface IFieldLoginForm {
-//     email: string;
-//     password: string;
-// }
-
 export interface IState {
     app: IAppState;
-    tracks: ITracksState;
+    tasks: ITaskState;
+    form: IFormState;
 }
 
 export interface ICombineReducers {
-    app: Reducer<IAppState, AnyAction>;
-    tracks: Reducer<ITracksState, AnyAction>;
+    app: Reducer<IAppState, AppActionsType>;
+    tasks: Reducer<ITaskState, TaskActionsType>;
+    form: Reducer<IFormState, FormActionsType>
 }

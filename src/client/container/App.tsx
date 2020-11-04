@@ -1,47 +1,49 @@
-import React, { useState } from 'react';
-import { Switch, Route } from 'react-router-dom';
-import { v4 } from 'uuid';
-import { useSpring, animated, useTransition } from 'react-spring';
-import Page from './Page';
-import Track from '../component/Track';
-import { ITimer } from '../component/types';
-import { TIMERS } from '../constants';
-import { RegisterForm } from '../component/Forms/Register';
-import { AuthentionPageWithState } from '../pages/Authention';
+import React, { useEffect, useState } from 'react';
+// import { useSpring, animated, useTransition } from 'react-spring';
+import { connect } from 'react-redux';
+import { ITrack } from '../component/types';
+import { IState } from '../redux/types';
+import * as Actions from '../redux/action';
 
-const App = (): JSX.Element => {
-  const [showModal, setShowModal] = useState(false);
-  const [isRegisterForm, setIsRegisterForm] = useState(true);
-  const test = useSpring({
-    perspective: '600px',
-    transform: showModal ? 'rotateY(0deg)' : 'rotateY(180deg)',
-  });
-  const testTrans = useTransition(showModal, null, {
-    from: { position: 'absolute', transform: 'rotateY(180deg)' },
-    enter: { transform: 'rotateY(0deg)' },
-    leave: { transform: 'rotateY(180deg)' },
-    // trail: 2000,
-    // config: { duration: 500 },
-  });
-  const test2 = useSpring({
-    opacity: showModal ? 0 : 1,
-  });
+type AppStatePropsType = {
+
+}
+
+type AppPropsType = typeof Actions & AppStatePropsType
+const App = (props: AppPropsType): JSX.Element => {
+  const {
+    initialApp,
+  } = props;
+  // const [showModal, setShowModal] = useState(false);
+  // const [isRegisterForm, setIsRegisterForm] = useState(true);
+  // const test = useSpring({
+  //   perspective: '600px',
+  //   transform: showModal ? 'rotateY(0deg)' : 'rotateY(180deg)',
+  // });
+  // const testTrans = useTransition(showModal, null, {
+  //   from: { position: 'absolute', transform: 'rotateY(180deg)' },
+  //   enter: { transform: 'rotateY(0deg)' },
+  //   leave: { transform: 'rotateY(180deg)' },
+  //   // trail: 2000,
+  //   // config: { duration: 500 },
+  // });
+  // const test2 = useSpring({
+  //   opacity: showModal ? 0 : 1,
+  // });
+  useEffect(() => {
+    initialApp();
+  }, []);
   return (
-    <Switch>
-      <Route exact path="/">
-        <Page>
-          <div className="timer">
-            <div className="timer__track">
-              {TIMERS.map((timer: ITimer) => <Track key={v4} {...timer} />)}
-            </div>
-          </div>
-        </Page>
-      </Route>
-      <Route path="/auth">
-        <AuthentionPageWithState />
-      </Route>
-    </Switch>
+    <div>Hello</div>
   );
 };
 
-export default App;
+// const mapStateToProps = (state: IState): AppStatePropsType => {
+//   console.log('state', state);
+//   return {
+//     errors: state.app.form.error,
+//     fields: state.app.form.fields,
+//   };
+// };
+
+export const AppWithState = connect(null, { ...Actions })(App);

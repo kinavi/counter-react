@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
-import TracksReducer from './tracks';
+import TasksReducer from './tasks';
 import { ICombineReducers } from '../types';
 import { AppReducer } from './app';
+import { FormReducer } from './form';
 
 export default combineReducers<ICombineReducers>({
   app: AppReducer,
-  tracks: TracksReducer,
+  tasks: TasksReducer,
+  form: FormReducer,
 });

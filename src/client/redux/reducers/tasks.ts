@@ -1,9 +1,10 @@
 import { AnyAction, Reducer } from 'redux';
 import { Actions } from '../action/enum.actions';
-import { ITracksState } from '../types';
+import { ITaskState } from '../types';
 import { TRACKS_INITIAL_STATE } from '../store/initial';
+import { TaskActionsType } from '../action/types';
 
-const TracksReducer: Reducer<ITracksState> = (state = TRACKS_INITIAL_STATE, action: AnyAction) => {
+const TasksReducer: Reducer<ITaskState, TaskActionsType> = (state = TRACKS_INITIAL_STATE, action: AnyAction) => {
   switch (action.type) {
     case Actions.addTrack:
       return [];
@@ -19,4 +20,4 @@ const TracksReducer: Reducer<ITracksState> = (state = TRACKS_INITIAL_STATE, acti
   }
 };
 
-export default TracksReducer;
+export default TasksReducer;

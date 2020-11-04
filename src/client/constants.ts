@@ -1,6 +1,6 @@
-import { ITimer } from './component/types';
+import { ITrack } from './component/types';
 
-export const TIMERS: ITimer[] = [
+export const TIMERS: ITrack[] = [
   {
     id: 1,
     label: 'Test 1',

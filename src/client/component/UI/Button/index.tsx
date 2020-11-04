@@ -1,4 +1,6 @@
 import React from 'react';
+import classnames from 'classnames';
+import './index.sass';
 
 type ButtonPropsType = {
     onClick?: () => void;
@@ -12,8 +14,14 @@ export const Button = (props: ButtonPropsType): JSX.Element => {
   } = props;
 
   return (
-    <div className={`button ${mix}`}>
-      <button type="submit" onClick={onClick} className="btn">{children}</button>
-    </div>
+  // <div className={`button ${mix}`}>
+    <button
+      type="submit"
+      onClick={onClick}
+      className={classnames('stash-button', mix)}
+    >
+      {children}
+    </button>
+  // </div>
   );
 };

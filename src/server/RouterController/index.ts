@@ -2,6 +2,7 @@ import { Request, Response, Router } from 'express';
 import { IModels } from '../mongoose/types';
 import { ViewController } from '../ViewController';
 import { Store } from '../../client/redux/store';
+import { setUserId } from '../../client/redux/action';
 // Как-то надо обновлять стор
 // Где-то надо хранить стор
 // Как-то надо отрисовывать
@@ -60,6 +61,14 @@ export class RouterController {
             .status(200)
             .send('done');
         });
+      });
+
+      this.router.get('/api/initial', authenticate, (req: Request, res: Response) => {
+        console.log('Hello', req.user);
+        if (req.user) {
+          return res.status(200).send(setUserId(req.user._id));
+        }
+        res.redirect('/auth');
       });
       // contine routs...
     }

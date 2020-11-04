@@ -6,8 +6,12 @@ export enum Actions {
     stop = 'STOP',
 }
 
-export enum ActionsForm {
+export enum FormActions {
     updateField = 'UPDATE_FIELD',
     setErrors = 'SET_ERRORS',
+}
 
+export enum AppActions {
+    updateUserId = 'UPDATE_USER_ID',
+    updateStatus = 'UPDATE_STATUS',
 }

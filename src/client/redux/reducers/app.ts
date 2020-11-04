@@ -1,29 +1,18 @@
 import { Reducer } from 'redux';
-import { IAppState, IErrors, IFieldsForm } from '../types';
+import { IAppState } from '../types';
 import { APP_INITIAL_STATE } from '../store/initial';
-import { ActionsForm } from '../action/enum.actions';
-import { IAppActions } from './types';
+import { AppActions } from '../action/enum.actions';
+import { AppActionsType } from '../action/types';
 
-export const AppReducer: Reducer<IAppState, IAppActions> = (
+export const AppReducer: Reducer<IAppState, AppActionsType> = (
   state = APP_INITIAL_STATE,
-  action,
+  { payload, type },
 ) => {
-  switch (action.type) {
-    case ActionsForm.updateField:
+  switch (type) {
+    case AppActions.updateUserId:
       return ({
         ...state,
-        form: {
-          ...state.form,
-          fields: action.payload as IFieldsForm,
-        },
-      });
-    case ActionsForm.setErrors:
-      return ({
-        ...state,
-        form: {
-          ...state.form,
-          error: action.payload as IErrors,
-        },
+        userId: payload as number,
       });
     default:
       return state;

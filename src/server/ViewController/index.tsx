@@ -3,14 +3,14 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom';
 import Html from './views/html';
-import App from '../../client/container/App';
+import { AppWithState } from '../../client/container/App';
 
 export class ViewController {
     public renderMainPage = (store: any, url: string) => renderToString(
       <Html>
         <Provider store={store}>
           <StaticRouter location={url}>
-            <App />
+            <AppWithState />
           </StaticRouter>
         </Provider>
       </Html>,
