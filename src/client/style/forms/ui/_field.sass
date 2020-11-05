@@ -1,0 +1,53 @@
+.field
+  display: flex
+  flex-direction: row
+  margin-bottom: 15px //10px
+
+  &__label
+    flex-basis: 20%
+    margin-right: 10px
+    justify-content: flex-end
+    display: flex
+    align-items: center
+  &__input
+    margin: auto
+    box-sizing: border-box
+
+    & input
+      width: calc(100% - 28px - 20px) // TODO вынести размеры в переменную
+      border: none
+      box-sizing: border-box
+      font-family: monospace
+
+.form-input
+  display: flex
+  background: white
+  max-height: 30px
+  padding: 8px
+  max-width: 200px
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1)
+  border-radius: 2px
+  &__icon
+    margin-right: 8px
+    display: flex
+    svg
+      color: $color-font-field
+  &__icon_error
+    display: flex
+    opacity: 0
+    svg
+      color: red // TODO: Подобрать норм цвет
+  &__icon_show
+    opacity: 1
+  input
+    &::placeholder
+      color: $color-font-field
+    color: $color-font-field
+  input:focus
+    border: none
+    outline: none
+  &_focus
+    outline: 1px solid #DF6A6A
+  &_error
+    outline: 1px solid #DF6A6A
+

@@ -1,0 +1,144 @@
+$height-min: 10%
+@mixin flex-center
+    display: flex
+    align-items: center
+    justify-content: center
+    
+.page 
+    display: flex
+    flex-direction: column
+    
+    &__header
+        min-height: $height-min
+        background: red
+    &__footer
+        min-height: $height-min
+        background: red
+    &__body 
+        min-height: (100% - $height-min*2)
+        padding: 10px
+
+.test-perp
+    display: flex
+    flex-direction: column
+    perspective: 100px
+    height: 100%
+    // transform-style: preserve-3d
+    &__item
+        position: relative
+        width: 100%
+        height: 150px
+        margin-bottom: 10px
+        &_drag-start
+            // display: none
+            // position: absolute
+        // transform: translate3d(10px, 10px, 10px)
+        // translate: buy 
+        // animation: buy 1s ease-in-out 0.5s alternate infinite
+    &__item:nth-child(n)
+        background: #43665657
+    &__item:nth-child(2n)
+        background: #7e863970
+    &__item:nth-child(3n)
+        background: #86397c9e
+
+.img
+    width: 100%
+    height: 100%
+    object-fit: cover
+
+@keyframes buy
+    0%
+        transform: translate3d(0px, 0, 0px)
+    100%
+        transform: translate3d(0px, 200px, -50px)
+
+@keyframes collapse
+    0%  
+
+        // transform: translate3d(0px, 0%, 0px)
+    100%
+        // transform: translate3d(0px, -50%, 0px)
+    // position: absolute;
+    // top: 25%;
+    // width: 100%;
+@keyframes expand
+    0%
+        // transform: translate3d(0px, -50%, 0px)
+    100%
+        // transform: translate3d(0px, 0%, 0px)
+
+@keyframes filter-on
+    0%
+        // filter: none
+        // width: 100%
+        // height: calc( 100% / 2 )
+    100%
+        // width: 80%
+        // height: calc( 100% / 3 )
+        //filter: brightness(50%)
+
+@keyframes filter-off
+    0%
+        // width: 80%
+        height: calc( 100% / 3 )
+        // filter: brightness(50%)
+    100%
+        // width: 100%
+        height: calc( 100% / 2 )
+        // filter: none
+
+.scroll
+    display: flex
+    flex-direction: column
+    position: relative
+    height: 250px
+    margin-bottom: 10px
+    &__photo
+        // background: green
+        height: calc( 100% / 2 )
+        @include flex-center
+        // background: url('/lenivec.jpg')
+        // background-position: center
+        // background-repeat: no-repeat
+        // background-size: cover
+        margin: 0 auto
+        &_filter-on
+            animation: filter-on 0.5s ease-in-out
+            animation-fill-mode: forwards
+        &_filter-off
+            animation: filter-off 0.5s ease-in-out
+            animation-fill-mode: forwards
+    &__text-container
+        background: red
+        height: calc( 100% / 2 )
+        @include flex-center
+        border-radius: 15px
+        
+        &_collapse
+            animation: collapse 0.5s ease-in-out
+            animation-fill-mode: forwards
+        &_expand
+            animation: expand 0.5s ease-in-out
+            animation-fill-mode: forwards
+    &__label
+        @include flex-center
+        height: 100%
+        width: calc( 100% *  1/4 )
+        padding: 0px 20px
+        text-transform: uppercase
+        border-right: 1px solid black
+        margin-right: -1px
+    &__text
+        @include flex-center
+        height: 100%
+        width: calc( 100% *  3/4 )
+        padding: 0px 20px
+
+.skills
+    padding: 10px
+    border-radius: 15px
+    background: red
+    &__item
+        width: 50px
+        
