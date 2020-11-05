@@ -1,13 +1,11 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 import { RegisterForm } from '../../component/Forms/Register';
 import { LoginForm } from '../../component/Forms/Login';
 import * as Actions from '../../redux/action';
 import {
-  IAppState, IErrors, IFieldsForm, IState,
+  IErrors, IFieldsForm, IState,
 } from '../../redux/types';
-import { Button } from '../../component/UI/Button';
 
 interface IAuthentionPageStateProps {
   errors: IErrors;
@@ -23,8 +21,7 @@ const AuthentionPage = (props: AuthentionPagePropsType) => {
   const {
     register, fields, errors, updateFields, login,
   } = props;
-  const url = useLocation();
-  console.log('url', url);
+
   const commonPropsForm = {
     errors,
     fields,
@@ -32,9 +29,6 @@ const AuthentionPage = (props: AuthentionPagePropsType) => {
   };
 
   const [showRegisterForm, setShowRegisterForm] = useState<boolean>(false);
-  // const onRegister = () => {
-  //   register();
-  // };
 
   const handleSwitch = () => setShowRegisterForm(!showRegisterForm);
 
@@ -65,12 +59,9 @@ const AuthentionPage = (props: AuthentionPagePropsType) => {
   );
 };
 
-const mapStateToProps = (state: IState): IAuthentionPageStateProps => {
-  console.log('state', state);
-  return {
-    errors: state.app.form.error,
-    fields: state.app.form.fields,
-  };
-};
+const mapStateToProps = (state: IState): IAuthentionPageStateProps => ({
+  errors: state.form.error,
+  fields: state.form.fields,
+});
 
 export const AuthentionPageWithState = connect(mapStateToProps, { ...Actions })(AuthentionPage);

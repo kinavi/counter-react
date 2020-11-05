@@ -1,5 +1,4 @@
 import { Model } from 'mongoose';
-import { MODELS } from './constants';
 
 export interface ITrack {
     label: string;
@@ -9,7 +8,6 @@ export interface ITrack {
 // TODO: Разобраться с типизацией
 export interface IModels {
     [key: string]: Model<any>;
-    // user: Model<any>;
 }
 
 export interface IUser {

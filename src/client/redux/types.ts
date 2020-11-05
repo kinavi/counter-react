@@ -18,9 +18,9 @@ export interface ITrack {
     dateStop: Moment;
 }
 
-export interface ITaskState {
-    tasks: ITask[];
-}
+// export interface ITaskState {
+//     tasks: ITask[];
+// }
 
 export interface IAppState {
     userId: string;
@@ -45,12 +45,12 @@ export interface IFieldsForm {
 
 export interface IState {
     app: IAppState;
-    tasks: ITaskState;
+    tasks: ITask[];
     form: IFormState;
 }
 
 export interface ICombineReducers {
     app: Reducer<IAppState, AppActionsType>;
-    tasks: Reducer<ITaskState, TaskActionsType>;
+    tasks: Reducer<ITask[], TaskActionsType>;
     form: Reducer<IFormState, FormActionsType>
 }

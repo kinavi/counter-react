@@ -1,5 +1,7 @@
+import { IApiResponse } from '../../types';
+
 export const ApiController = {
-  post: async (url = '', data = {}): Promise<void> => {
+  post: async <T> (url = '', data = {}): Promise<T> => {
     const response = await fetch(url, {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors', // no-cors, *cors, same-origin
@@ -16,7 +18,7 @@ export const ApiController = {
 
     return await response.json(); // parses JSON response into native JavaScript objects
   },
-  get: async (url = ''): Promise<void> => {
+  get: async <T> (url = ''): Promise<T> => {
     const response = await fetch(url, {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors', // no-cors, *cors, same-origin

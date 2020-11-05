@@ -1,5 +1,5 @@
 import { Action } from 'redux';
-import { IErrors, IFieldsForm } from '../types';
+import { IErrors, IFieldsForm, ITask } from '../types';
 
 export interface IValidateResult {
     isValide: boolean;
@@ -15,6 +15,6 @@ export type FormActionsType = {
 } & Action
 
 export type TaskActionsType = {
-    payload?: string;
+    payload?: string | ITask[];
     id?: string
 } & Action

@@ -4,13 +4,13 @@ export const COMMON_OPTIONS: SchemaOptions = {
   versionKey: false,
 };
 
-export const TRACK: SchemaDefinition = {
-  userId: String,
-  label: String,
-  isStart: Boolean,
-};
+// export const TRACK: SchemaDefinition = {
+//   userId: String,
+//   label: String,
+//   isStart: Boolean,
+// };
 
-export const ROAD: SchemaDefinition = {
+export const TRACK: SchemaDefinition = {
   dateStart: Date,
   dateStop: Date,
   trackId: String,
@@ -24,10 +24,18 @@ export const USER: SchemaDefinition = {
   name: String,
 };
 
+export const TASK: SchemaDefinition = {
+  userId: String,
+  label: String,
+  timeTotal: String,
+  tracks: [TRACK],
+};
+
 export enum MODELS {
   track = 'track',
-  road = 'road',
-  user = 'user'
+  // road = 'road',
+  user = 'user',
+  task = 'task',
 }
 
 export const getConnectOptions = (dbName: string): ConnectionOptions => ({

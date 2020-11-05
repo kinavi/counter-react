@@ -15,3 +15,7 @@ export enum AppActions {
     updateUserId = 'UPDATE_USER_ID',
     updateStatus = 'UPDATE_STATUS',
 }
+
+export enum TaskActions {
+    setTasks = 'SET_TASKS'
+}

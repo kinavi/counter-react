@@ -1,13 +1,20 @@
-import { FormActions, AppActions } from './enum.actions';
+import { FormActions, AppActions, TaskActions } from './enum.actions';
 import {
-  IErrors, IFieldsForm, IState,
+  IErrors, IFieldsForm, IState, ITask,
 } from '../types';
 import { ApiController } from '../../utils/fetchs';
 import {
   validateForm,
 } from './validate';
 import { ENDPOINTS } from '../api/endpoints';
-import { FormActionsType, AppActionsType } from './types';
+import { FormActionsType, AppActionsType, TaskActionsType } from './types';
+import { IApiResponse } from '../../../types';
+
+// task actions
+export const setTasks = (tasks: ITask[]): TaskActionsType => ({
+  type: TaskActions.setTasks,
+  payload: tasks,
+});
 
 // form actions
 export const setErrors = (errors: IErrors): FormActionsType => ({
@@ -30,10 +37,12 @@ export const initialApp = () => (
   dispatch: (action: any) => void,
   getState: () => IState,
 ) => {
-  ApiController.get(ENDPOINTS.initial)
-    .then((data) => {
-      // TODO: if (status)
-      dispatch(data);
+  // TODO: Ref
+  ApiController.get<IApiResponse>(ENDPOINTS.initial)
+    .then(({ status, result }) => {
+      if (status === 'actionsList') {
+        (result as TaskActionsType[]).map((item) => dispatch(item));
+      }
     })
     .catch((error) => console.log('error', error));
 };
@@ -60,7 +69,7 @@ export const register = () => (
   console.log('state', getState());
   const { isValide, errors } = validateForm(fields);
   if (true) {
-    ApiController.post(ENDPOINTS.register, fields)
+    ApiController.post<IApiResponse>(ENDPOINTS.register, fields)
       .then((data) => console.log('data', data))
       .catch((error) => console.log('error', error));
   } else {
@@ -72,10 +81,15 @@ export const login = () => (
   dispatch: (action: any) => void,
   getState: () => IState,
 ) => {
-  const { app: { form: { fields } } } = getState();
-  if (true) {
-    ApiController.post(ENDPOINTS.login, fields)
-      .then((data) => console.log('data', data))
+  const { form: { fields } } = getState();
+  if (true) { // TODO: need valid
+    ApiController.post<IApiResponse>(ENDPOINTS.login, fields)
+      .then(({ status, message }) => {
+        if (status === 'ok') {
+          window.location.assign('/');
+        }
+        // TODO: add valid form
+      })
       .catch((error) => console.log('error', error));
   }
 };

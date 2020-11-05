@@ -57,13 +57,13 @@ export const RegisterForm = (props: RegisterFormType) => {
       />
       <Button
         onClick={handleRegister}
-        mix="register-form__button"
+        mix="button register-form__button"
       >
         Register
       </Button>
       <Button
         onClick={onSwitch}
-        mix="register-form__button register-form__button_switch show-form"
+        mix="button register-form__button register-form__button_switch show-form"
       >
         Switch
       </Button>

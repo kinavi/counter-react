@@ -14,7 +14,6 @@ export const Button = (props: ButtonPropsType): JSX.Element => {
   } = props;
 
   return (
-  // <div className={`button ${mix}`}>
     <button
       type="submit"
       onClick={onClick}
@@ -22,6 +21,5 @@ export const Button = (props: ButtonPropsType): JSX.Element => {
     >
       {children}
     </button>
-  // </div>
   );
 };
