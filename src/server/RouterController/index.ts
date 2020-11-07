@@ -4,6 +4,7 @@ import { ViewController } from '../ViewController';
 import { Store } from '../../client/redux/store';
 import { setUserId, setTasks } from '../../client/redux/action';
 import { IApiResponse } from '../../types';
+
 // Как-то надо обновлять стор
 // Где-то надо хранить стор
 // Как-то надо отрисовывать

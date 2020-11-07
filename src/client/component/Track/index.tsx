@@ -3,7 +3,7 @@ import { TrackPropsType } from '../types';
 import { Button } from '../UI/Button';
 import { Icons } from '../UI/Icons';
 
-const Track = (props: TrackPropsType): JSX.Element => {
+export const Track = (props: TrackPropsType): JSX.Element => {
   const {
     value,
     id,
@@ -51,5 +51,3 @@ const Track = (props: TrackPropsType): JSX.Element => {
     </div>
   );
 };
-
-export default Track;

@@ -1,28 +1,31 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { ITrack } from '../types';
-import { IState } from '../../redux/types';
+import { IState, ITask } from '../../redux/types';
 import * as Actions from '../../redux/action/enum.actions';
+import { Button } from '../UI/Button';
+import { WithMode } from './hocs/WithMode';
+import { ViewMode } from './chunks/ViewMode';
+import { EditMode } from './chunks/EditMode';
+import {
+  ViewModePropsType,
+  EditModePropsType,
+} from './types';
 
-type TaskPropsType = {
+// interface ITaskStateProps {
+//     tasks: ITask[];
+// }
 
-}
+// type TaskPropsType = {
+//
+// } & ITask// ITaskStateProps
+//
+// export const Task = (props: TaskPropsType): JSX.Element => {
+//
+// };
 
-const Task = (props: TaskPropsType): JSX.Element => {
-  const {
-
-  } = props;
-  return (
-    <div className="task" />
-  );
-};
-
-const mapStateToProps = (state: IState): IAuthentionPageStateProps => {
-  console.log('state', state);
-  return {
-    errors: state.app.form.error,
-    fields: state.app.form.fields,
-  };
-};
-
-export const AuthentionPageWithState = connect(mapStateToProps, { ...Actions })(AuthentionPage);
+export const Task = (
+  WithMode<any, ViewModePropsType & EditModePropsType>({
+    view: ViewMode,
+    edit: EditMode,
+  })
+);

@@ -10,6 +10,18 @@ const TasksReducer: Reducer<ITask[], TaskActionsType> = (
   switch (type) {
     case TaskActions.setTasks:
       return payload as ITask[];
+
+    case TaskActions.addTask:
+      return [
+        ...state,
+        {
+          id: new Date().getTime(),
+          label: payload as string,
+          time: 0,
+          tracks: [],
+        },
+      ];
+
     default: return state;
   }
 };

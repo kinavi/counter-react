@@ -1,0 +1,22 @@
+.create-task
+  &__container
+  &__add-button
+    background: #E47676
+    @include сenteringFlex
+    width: 30px
+    height: 30px
+    border-radius: 50%
+    filter: drop-shadow(1px 1px 4px rgba(0, 0, 0, 0.1))
+    margin: 10px 0
+    & .svg
+      width: 15px
+      height: 15px
+
+  &__add-button:hover
+    background: #B95252
+    & .svg path
+      fill: white
+  &__form
+    padding: 10px 0
+  &__field
+    margin-bottom: 0

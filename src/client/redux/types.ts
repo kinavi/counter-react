@@ -5,7 +5,7 @@ import { AppActionsType, FormActionsType, TaskActionsType } from './action/types
 export interface ITask {
     id: string;
     label: string;
-    timeTotal: string;
+    time: string;
     tracks: ITrack[];
 }
 

@@ -16,6 +16,11 @@ export const setTasks = (tasks: ITask[]): TaskActionsType => ({
   payload: tasks,
 });
 
+export const addTask = (task: string): TaskActionsType => ({
+  type: TaskActions.addTask,
+  payload: task,
+});
+
 // form actions
 export const setErrors = (errors: IErrors): FormActionsType => ({
   type: FormActions.setErrors,

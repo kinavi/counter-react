@@ -12,7 +12,7 @@ export type FieldType = {
     placeholder: string;
     mix?: string;
     isRequired?: boolean;
-    Icon: JSX.Element;
+    Icon?: JSX.Element;
     hasError?: string;
 }
 

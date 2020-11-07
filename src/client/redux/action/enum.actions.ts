@@ -17,5 +17,6 @@ export enum AppActions {
 }
 
 export enum TaskActions {
-    setTasks = 'SET_TASKS'
+    setTasks = 'SET_TASKS',
+    addTask = 'ADD_TASK',
 }
