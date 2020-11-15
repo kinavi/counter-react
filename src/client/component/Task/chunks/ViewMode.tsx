@@ -1,47 +1,78 @@
-import React from 'react';
+import React, { useState } from 'react';
+import classnames from 'classnames';
 import { Button } from '../../UI/Button';
 import { ViewModePropsType } from '../types';
 
 export const ViewMode = (props: ViewModePropsType) => {
   const {
-    id,
-    label,
-    time,
-    tracks,
-    onRightButtonClick,
-    onLeftButtonClick,
+    onChange,
+    onPlay,
     leftIcon,
     rightIcon,
-    // switchMode,
+    mix,
+    ...task
   } = props;
 
+  const {
+    id,
+    label,
+    timeTotal,
+    tracks,
+  } = task;
+  const [isShowTracks, setIsShowTracks] = useState(false);
+
+  const handleEditClick = () => {
+    onChange({ ...task, isReadonly: false });
+  };
+
   return (
-    <div className="task__container">
-      <div className="task__body">
-        <div className="task__label">
-          {label}
+    <>
+      <div
+        className={classnames(mix, 'task__container')}
+        onClick={() => setIsShowTracks(!isShowTracks)}
+      >
+        <div className="task__body">
+          <Button
+            mix="task__left-button task__button"
+            onClick={handleEditClick}
+          >
+            {leftIcon}
+          </Button>
+          <div className="task__item-container">
+            <div className="task__label">
+              {label}
+            </div>
+            <div className="task__time">
+              {timeTotal}
+            </div>
+          </div>
+          <Button
+            mix="task__right-button task__button"
+            onClick={onPlay}
+          >
+            {rightIcon}
+          </Button>
         </div>
-        <div className="task__time">
-          {time}
-        </div>
-        {/* {children} */}
+        {/* {!!leftIcon && ( */}
+        {/*  <Button */}
+        {/*    mix="task__left-button task__button" */}
+        {/*    onClick={onEdit} */}
+        {/*  > */}
+        {/*    {leftIcon} */}
+        {/*  </Button> */}
+        {/* )} */}
+        {/* {!!rightIcon && ( */}
+        {/*  <Button */}
+        {/*    mix="task__right-button task__button" */}
+        {/*    onClick={onPlay} */}
+        {/*  > */}
+        {/*    {rightIcon} */}
+        {/*  </Button> */}
+        {/* )} */}
       </div>
-      {!!leftIcon && (
-        <Button
-          mix="task__left-button task__button"
-          onClick={onLeftButtonClick}
-        >
-          {leftIcon}
-        </Button>
+      {isShowTracks && (
+        tracks.map((item, index) => <div key={index}>item</div>)
       )}
-      {!!rightIcon && (
-        <Button
-          mix="task__right-button task__button"
-          onClick={onRightButtonClick}
-        >
-          {rightIcon}
-        </Button>
-      )}
-    </div>
+    </>
   );
 };

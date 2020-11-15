@@ -2,8 +2,10 @@ import { Request, Response, Router } from 'express';
 import { IModels } from '../mongoose/types';
 import { ViewController } from '../ViewController';
 import { Store } from '../../client/redux/store';
-import { setUserId, setTasks } from '../../client/redux/action';
+import * as ActionsCreator from '../../client/redux/actions/ActionsCreator';
 import { IApiResponse } from '../../types';
+import { TaskConvertor } from './utils';
+import { ITask } from '../../client/redux/types';
 
 // Как-то надо обновлять стор
 // Где-то надо хранить стор
@@ -68,15 +70,86 @@ export class RouterController {
       this.router.get('/api/initial', authenticate, async (req: Request, res: Response) => {
         if (req.user) {
           const userId = req.user._id;
-          const tasks = await models.task.find({ userId });
-          console.log('tasks', tasks);
+          const tasksDB = await models.task.find({ userId });
+          const tasks: ITask[] = tasksDB.map((task) => ({
+            id: task._id,
+            label: task.label,
+            timeTotal: task.timeTotal,
+            tracks: [], // TODO суда запрос,
+          }));
           const result: IApiResponse = {
             status: 'actionsList',
-            result: [setUserId(userId), setTasks(tasks)],
+            result: [ActionsCreator.setUserId(userId), ActionsCreator.setTasks(tasks)],
           };
           return res.status(200).send(result);
         }
         res.redirect('/auth');
+      });
+
+      this.router.post('/api/createTask', authenticate, async (req: Request, res: Response) => {
+        const { userId, nameTask } = req.body;
+        // const isTaskFree = await models.task.findOne({ label: nameTask });
+        // if (!isTaskFree) {
+        const task = new models.task({
+          userId,
+          label: nameTask,
+          timeTotal: 0,
+          tracks: [],
+        });
+        task.save();
+
+        const result: IApiResponse = {
+          status: 'action',
+          result: ActionsCreator.addTask({
+            id: task._id,
+            tracks: [],
+            timeTotal: '0',
+            label: nameTask,
+          }),
+        };
+
+        return res.status(200).send(result);
+      });
+
+      this.router.post('/api/updateTask', authenticate, async (req: Request, res: Response) => {
+        console.log('req', req.body);
+        const task = req.body;
+        const { n, nModified, ok } = await models.task.updateOne(
+          { _id: task.id },
+          { label: task.label },
+        );
+
+        if (ok && nModified && n) {
+          const result: IApiResponse = {
+            status: 'ok',
+            result: ActionsCreator.updateTask({
+              ...task,
+              snapshot: task.label,
+              isReadonly: true,
+            }),
+          };
+          res.status(200).send(result);
+        } else {
+          const result: IApiResponse = {
+            status: 'error',
+            // result: ActionsCreator.updateTask(task),
+            message: 'task not update',
+          };
+          res.status(200).send(result);
+        }
+      });
+
+      this.router.delete('/api/removeTask', authenticate, async (req: Request, res: Response) => {
+        const { taskId } = req.body;
+        const { n, deletedCount, ok } = await models.task.deleteOne({ _id: taskId });
+
+        if (ok && deletedCount && n) {
+          const result: IApiResponse = {
+            status: 'ok',
+            result: ActionsCreator.removeTask(taskId),
+          };
+          res.status(200).send(result);
+        }
       });
       // contine routs...
     }

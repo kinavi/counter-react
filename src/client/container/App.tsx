@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-// import { useSpring, animated, useTransition } from 'react-spring';
 import { connect } from 'react-redux';
 import { IState, ITask } from '../redux/types';
-import * as Actions from '../redux/action';
+import * as ActionsCreator from '../redux/actions/ActionsCreator';
+import * as ThunkActions from '../redux/actions/ThunkActions';
 import { CreateTask } from '../component/CreateTask';
 import { Clock } from '../component/Clock';
 import { Task } from '../component/Task';
@@ -12,13 +12,17 @@ type AppStatePropsType = {
   tasks: ITask[];
 }
 
-type AppPropsType = typeof Actions & AppStatePropsType
+type AppPropsType = typeof ActionsCreator & typeof ThunkActions & AppStatePropsType
 
 const App = (props: AppPropsType): JSX.Element => {
   const {
     initialApp,
     tasks,
     addTask,
+    updateTask,
+    submitCreateTask,
+    submitUpdateTask,
+    submitRemoveTask,
   } = props;
 
   // const [showModal, setShowModal] = useState(false);
@@ -45,20 +49,24 @@ const App = (props: AppPropsType): JSX.Element => {
   return (
     <div className="app__container">
       <Clock />
-      <div className="app__control-panel">
-        <CreateTask
-          onCreateTask={addTask}
-        />
-      </div>
       <div className="app__tasks-group">
         {tasks.map((task) => (
           <Task
+            mix="app__task"
             key={task.id}
             {...task}
-            leftIcon={Icons.note}
-            rightIcon={Icons.play}
+            onChange={updateTask}
+            onSave={() => submitUpdateTask(task)}
+            onRemove={() => submitRemoveTask(task.id)}
+
           />
         ))}
+      </div>
+      <div className="app__control-panel">
+        <Task
+          onCreate={submitCreateTask}
+          isCreateMode
+        />
       </div>
     </div>
   );
@@ -68,4 +76,4 @@ const mapStateToProps = (state: IState): AppStatePropsType => ({
   tasks: state.tasks,
 });
 
-export const AppWithState = connect(mapStateToProps, { ...Actions })(App);
+export const AppWithState = connect(mapStateToProps, { ...ThunkActions, ...ActionsCreator })(App);

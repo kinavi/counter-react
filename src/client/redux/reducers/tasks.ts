@@ -1,28 +1,38 @@
 import { Reducer } from 'redux';
-import { TaskActions } from '../action/enum.actions';
+import { TaskActions } from '../actions/enum.actions';
 import { ITask } from '../types';
-import { TaskActionsType } from '../action/types';
+import { TaskActionsType } from '../actions/types';
 
 const TasksReducer: Reducer<ITask[], TaskActionsType> = (
-  state = [],
+  tasks = [],
   { type, payload, id },
 ) => {
   switch (type) {
     case TaskActions.setTasks:
-      return payload as ITask[];
+      return (payload as ITask[]).map((
+        task,
+      ) => ({ ...task, snapshot: task.label, isReadonly: true })); // payload as ITask[];
 
     case TaskActions.addTask:
       return [
-        ...state,
+        ...tasks,
         {
-          id: new Date().getTime(),
-          label: payload as string,
-          time: 0,
-          tracks: [],
+          ...payload as ITask,
+          isReadonly: true,
+          snapshot: (payload as ITask).label,
         },
       ];
 
-    default: return state;
+    case TaskActions.updateTask:
+      return tasks.map((task: ITask) => (
+        task.id === (payload as ITask).id
+          ? payload
+          : task));
+
+    case TaskActions.removeTask:
+      return tasks.filter((task) => task.id !== payload as string);
+
+    default: return tasks;
   }
 };
 

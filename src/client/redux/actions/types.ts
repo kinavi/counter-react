@@ -15,6 +15,6 @@ export type FormActionsType = {
 } & Action
 
 export type TaskActionsType = {
-    payload?: string | ITask[];
+    payload?: string | ITask[] | ITask;
     id?: string
 } & Action

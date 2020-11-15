@@ -3,8 +3,8 @@ import {
   IErrors, IFieldsForm, IFormState,
 } from '../types';
 import { FORM_INITIAL_STATE } from '../store/initial';
-import { FormActions } from '../action/enum.actions';
-import { FormActionsType } from '../action/types';
+import { FormActions } from '../actions/enum.actions';
+import { FormActionsType } from '../actions/types';
 
 export const FormReducer: Reducer<IFormState, FormActionsType> = (
   state = FORM_INITIAL_STATE,

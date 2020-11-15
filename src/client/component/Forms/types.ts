@@ -1,5 +1,5 @@
 import { IErrors, IFieldsForm } from '../../redux/types';
-import * as Actions from '../../redux/action/index';
+import * as Actions from '../../redux/actions/index';
 
 export interface IRegisterFieldsForm {
     email: string;

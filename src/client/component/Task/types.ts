@@ -1,17 +1,27 @@
 import { ITask } from '../../redux/types';
+import { submitRemoveTask } from '../../redux/actions/ThunkActions';
 
 export type EditModePropsType = {
-    // switchMode: () => void;
     leftIcon: JSX.Element;
     rightIcon: JSX.Element;
-    onLeftButtonClick: () => void;
-    onRightButtonClick: () => void;
+    onChange(task: ITask): void;
+    onSave(): void;
+    onRemove(): void;
+    mix?: string;
 } & ITask
 
 export type ViewModePropsType = {
     leftIcon: JSX.Element;
     rightIcon: JSX.Element;
-    onLeftButtonClick: () => void;
-    onRightButtonClick: () => void;
-    // switchMode: () => void;
+    onChange(task: ITask): void;
+    onPlay(): void;
+    mix?: string;
 } & ITask
+
+export type CreateModePropsType = {
+    // onSave(): void;
+    onCreate(value: string): void;
+    mix?: string;
+    onCancel(): void;
+    // onChange(): void;
+}

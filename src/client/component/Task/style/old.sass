@@ -18,7 +18,9 @@
     justify-content: space-between
   &__button
     border-radius: 50%
-    @include сenteringFlex
+    display: flex
+    align-items: center
+    justify-content: center
     width: 30px
     height: 30px
     & .icon
@@ -38,4 +40,5 @@
       background: #BABAAC
   &__count-container
     z-index: 10
-
+  &__field
+    margin-bottom: 0

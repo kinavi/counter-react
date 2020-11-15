@@ -1,42 +1,10 @@
-import { FormActions, AppActions, TaskActions } from './enum.actions';
-import {
-  IErrors, IFieldsForm, IState, ITask,
-} from '../types';
+import { IState, ITask } from '../types';
 import { ApiController } from '../../utils/fetchs';
-import {
-  validateForm,
-} from './validate';
-import { ENDPOINTS } from '../api/endpoints';
-import { FormActionsType, AppActionsType, TaskActionsType } from './types';
 import { IApiResponse } from '../../../types';
-
-// task actions
-export const setTasks = (tasks: ITask[]): TaskActionsType => ({
-  type: TaskActions.setTasks,
-  payload: tasks,
-});
-
-export const addTask = (task: string): TaskActionsType => ({
-  type: TaskActions.addTask,
-  payload: task,
-});
-
-// form actions
-export const setErrors = (errors: IErrors): FormActionsType => ({
-  type: FormActions.setErrors,
-  payload: errors,
-});
-
-export const updateFields = (fields: IFieldsForm): FormActionsType => ({
-  type: FormActions.updateField,
-  payload: fields,
-});
-
-// app actions
-export const setUserId = (id: number): AppActionsType => ({
-  type: AppActions.updateUserId,
-  payload: id,
-});
+import { ENDPOINTS } from '../api/endpoints';
+import { TaskActionsType } from './types';
+import { validateForm } from './validate';
+import * as ActionsCreator from './ActionsCreator';
 
 export const initialApp = () => (
   dispatch: (action: any) => void,
@@ -50,6 +18,70 @@ export const initialApp = () => (
       }
     })
     .catch((error) => console.log('error', error));
+};
+
+export const submitCreateTask = (value: string) => (
+  dispatch: (action: any) => void,
+  getState: () => IState,
+) => {
+  const { app: { userId } } = getState();
+  ApiController.post<IApiResponse>(ENDPOINTS.createTask, { userId, nameTask: value })
+    .then(({
+      result,
+      status,
+      message,
+    }) => {
+      switch (status) {
+        case 'action':
+          dispatch(result);
+          break;
+        case 'error':
+          // todo: dispatch error message
+          break;
+        default:
+          throw new Error();
+      }
+    })
+    .catch((error) => console.log('error', error));
+};
+
+export const submitUpdateTask = (task: ITask) => (
+  dispatch: (action: any) => void,
+  getState: () => IState,
+) => {
+  ApiController.post<IApiResponse>(ENDPOINTS.updateTask, task)
+    .then(({ message, result, status }) => {
+      switch (status) {
+        case 'ok':
+          dispatch(result);
+          break;
+        case 'error':
+          throw new Error(message);
+        default:
+          throw new Error();
+      }
+    })
+    .catch((error) => console.log('error', error));
+};
+
+export const submitRemoveTask = (taskId: string) => (
+  dispatch: (action: any) => void,
+  getState: () => IState,
+) => {
+  ApiController.delete<IApiResponse>(ENDPOINTS.removeTask, { taskId })
+    .then(({ message, result, status }) => {
+      switch (status) {
+        case 'ok':
+          dispatch(result);
+          break;
+        case 'error':
+          throw new Error(message);
+          break;
+        default:
+          throw new Error();
+      }
+    })
+    .catch((error) => {});
 };
 
 // task actions
@@ -78,7 +110,7 @@ export const register = () => (
       .then((data) => console.log('data', data))
       .catch((error) => console.log('error', error));
   } else {
-    dispatch(setErrors(errors));
+    dispatch(ActionsCreator.setErrors(errors));
   }
 };
 

@@ -1,12 +1,14 @@
 import { Reducer } from 'redux';
 import { Moment } from 'moment';
-import { AppActionsType, FormActionsType, TaskActionsType } from './action/types';
+import { AppActionsType, FormActionsType, TaskActionsType } from './actions/types';
 
 export interface ITask {
     id: string;
     label: string;
-    time: string;
+    timeTotal: string;
     tracks: ITrack[];
+    snapshot: string;
+    isReadonly: boolean;
 }
 
 export interface ITrack {

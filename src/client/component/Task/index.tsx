@@ -1,31 +1,14 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { IState, ITask } from '../../redux/types';
-import * as Actions from '../../redux/action/enum.actions';
-import { Button } from '../UI/Button';
 import { WithMode } from './hocs/WithMode';
 import { ViewMode } from './chunks/ViewMode';
 import { EditMode } from './chunks/EditMode';
-import {
-  ViewModePropsType,
-  EditModePropsType,
-} from './types';
+import { CreateMode } from './chunks/CreateMode';
 
-// interface ITaskStateProps {
-//     tasks: ITask[];
-// }
-
-// type TaskPropsType = {
-//
-// } & ITask// ITaskStateProps
-//
-// export const Task = (props: TaskPropsType): JSX.Element => {
-//
-// };
+import './style/index.sass';
 
 export const Task = (
-  WithMode<any, ViewModePropsType & EditModePropsType>({
+  WithMode({
     view: ViewMode,
     edit: EditMode,
+    create: CreateMode,
   })
 );

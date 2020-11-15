@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { RegisterForm } from '../../component/Forms/Register';
 import { LoginForm } from '../../component/Forms/Login';
-import * as Actions from '../../redux/action';
+import * as ActionsCreator from '../../redux/actions/ActionsCreator';
 import {
   IErrors, IFieldsForm, IState,
 } from '../../redux/types';
@@ -14,7 +14,7 @@ interface IAuthentionPageStateProps {
 
 type AuthentionPagePropsType = {
 
-} & typeof Actions & IAuthentionPageStateProps
+} & typeof ActionsCreator & IAuthentionPageStateProps
 
 // TODO: Валидация
 const AuthentionPage = (props: AuthentionPagePropsType) => {
@@ -64,4 +64,4 @@ const mapStateToProps = (state: IState): IAuthentionPageStateProps => ({
   fields: state.form.fields,
 });
 
-export const AuthentionPageWithState = connect(mapStateToProps, { ...Actions })(AuthentionPage);
+export const AuthentionPageWithState = connect(mapStateToProps, { ...ActionsCreator })(AuthentionPage);
