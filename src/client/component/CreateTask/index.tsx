@@ -1,20 +1,22 @@
 import React, { useCallback, useState } from 'react';
+import classnames from 'classnames';
 import { Button } from '../UI/Button';
+import { TaskField } from '../UI/TaskField';
 import { Icons } from '../UI/Icons';
-import { Item } from '../Item';
-import { Field } from '../UI/Field';
 
-type CreateTaskPropsType = {
-    onCreateTask: (task: string) => void
+export type CreateModePropsType = {
+  onCreate(value: string): void;
+  mix?: string;
 }
 
-export const CreateTask = (props: CreateTaskPropsType): JSX.Element => {
+export const CreateTask = (props: CreateModePropsType) => {
   const {
-    onCreateTask,
+    mix,
+    onCreate,
   } = props;
 
-  const [isShowCreateForm, setShowCreateForm] = useState(false);
   const [value, setValue] = useState('');
+  const [isShowCreateForm, setShowCreateForm] = useState(false);
 
   const switchFormState = useCallback(
     () => setShowCreateForm(!isShowCreateForm),
@@ -30,26 +32,26 @@ export const CreateTask = (props: CreateTaskPropsType): JSX.Element => {
     </Button>
   );
 
-  const handleCreateTask = () => {
-    // TODO: need validation
-    onCreateTask(value);
-    switchFormState();
-  };
-
   const renderCreateForm = () => (
-    <Item
-      onRightButtonClick={handleCreateTask}
-      onLeftButtonClick={switchFormState}
-      leftIcon={Icons.cross}
-      rightIcon={Icons.check}
-    >
-      <Field
-        value={value}
-        onChange={(value) => setValue((value))}
-        placeholder="Введите новую задачу"
-        mix="create-task__field"
-      />
-    </Item>
+    <div className={classnames(mix, 'task__container')}>
+      <div className="task__body">
+        <Button
+          mix="task__left-button task__button"
+          onClick={switchFormState}
+        >
+          {Icons.cross}
+        </Button>
+        <TaskField
+          iconRight={Icons.check}
+          value={value}
+          onChange={(value: string) => setValue(value)}
+          onSave={() => {
+            onCreate(value);
+            switchFormState();
+          }}
+        />
+      </div>
+    </div>
   );
 
   return (

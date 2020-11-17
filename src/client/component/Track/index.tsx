@@ -1,53 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { TrackPropsType } from '../types';
 import { Button } from '../UI/Button';
-import { Icons } from '../UI/Icons';
+import { useClock, useInterval } from '../../hooks';
+
+// const useCounter = (isStart: boolean, delay: number, count: number) => {
+//   const [value, setValue] = useState(count);
+// };
 
 export const Track = (props: TrackPropsType): JSX.Element => {
   const {
-    value,
+    onStop,
+    taskId,
     id,
-    label,
-    left,
-    leftIcon,
-    rightIcon,
-    onLeftButtonClick,
-    onRightButtonClick,
+    dateStart,
+    dateStop,
   } = props;
+  const delay = 1000;
+  const isStart = !dateStop;
+  const [count, setCount] = useState(0);
 
-  const [showDisplayTime, switchShowDisplayTime] = useState(false);
+  useInterval(
+    () => setCount(count + 1),
+    isStart ? delay : null,
+  );
 
   return (
     <div className="track">
       <div className="track__container">
         <div className="track__label">
-          {label}
+          {count}
         </div>
-        <Button
-          mix="track__count-container"
-          onClick={() => switchShowDisplayTime(!showDisplayTime)}
-        >
-          {
-            showDisplayTime
-              ? value
-              : left
-            }
-        </Button>
+        <div>
+          {}
+        </div>
       </div>
       <div className="track__progress-bar" />
-      <Button
-        mix="track__left-button track__button"
-        onClick={onLeftButtonClick}
-      >
-        {leftIcon}
-      </Button>
-      <Button
-        mix="track__right-button track__button"
-        onClick={onRightButtonClick}
-      >
-
-        {rightIcon}
-      </Button>
     </div>
   );
 };

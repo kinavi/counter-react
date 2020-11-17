@@ -49,6 +49,7 @@ module.exports = {
     'jest/prefer-to-have-length': 'warn',
     'jest/valid-expect': 'error',
     'import/prefer-default-export': 'off',
+    'consistent-return': 'off',
     // 'eslint/func-names': ['error', 'never'],
     // 'import/no-unresolved': [2, { ignore: ['*.( jpg | png )'] }],
   },

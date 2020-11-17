@@ -1,4 +1,4 @@
-import { IState, ITask } from '../types';
+import { IState, ITask, ITrack } from '../types';
 import { ApiController } from '../../utils/fetchs';
 import { IApiResponse } from '../../../types';
 import { ENDPOINTS } from '../api/endpoints';
@@ -76,12 +76,19 @@ export const submitRemoveTask = (taskId: string) => (
           break;
         case 'error':
           throw new Error(message);
-          break;
         default:
           throw new Error();
       }
     })
     .catch((error) => {});
+};
+
+export const submitStartTrack = (taskId: string) => (
+  dispatch: (action: any) => void,
+  getState: () => IState,
+) => {
+  ApiController.post<IApiResponse>(ENDPOINTS.startTrack, { taskId })
+    .then((data) => console.log('date', date));
 };
 
 // task actions

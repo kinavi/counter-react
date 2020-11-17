@@ -1,12 +1,14 @@
 import { Reducer } from 'redux';
-import { TaskActions } from '../actions/enum.actions';
+import { TaskActions, TrackActions } from '../actions/enum.actions';
 import { ITask } from '../types';
-import { TaskActionsType } from '../actions/types';
+import { TaskActionsType, TrackActionsType } from '../actions/types';
+import { TracksReducer } from './tracks';
 
-const TasksReducer: Reducer<ITask[], TaskActionsType> = (
+export const TasksReducer: Reducer<ITask[], TaskActionsType> = (
   tasks = [],
-  { type, payload, id },
+  action,
 ) => {
+  const { type, payload, taskId } = action;
   switch (type) {
     case TaskActions.setTasks:
       return (payload as ITask[]).map((
@@ -32,8 +34,14 @@ const TasksReducer: Reducer<ITask[], TaskActionsType> = (
     case TaskActions.removeTask:
       return tasks.filter((task) => task.id !== payload as string);
 
+    case TrackActions.setTracks:
+    case TrackActions.startTrack:
+    case TrackActions.stopTrack:
+      return tasks.map((task) => (
+        task.id === taskId
+          ? TracksReducer(task.tracks, action as TrackActionsType)
+          : task));
+
     default: return tasks;
   }
 };
-
-export default TasksReducer;

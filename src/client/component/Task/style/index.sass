@@ -5,15 +5,20 @@
     position: relative
     filter: drop-shadow(1px 1px 4px rgba(0, 0, 0, 0.1))
     margin: 0 auto
-    height: 40px
+    flex-direction: column
+    //height: 40px
   &__body
-    background: #E47676
     width: 100%
-    height: 100%
-    border-radius: 25px
+    //height: 100%
     display: flex
     align-items: center
     justify-content: space-between
+    border-radius: 25px
+    background: #E47676
+    margin-bottom: 10px
+    &:hover
+      background: #B25C5C
+      cursor: pointer
   &__button
     border-radius: 50%
     display: flex
@@ -28,6 +33,7 @@
     background: #E47676
     &:hover
       background: #B25C5C
+      cursor: pointer
     //& svg
     //  width: 16px
     //  height: 16px //20px
@@ -35,6 +41,7 @@
     background: #E47676
     &:hover
       background: #B25C5C
+      cursor: pointer
     //& svg
     //  width: 16px
     //  height: 16px //20px

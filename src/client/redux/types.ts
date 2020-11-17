@@ -13,9 +13,7 @@ export interface ITask {
 
 export interface ITrack {
     id: string;
-    label: string;
-    value: string;
-    left: string;
+    taskId: string;
     dateStart: Moment;
     dateStop: Moment;
 }

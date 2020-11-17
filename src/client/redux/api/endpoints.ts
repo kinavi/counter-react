@@ -7,4 +7,6 @@ export const ENDPOINTS = {
   createTask: '/api/createTask',
   updateTask: '/api/updateTask',
   removeTask: '/api/removeTask',
+
+  startTrack: '/api/startTrack',
 };

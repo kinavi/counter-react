@@ -23,6 +23,7 @@ const App = (props: AppPropsType): JSX.Element => {
     submitCreateTask,
     submitUpdateTask,
     submitRemoveTask,
+    submitStartTrack,
   } = props;
 
   // const [showModal, setShowModal] = useState(false);
@@ -58,14 +59,13 @@ const App = (props: AppPropsType): JSX.Element => {
             onChange={updateTask}
             onSave={() => submitUpdateTask(task)}
             onRemove={() => submitRemoveTask(task.id)}
-
+            onPlay={() => submitStartTrack(task.id)}
           />
         ))}
       </div>
       <div className="app__control-panel">
-        <Task
+        <CreateTask
           onCreate={submitCreateTask}
-          isCreateMode
         />
       </div>
     </div>

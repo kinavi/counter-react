@@ -7,6 +7,7 @@ import {
   USER,
   MODELS,
   TASK,
+  TRACK,
   getConnectOptions,
 } from './constants';
 import { IModels } from './types';
@@ -38,6 +39,7 @@ export class TimerMongoose {
   private setModels = () => {
     this.models[MODELS.user] = model(MODELS.user, new UserSchema(USER).Schema);
     this.models[MODELS.task] = model(MODELS.task, new TaskSchema(TASK).Schema);
+    this.models[MODELS.track] = model(MODELS.track, new TaskSchema(TRACK).Schema);
   }
 
   public setConnect = (message: string, onConnect: () => void): void => {

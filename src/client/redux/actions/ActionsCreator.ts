@@ -1,7 +1,13 @@
 // task actions
-import { IErrors, IFieldsForm, ITask } from '../types';
-import { AppActionsType, FormActionsType, TaskActionsType } from './types';
-import { AppActions, FormActions, TaskActions } from './enum.actions';
+import {
+  IErrors, IFieldsForm, ITask, ITrack,
+} from '../types';
+import {
+  AppActionsType, FormActionsType, TaskActionsType, TrackActionsType,
+} from './types';
+import {
+  AppActions, FormActions, TaskActions, TrackActions,
+} from './enum.actions';
 
 export const setTasks = (tasks: ITask[]): TaskActionsType => ({
   type: TaskActions.setTasks,
@@ -21,6 +27,22 @@ export const updateTask = (task: ITask): TaskActionsType => ({
 export const removeTask = (taskId: string): TaskActionsType => ({
   type: TaskActions.removeTask,
   payload: taskId,
+});
+// track actions
+
+export const setTracks = (tracks: ITrack[]): TrackActionsType => ({
+  type: TrackActions.setTracks,
+  payload: tracks,
+});
+
+export const startTrack = (track: ITrack): TrackActionsType => ({
+  type: TrackActions.startTrack,
+  payload: track,
+});
+
+export const stopTrack = (track: ITrack): TrackActionsType => ({
+  type: TrackActions.stopTrack,
+  payload: track,
 });
 
 // form actions

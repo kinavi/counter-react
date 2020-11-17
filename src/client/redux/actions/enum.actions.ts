@@ -22,3 +22,9 @@ export enum TaskActions {
     updateTask = 'UPDATE_TASK',
     removeTask = 'REMOVE_TASK'
 }
+
+export enum TrackActions {
+    setTracks = 'SET_TRACKS',
+    startTrack = 'START_TRACK',
+    stopTrack = 'STOP_TRACK',
+}

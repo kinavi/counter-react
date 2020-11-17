@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import TasksReducer from './tasks';
+import { TasksReducer } from './tasks';
 import { ICombineReducers } from '../types';
 import { AppReducer } from './app';
 import { FormReducer } from './form';

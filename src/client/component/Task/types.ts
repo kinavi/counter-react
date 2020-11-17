@@ -1,5 +1,14 @@
-import { ITask } from '../../redux/types';
-import { submitRemoveTask } from '../../redux/actions/ThunkActions';
+import { ITask, ITrack } from '../../redux/types';
+import { updateTask } from '../../redux/actions/ActionsCreator';
+
+// export type TaskEditType = {
+//     label: string
+// }
+//
+// export type TaskViewType = {
+//     label: string;
+//     timeTotal: string;
+// }
 
 export type EditModePropsType = {
     leftIcon: JSX.Element;
@@ -7,7 +16,6 @@ export type EditModePropsType = {
     onChange(task: ITask): void;
     onSave(): void;
     onRemove(): void;
-    mix?: string;
 } & ITask
 
 export type ViewModePropsType = {
@@ -15,13 +23,22 @@ export type ViewModePropsType = {
     rightIcon: JSX.Element;
     onChange(task: ITask): void;
     onPlay(): void;
-    mix?: string;
 } & ITask
 
-export type CreateModePropsType = {
-    // onSave(): void;
-    onCreate(value: string): void;
-    mix?: string;
-    onCancel(): void;
-    // onChange(): void;
+export type WithModePropsType = {
+    isReadonly: boolean;
+    onSave(): void;
+    onPlay(): void;
+    onChange: typeof updateTask;
+    onRemove(): void;
+} & ITask
+
+export type ComponentType = {
+    view: (props: ViewModePropsType) => JSX.Element;
+    edit: (props: EditModePropsType) => JSX.Element;
 }
+
+export type WithTracksPropsType = {
+    tracks: ITrack[];
+    mix: string;
+} & WithModePropsType

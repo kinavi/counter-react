@@ -1,4 +1,5 @@
 import { Request, Response, Router } from 'express';
+import moment from 'moment';
 import { IModels } from '../mongoose/types';
 import { ViewController } from '../ViewController';
 import { Store } from '../../client/redux/store';
@@ -6,7 +7,6 @@ import * as ActionsCreator from '../../client/redux/actions/ActionsCreator';
 import { IApiResponse } from '../../types';
 import { TaskConvertor } from './utils';
 import { ITask } from '../../client/redux/types';
-
 // Как-то надо обновлять стор
 // Где-то надо хранить стор
 // Как-то надо отрисовывать
@@ -71,12 +71,14 @@ export class RouterController {
         if (req.user) {
           const userId = req.user._id;
           const tasksDB = await models.task.find({ userId });
-          const tasks: ITask[] = tasksDB.map((task) => ({
-            id: task._id,
-            label: task.label,
-            timeTotal: task.timeTotal,
-            tracks: [], // TODO суда запрос,
-          }));
+          const tasks: ITask[] = await Promise.all(
+            tasksDB.map(async (task) => ({
+              id: task._id,
+              label: task.label,
+              timeTotal: task.timeTotal,
+              tracks: await models.track.find({ taskId: task._id }),
+            })),
+          );
           const result: IApiResponse = {
             status: 'actionsList',
             result: [ActionsCreator.setUserId(userId), ActionsCreator.setTasks(tasks)],
@@ -88,8 +90,7 @@ export class RouterController {
 
       this.router.post('/api/createTask', authenticate, async (req: Request, res: Response) => {
         const { userId, nameTask } = req.body;
-        // const isTaskFree = await models.task.findOne({ label: nameTask });
-        // if (!isTaskFree) {
+
         const task = new models.task({
           userId,
           label: nameTask,
@@ -150,6 +151,41 @@ export class RouterController {
           };
           res.status(200).send(result);
         }
+      });
+
+      this.router.post('/api/startTrack', authenticate, async (req: Request, res: Response) => {
+        console.log('req', req.body);
+        const { taskId } = req.body;
+
+        // TODO: Тут потенцильная угроза. Надо сделать проверку на запущенный трек
+        // TODO: Сделать чтобы только одна задача запускалась за раз
+        const hasStartTrack = await models.track.findOne({ taskId, dateStop: null });
+
+        if (hasStartTrack) {
+          const result: IApiResponse = {
+            status: 'error',
+            message: 'Есть активные треки',
+          };
+          return res.status(200).send(result);
+        }
+        const track = new models.track({
+          dateStart: moment(),
+          dateStop: null,
+          taskId,
+        });
+        track.save();
+
+        const result: IApiResponse = {
+          status: 'ok',
+          result: ActionsCreator.startTrack({
+            id: track._id,
+            dateStart: track.dateStart,
+            dateStop: track.dateStop,
+            taskId: track.taskId,
+          }),
+        };
+
+        res.status(200).send(result);
       });
       // contine routs...
     }
