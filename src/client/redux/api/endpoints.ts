@@ -9,4 +9,5 @@ export const ENDPOINTS = {
   removeTask: '/api/removeTask',
 
   startTrack: '/api/startTrack',
+  stopTrack: '/api/stopTrack',
 };
