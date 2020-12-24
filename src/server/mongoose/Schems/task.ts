@@ -1,10 +1,11 @@
 import { SchemaDefinition } from 'mongoose';
+import normalize from 'normalize-mongoose';
 import { SchemaFactory } from '.';
 
 export class TaskSchema extends SchemaFactory {
   constructor(definition: SchemaDefinition) {
     super(definition);
-    // this.Schema.methods.getTracks = this.getTracks;
+    this.Schema.plugin(normalize);
   }
 
   // // TODO: Надо разобраться с этой фигней
