@@ -6,30 +6,30 @@ import Html from './views/html';
 import { AppWithState } from '../../client/container/App';
 import { AuthentionPageWithState } from '../../client/pages/Authention';
 
-export class ViewController {
-    public renderMainPage = (store: any, url: string) => renderToString(
-      <Html>
-        <Provider store={store}>
-          <StaticRouter location={url}>
-            <AppWithState />
-          </StaticRouter>
-        </Provider>
-      </Html>,
-    )
+export const VIEWS = {
+  renderMainPage: (store: any, url: string) => renderToString(
+    <Html>
+      <Provider store={store}>
+        <StaticRouter location={url}>
+          <AppWithState />
+        </StaticRouter>
+      </Provider>
+    </Html>,
+  ),
 
-    public renderAuthForm = (store: any, url: string) => renderToString(
-      <Html>
-        <Provider store={store}>
-          <StaticRouter location={url}>
-            <AuthentionPageWithState />
-          </StaticRouter>
-        </Provider>
-      </Html>,
-    )
+  renderAuthForm: (store: any, url: string) => renderToString(
+    <Html>
+      <Provider store={store}>
+        <StaticRouter location={url}>
+          <AuthentionPageWithState />
+        </StaticRouter>
+      </Provider>
+    </Html>,
+  ),
 
-    public renderTestPage = () => renderToString(
-      <Html>
-        <div>Test</div>
-      </Html>,
-    )
-}
+  renderTestPage: () => renderToString(
+    <Html>
+      <div>Test</div>
+    </Html>,
+  ),
+};
