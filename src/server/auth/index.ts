@@ -6,11 +6,20 @@ import { Model } from 'mongoose';
 import { strategyOptions } from './constants';
 
 export class Auth {
-  private strategy: passport.Strategy;
+  private _strategy: passport.Strategy | null;
 
-  public Passport: passport.PassportStatic;
+  public Passport: passport.PassportStatic | null;
+
+  constructor() {
+    this._strategy = null;
+    this.Passport = null;
+  }
 
   public get Authenticate() {
+    if (!this.Passport) {
+      throw new Error('Auth.Passport is null');
+    }
+
     return this.Passport.authenticate(
       'jwt',
       {
@@ -20,8 +29,8 @@ export class Auth {
     );
   }
 
-  constructor(userModel: Model<any>) {
-    this.strategy = new Strategy(
+  public InitialPassport = (userModel: Model<any>) => {
+    this._strategy = new Strategy(
       strategyOptions,
       (jwtPayload, done) => {
         const { login, password } = jwtPayload;
@@ -38,6 +47,6 @@ export class Auth {
         });
       },
     );
-    this.Passport = passport.use(this.strategy);
+    this.Passport = passport.use(this._strategy);
   }
 }
