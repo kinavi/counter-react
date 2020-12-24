@@ -7,7 +7,10 @@ export interface ITrack {
 
 // TODO: Разобраться с типизацией
 export interface IModels {
-    [key: string]: Model<any>;
+    // [key: string]: Model<any>;
+    user: Model<any>;
+    task: Model<any>;
+    track: Model<any>;
 }
 
 export interface IUser {
