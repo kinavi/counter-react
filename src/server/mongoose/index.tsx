@@ -12,24 +12,26 @@ import {
 } from './constants';
 import { IModels } from './types';
 
-export class TimerMongoose {
-  private url: string;
+type StatusDB = 'ok' | 'error' | 'initial'
 
-  private models: IModels;
+export class TimerMongoose {
+  private _url: string;
+
+  private _models: IModels | null;
 
   get Models() {
-    return this.models;
+    return this._models;
   }
 
-  private dbName: string;
+  private _dbName: string;
 
-  public isReady: boolean;
+  public Status: StatusDB;
 
   constructor(url: string, dbName: string) {
-    this.url = url;
-    this.dbName = dbName;
-    this.isReady = false;
-    this.models = {};
+    this._url = url;
+    this._dbName = dbName;
+    this.Status = 'initial';
+    this._models = null;
   }
 
   private handleError = (error: string): void => {
@@ -37,21 +39,23 @@ export class TimerMongoose {
   }
 
   private setModels = () => {
-    this.models[MODELS.user] = model(MODELS.user, new UserSchema(USER).Schema);
-    this.models[MODELS.task] = model(MODELS.task, new TaskSchema(TASK).Schema);
-    this.models[MODELS.track] = model(MODELS.track, new TaskSchema(TRACK).Schema);
+    this._models = {
+      user: model(MODELS.user, new UserSchema(USER).Schema),
+      task: model(MODELS.task, new TaskSchema(TASK).Schema),
+      track: model(MODELS.track, new TaskSchema(TRACK).Schema),
+    };
   }
 
-  public setConnect = (message: string, onConnect: () => void): void => {
-    connect(this.url, getConnectOptions(this.dbName))
-      .then(() => {
-        console.log(message);
-        this.setModels();
-        this.isReady = true;
-        onConnect();
-      })
-      .catch((error) => {
-        this.handleError(error);
-      });
-  }
+  // message: string, onConnect: () => void
+  public SetConnect = async (): Promise<void> => connect(this._url, getConnectOptions(this._dbName))
+    .then(() => {
+      // console.log(message);
+      this.setModels();
+      this.Status = 'ok';
+      // onConnect();
+    })
+    .catch((error) => {
+      this.Status = 'error';
+      this.handleError(error);
+    })
 }
