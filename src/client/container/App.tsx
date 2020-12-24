@@ -24,6 +24,7 @@ const App = (props: AppPropsType): JSX.Element => {
     submitUpdateTask,
     submitRemoveTask,
     submitStartTrack,
+    submitStopTrack,
   } = props;
 
   // const [showModal, setShowModal] = useState(false);
@@ -60,6 +61,7 @@ const App = (props: AppPropsType): JSX.Element => {
             onSave={() => submitUpdateTask(task)}
             onRemove={() => submitRemoveTask(task.id)}
             onPlay={() => submitStartTrack(task.id)}
+            onStop={(id: string) => submitStopTrack(id)}
           />
         ))}
       </div>
@@ -76,4 +78,7 @@ const mapStateToProps = (state: IState): AppStatePropsType => ({
   tasks: state.tasks,
 });
 
-export const AppWithState = connect(mapStateToProps, { ...ThunkActions, ...ActionsCreator })(App);
+export const AppWithState = connect(
+  mapStateToProps,
+  { ...ThunkActions, ...ActionsCreator },
+)(App);
