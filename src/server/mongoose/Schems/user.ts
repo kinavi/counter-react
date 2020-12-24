@@ -1,12 +1,14 @@
 import { SchemaDefinition } from 'mongoose';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
+import normalize from 'normalize-mongoose';
 import { SchemaFactory } from '.';
 import { ENV } from '../../config';
 
 export class UserSchema extends SchemaFactory {
   constructor(definition: SchemaDefinition) {
     super(definition);
+    this.Schema.plugin(normalize);
 
     this.Schema.methods.setPassword = function (password: string) {
       this.salt = crypto.randomBytes(16).toString('hex');
