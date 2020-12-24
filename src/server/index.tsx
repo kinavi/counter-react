@@ -11,55 +11,68 @@ import { ENV } from './config';
 import { RouterController } from './RouterController';
 
 export class Server {
-  private port: number;
+  private readonly _port: number;
 
-  private pathStatic: string;
+  private readonly _pathStatic: string;
 
-  private app: Application;
+  private _app: Application;
 
-  private db: TimerMongoose;
+  private _db: TimerMongoose;
+
+  private readonly _auth: Auth;
+
+  private readonly _routers: RouterController;
 
   constructor(port: number, pathToPublic: string) {
-    this.port = port;
-    this.app = express();
-    this.pathStatic = pathToPublic;
-    this.db = new TimerMongoose(ENV.DB_URL, ENV.DB_NAME);
+    this._port = port;
+    this._app = express();
+    this._pathStatic = pathToPublic;
+    this._db = new TimerMongoose(ENV.DB_URL, ENV.DB_NAME);
+    this._auth = new Auth();
+    this._routers = new RouterController();
   }
 
-  private runMongoose = (): void => {
-    this.db.setConnect(`DB connect is done.`, this.runServer);
+  private runMongoose = async () => {
+    await this._db.SetConnect();
+    if (this._db.Status === 'ok' && this._db.Models) {
+      this._auth.InitialPassport(this._db.Models.user);
+      this._routers.InitialRouters(this._auth.Authenticate, this._db.Models);
+      this.runServer();
+    }
   }
 
   private runServer = (): void => {
-    if (this.db.isReady) {
-      const {
-        Passport,
-        Authenticate,
-      } = new Auth(this.db.Models.user);
-      const {
-        Router,
-      } = new RouterController(Authenticate, this.db.Models);
+    if (this._db.Status === 'ok' && this._routers) {
+      const { Passport } = this._auth;
+      const { Router } = this._routers;
 
-      this.app.use(cors());
-      this.app.use(bodyParser.json());
-      this.app.use(cookieParser());
-      this.app.use(Passport.initialize());
-      this.app.use(Passport.session());
-      this.app.use(express.static(this.pathStatic));
-      this.app.use('/', Router);
+      if (!Passport) {
+        throw new Error('runServer -> Passport in null');
+      }
 
-      this.app.listen(
-        this.port,
-        () => console.log('Server is running - port: ', this.port),
+      this._app.use(cors());
+      this._app.use(bodyParser.json());
+      this._app.use(cookieParser());
+      this._app.use(Passport.initialize());
+      this._app.use(Passport.session());
+      this._app.use(express.static(this._pathStatic));
+      this._app.use('/', Router);
+
+      this._app.listen(
+        this._port,
+        () => console.log('Server is running - port: ', this._port),
       );
     }
   }
 
-  public run = (): void => {
-    this.runMongoose();
+  public Run = (): void => {
+    this.runMongoose()
+      .catch((error) => {
+        console.log('error', error);
+      });
   }
 }
 
 const server = new Server(ENV.PORT, path.resolve('./dist/public'));
 
-server.run();
+server.Run();
