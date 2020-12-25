@@ -8,25 +8,43 @@ export const Button = (props: ButtonPropsType): JSX.Element => {
     mix,
     onClick,
     children,
+    isHidden,
+    isBlocked,
   } = props;
 
-  const [hover, setHover] = useState(false);
+  const [isHover, setIsHover] = useState(false);
 
   const handleMouseEnter = (event: MouseEvent) => {
-    setHover(true);
+    event.preventDefault();
+    setIsHover(true);
     event.stopPropagation();
   };
 
   const handleMouseLeave = (event: MouseEvent) => {
-    setHover(false);
+    event.preventDefault();
+    setIsHover(false);
     event.stopPropagation();
+  };
+
+  const generateCls = classnames(
+    'native-button', {
+      'native-button_hover': !isBlocked && isHover,
+      'native-button_hidden': isHidden,
+    },
+    mix,
+  );
+
+  const handleClick = () => {
+    if (!isBlocked) {
+      onClick();
+    }
   };
 
   return (
     <button
       type="submit"
-      onClick={onClick}
-      className={classnames('native-button', { 'native-button_hover': hover }, mix)}
+      onClick={handleClick}
+      className={generateCls}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
