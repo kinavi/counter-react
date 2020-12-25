@@ -1,12 +1,17 @@
 import { Action } from 'redux';
 import {
-  IErrors, IFieldsForm, ITask, ITrack,
+  IErrors,
+  IFieldsForm,
+  ITask,
+  ITrack,
 } from '../types';
+import { StatusType } from '../../container/types';
 
 export interface IValidateResult {
-    isValide: boolean;
+    isValidate: boolean;
     errors: IErrors;
 }
+
 // TODO: Расширить
 export type AppActionsType = {
     payload?: string | StatusType
@@ -17,11 +22,6 @@ export type FormActionsType = {
 } & Action
 
 export type TaskActionsType = {
-    payload?: string | ITask[] | ITask;
-    taskId: string;
-} & TrackActionsType
-
-export type TrackActionsType = {
-    payload?: ITrack[] | ITrack;
-
+    payload?: string | ITask[] | ITask | ITrack[] | ITrack | number;
+    id?: string;
 } & Action

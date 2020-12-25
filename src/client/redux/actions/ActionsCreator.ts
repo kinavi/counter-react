@@ -36,6 +36,12 @@ export const removeTask = (taskId: string): TaskActionsType => ({
   payload: taskId,
 });
 
+export const updateTaskTotalCount = (taskId: string, counts: number): TaskActionsType => ({
+  type: TaskActions.updateTotalCount,
+  payload: counts,
+  id: taskId,
+});
+
 // track actions
 export const setTracks = (taskId: string, tracks: ITrack[]): TaskActionsType => ({
   type: TaskActions.setTracks,

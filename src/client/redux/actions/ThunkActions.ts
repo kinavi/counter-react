@@ -1,4 +1,4 @@
-import { IState, ITask, ITrack } from '../types';
+import { IState, ITask } from '../types';
 import { ApiController } from '../../utils/fetchs';
 import { IApiResponse } from '../../../types';
 import { ENDPOINTS } from '../api/endpoints';
@@ -88,7 +88,24 @@ export const submitStartTrack = (taskId: string) => (
   getState: () => IState,
 ) => {
   ApiController.post<IApiResponse>(ENDPOINTS.startTrack, { taskId })
-    .then((data) => console.log('date', date));
+    .then(({ status, result }) => {
+      if (status === 'action') {
+        dispatch(result);
+      }
+    });
+};
+
+export const submitStopTrack = (trackId: string) => (
+  dispatch: (action: any) => void,
+  getState: () => IState,
+) => {
+  ApiController.post<IApiResponse>(ENDPOINTS.stopTrack, { trackId })
+    .then(({ result, status }) => {
+      if (status === 'actionsList') {
+        // dispatch(result);
+        (result as TaskActionsType[]).map((item) => dispatch(item));
+      }
+    });
 };
 
 // task actions
@@ -111,7 +128,7 @@ export const register = () => (
 ) => {
   const { app: { form: { fields } } } = getState();
   console.log('state', getState());
-  const { isValide, errors } = validateForm(fields);
+  const { isValidate, errors } = validateForm(fields);
   if (true) {
     ApiController.post<IApiResponse>(ENDPOINTS.register, fields)
       .then((data) => console.log('data', data))

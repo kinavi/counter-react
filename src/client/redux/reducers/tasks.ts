@@ -1,19 +1,18 @@
-import { Reducer } from 'redux';
-import { TaskActions, TrackActions } from '../actions/enum.actions';
-import { ITask } from '../types';
-import { TaskActionsType, TrackActionsType } from '../actions/types';
-import { TracksReducer } from './tracks';
+import { Reducer } from 'react';
+import { TaskActions } from '../actions/enum.actions';
+import { ITask, ITrack } from '../types';
+import { TaskActionsType } from '../actions/types';
 
 export const TasksReducer: Reducer<ITask[], TaskActionsType> = (
   tasks = [],
   action,
 ) => {
-  const { type, payload, taskId } = action;
+  const { type, payload, id } = action;
   switch (type) {
     case TaskActions.setTasks:
       return (payload as ITask[]).map((
         task,
-      ) => ({ ...task, snapshot: task.label, isReadonly: true })); // payload as ITask[];
+      ) => ({ ...task, snapshot: task.label, isReadonly: true }));
 
     case TaskActions.addTask:
       return [
@@ -34,14 +33,41 @@ export const TasksReducer: Reducer<ITask[], TaskActionsType> = (
     case TaskActions.removeTask:
       return tasks.filter((task) => task.id !== payload as string);
 
-    case TrackActions.setTracks:
-    case TrackActions.startTrack:
-    case TrackActions.stopTrack:
-      return tasks.map((task) => (
-        task.id === taskId
-          ? TracksReducer(task.tracks, action as TrackActionsType)
-          : task));
+    case TaskActions.setTracks:
+      return tasks.map((task) => (task.id === (payload as ITrack).taskId
+        ? ({
+          ...task,
+          tracks: payload as ITrack[],
+        })
+        : task));
 
+    case TaskActions.startTrack:
+      return tasks.map((task) => (task.id === (payload as ITrack).taskId
+        ? ({
+          ...task,
+          hasActiveTrack: true,
+          tracks: [...task.tracks, payload as ITrack],
+        })
+        : task));
+
+    case TaskActions.stopTrack:
+      return tasks.map((task) => (task.id === (payload as ITrack).taskId
+        ? ({
+          ...task,
+          hasActiveTrack: false,
+          tracks: task.tracks.map((track) => (track.id === (payload as ITrack).id
+            ? payload as ITrack
+            : track)),
+        })
+        : task));
+
+    case TaskActions.updateTotalCount:
+      return tasks.map((task) => (task.id === id
+        ? ({
+          ...task,
+          timeTotal: payload as number,
+        })
+        : task));
     default: return tasks;
   }
 };

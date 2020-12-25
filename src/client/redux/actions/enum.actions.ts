@@ -21,7 +21,7 @@ export enum TaskActions {
     addTask = 'ADD_TASK',
     updateTask = 'UPDATE_TASK',
     removeTask = 'REMOVE_TASK',
-
+    updateTotalCount = 'UPDATE_TOTAL_COUNT',
     setTracks = 'SET_TRACKS',
     startTrack = 'START_TRACK',
     stopTrack = 'STOP_TRACK',
