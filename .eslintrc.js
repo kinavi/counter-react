@@ -51,6 +51,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'consistent-return': 'off',
     'no-underscore-dangle': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
     // 'eslint/func-names': ['error', 'never'],
     // 'import/no-unresolved': [2, { ignore: ['*.( jpg | png )'] }],
   },
