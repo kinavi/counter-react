@@ -1,6 +1,7 @@
 const path = require('path');
 const merge = require('webpack-merge');
 const nodeExternals = require('webpack-node-externals');
+const NodemonPlugin = require('nodemon-webpack-plugin');
 const baseConfig = require('./base.config');
 
 module.exports = merge(baseConfig, {
@@ -23,7 +24,7 @@ module.exports = merge(baseConfig, {
     ],
   },
   plugins: [
-
+    new NodemonPlugin(),
   ],
   devtool: 'inline-source-map',
 });
