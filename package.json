@@ -8,6 +8,8 @@
   "scripts": {
     "build:client": "webpack --config=./webpack/client.config.js --mode development",
     "build:server": "webpack --config=./webpack/server.config.js --mode development",
+    "build:watch:client": "webpack --config=./webpack/client.config.js --mode development --watch",
+    "run:watch:server": "webpack --config=./webpack/server.config.js --mode development --watch",
     "run:server": "node ./dist/",
     "dev": "webpack-dev-server --config=./webpack/dev.config.js --mode development",
     "test": "jest --config=jest.config.js --verbose --watch"
@@ -20,6 +22,7 @@
     "dotenv": "^8.2.0",
     "express-jwt": "^6.0.0",
     "moment": "^2.29.1",
+    "nodemon": "^2.0.6",
     "passport-google-oauth": "^2.0.0",
     "passport-local": "^1.0.0",
     "react": "^16.13.1",
@@ -90,6 +93,7 @@
     "mini-css-extract-plugin": "^0.9.0",
     "mongoose": "^5.10.0",
     "node-sass": "^5.0.0",
+    "nodemon-webpack-plugin": "^4.3.2",
     "normalize-mongoose": "^0.0.1",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
