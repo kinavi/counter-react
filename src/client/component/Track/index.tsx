@@ -1,11 +1,16 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import moment from 'moment';
 import { TrackPropsType } from '../types';
 import { Button } from '../UI/Button';
-import { useClock, useInterval } from '../../hooks';
+import { Icons } from '../UI/Icons';
+import { useInterval } from '../../hooks';
 
-// const useCounter = (isStart: boolean, delay: number, count: number) => {
-//   const [value, setValue] = useState(count);
-// };
+import './index.sass';
+import {
+  convertCountToHour,
+  convertCountToMinutes,
+  convertCountToSeconds,
+} from '../../utils';
 
 export const Track = (props: TrackPropsType): JSX.Element => {
   const {
@@ -14,27 +19,69 @@ export const Track = (props: TrackPropsType): JSX.Element => {
     id,
     dateStart,
     dateStop,
+    limit = 2700, // 45 min
   } = props;
+
   const delay = 1000;
   const isStart = !dateStop;
-  const [count, setCount] = useState(0);
+  const deltaSeconds = moment(dateStop || undefined)
+    .diff(moment(dateStart), 's') || 0;
+  const [counts, setCounts] = useState<number>(deltaSeconds);
 
   useInterval(
-    () => setCount(count + 1),
+    () => setCounts(counts + 1),
     isStart ? delay : null,
   );
+
+  const progress = useMemo(() => {
+    const percent = (counts / limit) * 100;
+    if (percent > 100) {
+      return 100;
+    }
+    return percent;
+  }, [counts]);
+
+  useEffect(() => {
+    if (isStart && progress >= 100) {
+      onStop();
+    }
+  }, [progress]);
+
+  const sec = convertCountToSeconds(counts);
+  const min = convertCountToMinutes(counts);
+  const hour = convertCountToHour(counts);
 
   return (
     <div className="track">
       <div className="track__container">
-        <div className="track__label">
-          {count}
+        <div className="track__group">
+          <div className="track__date">
+            {moment(dateStart).format('MM-DD-YYYY')}
+          </div>
+          <div>
+            {convertCountToMinutes(limit)}
+            {' '}
+            min
+          </div>
+          <div className="track__time">
+            {`${hour} : ${min} : ${sec}`}
+          </div>
         </div>
-        <div>
-          {}
-        </div>
+        <Button
+          mix="track__button"
+          onClick={onStop}
+          isBlocked={!isStart}
+        >
+          {isStart ? Icons.stop : Icons.check}
+        </Button>
       </div>
-      <div className="track__progress-bar" />
+      <div
+        className="track__progress-bar" // TODO: Надо через clip-path
+        style={{
+          width: `${progress}%`,
+          borderRadius: isStart ? '25px 0px 0px 25px' : '25px',
+        }}
+      />
     </div>
   );
 };
