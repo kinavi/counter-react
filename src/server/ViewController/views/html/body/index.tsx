@@ -14,7 +14,6 @@ const Body = (props: BodyPropsType): JSX.Element => {
 
   return (
     <body>
-      <div>server</div>
       <div id={reactId}>
         {children}
         {/* {renderModule()} */}
