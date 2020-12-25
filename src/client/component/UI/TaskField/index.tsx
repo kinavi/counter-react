@@ -1,31 +1,22 @@
 import React from 'react';
-import { Button } from '../Button';
-import './style/index.sass';
 import classnames from 'classnames';
+import { Button } from '../Button';
+import { TaskFieldPropsType } from './types';
 
-type TaskFieldPropsType = {
-    iconLeft?: JSX.Element;
-    iconRight?: JSX.Element;
-    value: string;
-    onChange(value: string): void;
-    onSave(): void;
-    onRemove?(): void;
-}
+import './index.sass';
 
 export const TaskField = (props: TaskFieldPropsType): JSX.Element => {
   const {
     onChange,
     value,
-    onCancel,
     onSave,
-    onRemove,
+    onRemove = () => {},
     iconRight,
-    iconLeft,
+    iconLeft = '',
   } = props;
 
   return (
     <div className="task-field__container">
-      {/* {iconLeft && ( */}
       <Button
         onClick={onRemove}
         mix={classnames(
@@ -33,9 +24,8 @@ export const TaskField = (props: TaskFieldPropsType): JSX.Element => {
           { 'task-field__left-button_hidden': !iconLeft },
         )}
       >
-        {iconLeft || ''}
+        {iconLeft}
       </Button>
-      {/* )} */}
       <input
         value={value}
         onChange={(

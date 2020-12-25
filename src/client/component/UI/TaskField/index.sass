@@ -3,38 +3,42 @@
     display: flex
     justify-content: space-between
     align-items: center
-    margin-right: 45px
-    height: 30px
-    width: 234px
-    background: #E6DEB8
+    height: 40px
+    flex-grow: 1
+    margin-left: 10px
+    background: white
     border-radius: 25px
   &__left-button
-    width: 30px
-    height: 30px
+    width: 40px
+    height: 40px
     padding: 7px
     border-radius: 25px
     & svg
       width: 16px
       height: 16px
     &:hover
-      background: #CCC5A3
+      background: #d9d9ce
+    &_hidden
+      visibility: hidden
   &__right-button
-    width: 30px
-    height: 30px
+    width: 40px
+    height: 40px
     border-radius: 25px
     padding: 7px
     & svg
       width: 16px
       height: 16px
     &:hover
-      background: #CCC5A3
+      background:  #d9d9ce
+    &_hidden
+      visibility: hidden
   &__input
-    max-width: 154px
-    height: 16px
-    //outline: none
+    max-width: 190px
+    height: 30px
     flex-grow: 1
     border: none
-    background: #E6DEB8
+    background: white
+    font-size: 18px
     &:focus
       outline: none
 
