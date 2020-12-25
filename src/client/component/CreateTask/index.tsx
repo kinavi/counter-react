@@ -36,7 +36,7 @@ export const CreateTask = (props: CreateModePropsType) => {
     <div className={classnames(mix, 'task__container')}>
       <div className="task__body">
         <Button
-          mix="task__left-button task__button"
+          mix="task__button task__left-button_edit"
           onClick={switchFormState}
         >
           {Icons.cross}
