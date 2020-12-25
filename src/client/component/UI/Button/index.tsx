@@ -1,23 +1,34 @@
-import React from 'react';
+import React, { useState, MouseEvent } from 'react';
 import classnames from 'classnames';
 import './index.sass';
-
-type ButtonPropsType = {
-    onClick?: () => void;
-    children: JSX.Element | JSX.Element[] | string;
-    mix?: string;
-}
+import { ButtonPropsType } from './types';
 
 export const Button = (props: ButtonPropsType): JSX.Element => {
   const {
-    mix, onClick, children,
+    mix,
+    onClick,
+    children,
   } = props;
+
+  const [hover, setHover] = useState(false);
+
+  const handleMouseEnter = (event: MouseEvent) => {
+    setHover(true);
+    event.stopPropagation();
+  };
+
+  const handleMouseLeave = (event: MouseEvent) => {
+    setHover(false);
+    event.stopPropagation();
+  };
 
   return (
     <button
       type="submit"
       onClick={onClick}
-      className={classnames('stash-button', mix)}
+      className={classnames('native-button', { 'native-button_hover': hover }, mix)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {children}
     </button>
