@@ -10,6 +10,10 @@ import { Auth } from './auth';
 import { ENV } from './config';
 import { RouterController } from './RouterController';
 
+// TODO: Как-то надо обновлять стор
+// TODO: Где-то надо хранить стор
+// TODO: Как-то надо отрисовывать
+
 export class Server {
   private readonly _port: number;
 
@@ -47,7 +51,7 @@ export class Server {
       const { Router } = this._routers;
 
       if (!Passport) {
-        throw new Error('runServer -> Passport in null');
+        throw new Error('runServer -> Passport is null');
       }
 
       this._app.use(cors());

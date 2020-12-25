@@ -1,16 +1,18 @@
 import { Request, Response, Router } from 'express';
-import moment from 'moment';
 import { IModels } from '../mongoose/types';
 import { VIEWS } from '../ViewController';
 import { Store } from '../../client/redux/store';
-import * as ActionsCreator from '../../client/redux/actions/ActionsCreator';
-import { IApiResponse } from '../../types';
 import {
-  createTask, initial, login, register, removeTask, startTrack, stopTrack, updateTask,
+  createTask,
+  initial,
+  login,
+  register,
+  removeTask,
+  startTrack,
+  stopTrack,
+  updateTask,
 } from './api';
-// Как-то надо обновлять стор
-// Где-то надо хранить стор
-// Как-то надо отрисовывать
+
 export class RouterController {
     private readonly _router: Router;
 
@@ -18,7 +20,6 @@ export class RouterController {
       return this._router;
     }
 
-    // TODO: Type!
     constructor() {
       this._router = Router();
     }
@@ -26,7 +27,6 @@ export class RouterController {
     public InitialRouters = (authenticate: any, models: IModels) => {
       this._router.get('/', authenticate, (req: Request, res: Response) => {
         res.send(VIEWS.renderMainPage(Store, req.url));
-        // contine...
       });
 
       this._router.get('/auth', (req: Request, res: Response) => {
