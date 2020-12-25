@@ -71,16 +71,18 @@ const trash = () => (
   </svg>
 );
 
+const stop = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 0H2C0.898 0 0 0.898 0 2V18C0 19.102 0.898 20 2 20H18C19.102 20 20 19.102 20 18V2C20 0.898 19.102 0 18 0Z" fill="black" />
+  </svg>
+);
 export const Icons = {
   arrowCircleLeft: IconWithContext(<FaRegArrowAltCircleLeft />),
   circle: IconWithContext(<FaRegCircle />),
-  // play: IconWithContext(<FaPlay />),
   timesCircle: IconWithContext(<FaTimesCircle />),
-  stop: IconWithContext(<FaStop />),
   profile: IconWithContext(<CgProfile />),
   mail: IconWithContext(<CgMail />),
   password: IconWithContext(<CgLock />),
-  // close: IconWithContext(<CgClose />),
   warning: IconWithContext(<RiErrorWarningLine />),
   plus: plus(),
   cross: cross(),
@@ -88,4 +90,5 @@ export const Icons = {
   play: play(),
   check: check(),
   trash: trash(),
+  stop: stop(),
 };
