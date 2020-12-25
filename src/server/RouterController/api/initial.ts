@@ -18,7 +18,11 @@ export const initial = (models: IModels) => async (req: Request, res: Response) 
     );
     const result: IApiResponse = {
       status: 'actionsList',
-      result: [ActionsCreator.setUserId(userId), ActionsCreator.setTasks(tasks)],
+      result: [
+        ActionsCreator.setUserId(userId),
+        ActionsCreator.setTasks(tasks),
+        ActionsCreator.updateAppStatus('ready'),
+      ],
     };
     return res.status(200).send(result);
   }
