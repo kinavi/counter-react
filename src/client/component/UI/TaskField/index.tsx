@@ -1,5 +1,4 @@
 import React from 'react';
-import classnames from 'classnames';
 import { Button } from '../Button';
 import { TaskFieldPropsType } from './types';
 
@@ -13,16 +12,15 @@ export const TaskField = (props: TaskFieldPropsType): JSX.Element => {
     onRemove = () => {},
     iconRight,
     iconLeft = '',
+    placeholder = 'Label',
   } = props;
 
   return (
     <div className="task-field__container">
       <Button
         onClick={onRemove}
-        mix={classnames(
-          'task-field__left-button',
-          { 'task-field__left-button_hidden': !iconLeft },
-        )}
+        mix="task-field__left-button"
+        isHidden={!iconLeft}
       >
         {iconLeft}
       </Button>
@@ -32,6 +30,7 @@ export const TaskField = (props: TaskFieldPropsType): JSX.Element => {
           event,
         ) => onChange(event.target.value)}
         className="task-field__input"
+        placeholder={placeholder}
       />
       {iconRight && (
       <Button

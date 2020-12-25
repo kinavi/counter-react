@@ -5,4 +5,5 @@ export type TaskFieldPropsType = {
     onSave(): void;
     iconLeft?: JSX.Element;
     onRemove?(): void;
+    placeholder?: string;
 }
