@@ -1,24 +1,20 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { IState, ITask } from '../redux/types';
+import { IState } from '../redux/types';
 import * as ActionsCreator from '../redux/actions/ActionsCreator';
 import * as ThunkActions from '../redux/actions/ThunkActions';
 import { CreateTask } from '../component/CreateTask';
 import { Clock } from '../component/Clock';
 import { Task } from '../component/Task';
-import { Icons } from '../component/UI/Icons';
-
-type AppStatePropsType = {
-  tasks: ITask[];
-}
-
-type AppPropsType = typeof ActionsCreator & typeof ThunkActions & AppStatePropsType
+import { Loader } from '../component/UI/Loader';
+import { AppPropsType, AppStatePropsType } from './types';
 
 const App = (props: AppPropsType): JSX.Element => {
   const {
+    isLoading,
+    isReady,
     initialApp,
     tasks,
-    addTask,
     updateTask,
     submitCreateTask,
     submitUpdateTask,
@@ -51,31 +47,39 @@ const App = (props: AppPropsType): JSX.Element => {
   return (
     <div className="app__container">
       <Clock />
-      <div className="app__tasks-group">
-        {tasks.map((task) => (
-          <Task
-            mix="app__task"
-            key={task.id}
-            {...task}
-            onChange={updateTask}
-            onSave={() => submitUpdateTask(task)}
-            onRemove={() => submitRemoveTask(task.id)}
-            onPlay={() => submitStartTrack(task.id)}
-            onStop={(id: string) => submitStopTrack(id)}
+      {isLoading && <Loader />}
+      {isReady
+      && (
+      <>
+        <div className="app__tasks-group">
+          {tasks.map((task) => (
+            <Task
+              mix="app__task"
+              key={task.id}
+              {...task}
+              onChange={updateTask}
+              onSave={() => submitUpdateTask(task)}
+              onRemove={() => submitRemoveTask(task.id)}
+              onPlay={() => submitStartTrack(task.id)}
+              onStop={(id: string) => submitStopTrack(id)}
+            />
+          ))}
+        </div>
+        <div className="app__control-panel">
+          <CreateTask
+            onCreate={submitCreateTask}
           />
-        ))}
-      </div>
-      <div className="app__control-panel">
-        <CreateTask
-          onCreate={submitCreateTask}
-        />
-      </div>
+        </div>
+      </>
+      )}
     </div>
   );
 };
 
 const mapStateToProps = (state: IState): AppStatePropsType => ({
   tasks: state.tasks,
+  isLoading: state.app.status === 'loading' || state.app.status === 'initial',
+  isReady: state.app.status === 'ready',
 });
 
 export const AppWithState = connect(
