@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from '../../UI/Button';
 import { ViewModePropsType } from '../types';
+import {
+  convertCountToHour,
+  convertCountToMinutes,
+  convertCountToSeconds,
+} from '../../../utils';
 
 export const ViewMode = (props: ViewModePropsType) => {
   const {
@@ -15,39 +20,59 @@ export const ViewMode = (props: ViewModePropsType) => {
   const {
     label,
     timeTotal,
+    hasActiveTrack,
   } = task;
 
   const handleEditClick = () => {
     onChange({ ...task, isReadonly: false });
   };
 
+  const totalSeconds = convertCountToSeconds(timeTotal);
+  const totalMinutes = convertCountToMinutes(timeTotal);
+  const totalHours = convertCountToHour(timeTotal);
   return (
-    <div className="task__body task__body_view">
+    <>
       <Button
         mix="task__left-button task__button"
         onClick={handleEditClick}
       >
         {leftIcon}
       </Button>
-      <Button
-        mix="task__item-container"
-        onClick={onClick}
+      <div
+        className="task__body task__body_view"
       >
-        <>
-          <span className="task__label">
-            {label}
-          </span>
-          <span className="task__time">
-            {timeTotal}
-          </span>
-        </>
-      </Button>
+        <Button
+          mix="task__item-container"
+          onClick={onClick}
+        >
+          <>
+            <span className="task__label">
+              {label}
+            </span>
+            <span className="task__time">
+              {totalHours}
+              {' '}
+              h
+              {' '}
+              {totalMinutes}
+              {' '}
+              m
+              {' '}
+              {totalSeconds}
+              {' '}
+              s
+            </span>
+          </>
+        </Button>
+
+      </div>
       <Button
-        mix="task__right-button task__button"
+        mix="task__button task__right-button"
+        isHidden={hasActiveTrack}
         onClick={onPlay}
       >
         {rightIcon}
       </Button>
-    </div>
+    </>
   );
 };
