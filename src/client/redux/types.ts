@@ -1,6 +1,11 @@
 import { Reducer } from 'redux';
 import { Moment } from 'moment';
-import { AppActionsType, FormActionsType, TaskActionsType } from './actions/types';
+import {
+  AppActionsType,
+  FormActionsType,
+  TaskActionsType,
+} from './actions/types';
+import { StatusType } from '../container/types';
 
 export interface ITask {
     id: string;
@@ -15,16 +20,13 @@ export interface ITrack {
     id: string;
     taskId: string;
     dateStart: Moment;
-    dateStop: Moment;
+    dateStop: Moment | null;
 }
-
-// export interface ITaskState {
-//     tasks: ITask[];
-// }
 
 export interface IAppState {
     userId: string;
     readOnly: boolean;
+    status: StatusType;
 }
 
 export interface IFormState {

@@ -1,13 +1,20 @@
-// task actions
 import {
-  IErrors, IFieldsForm, ITask, ITrack,
+  IErrors,
+  IFieldsForm,
+  ITask,
+  ITrack,
 } from '../types';
 import {
-  AppActionsType, FormActionsType, TaskActionsType, TrackActionsType,
+  AppActionsType,
+  FormActionsType,
+  TaskActionsType,
 } from './types';
 import {
-  AppActions, FormActions, TaskActions, TrackActions,
+  AppActions,
+  FormActions,
+  TaskActions,
 } from './enum.actions';
+import { StatusType } from '../../container/types';
 
 export const setTasks = (tasks: ITask[]): TaskActionsType => ({
   type: TaskActions.setTasks,
@@ -28,20 +35,20 @@ export const removeTask = (taskId: string): TaskActionsType => ({
   type: TaskActions.removeTask,
   payload: taskId,
 });
-// track actions
 
-export const setTracks = (tracks: ITrack[]): TrackActionsType => ({
-  type: TrackActions.setTracks,
+// track actions
+export const setTracks = (taskId: string, tracks: ITrack[]): TaskActionsType => ({
+  type: TaskActions.setTracks,
   payload: tracks,
 });
 
-export const startTrack = (track: ITrack): TrackActionsType => ({
-  type: TrackActions.startTrack,
+export const startTrack = (taskId: string, track: ITrack): TaskActionsType => ({
+  type: TaskActions.startTrack,
   payload: track,
 });
 
-export const stopTrack = (track: ITrack): TrackActionsType => ({
-  type: TrackActions.stopTrack,
+export const stopTrack = (taskId: string, track: ITrack): TaskActionsType => ({
+  type: TaskActions.stopTrack,
   payload: track,
 });
 
@@ -57,7 +64,12 @@ export const updateFields = (fields: IFieldsForm): FormActionsType => ({
 });
 
 // app actions
-export const setUserId = (id: number): AppActionsType => ({
+export const setUserId = (id: string): AppActionsType => ({
   type: AppActions.updateUserId,
   payload: id,
+});
+
+export const updateAppStatus = (status: StatusType): AppActionsType => ({
+  type: AppActions.updateStatus,
+  payload: status,
 });

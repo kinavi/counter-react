@@ -1,4 +1,4 @@
-import { Reducer } from 'redux';
+import { Reducer } from 'react';
 import {
   IErrors, IFieldsForm, IFormState,
 } from '../types';

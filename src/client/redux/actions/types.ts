@@ -9,7 +9,7 @@ export interface IValidateResult {
 }
 // TODO: Расширить
 export type AppActionsType = {
-    payload?: string;
+    payload?: string | StatusType
 } & Action
 
 export type FormActionsType = {
