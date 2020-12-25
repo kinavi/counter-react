@@ -1,18 +1,20 @@
 body
     margin: 0
-    //background: #E5E5E5
     background: #FFEBDD
 html, body, #root, .page
   height: 100%
-  overflow: hidden
   font-family: monospace
+  overflow-x: hidden
+  overflow-y: auto
+  &::-webkit-scrollbar
+    width: 0.5em
+  &::-webkit-scrollbar-thumb
+    background: #bfbfb0
 
 .root
 
 #root
   display: flex
-  //background: gray
-    // position: fixed
 .app
     position: fixed
     width: 100%
@@ -22,14 +24,12 @@ html, body, #root, .page
 $color-font-field: #B9B9A9
 
 @mixin font-header-title
-    // margin-right: 10.5rem
     color: rgb(255, 255, 255)
     font-size: 1.8rem
     font-family: proxima_nova_rgbold, sans-serif
 
 .navigation-panel
   display: flex
-  //justify-content: center
   align-items: center
   width: 300px
   height: 50px
@@ -43,7 +43,6 @@ $color-font-field: #B9B9A9
       width: 30px
       height: 30px
       background: #6C5070
-      //box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1)
       border-radius: 2px
       display: flex
       align-items: center
@@ -54,7 +53,6 @@ $color-font-field: #B9B9A9
         outline: none
       & svg
         color: white
-        //background: white
         width: 100% !important
         height: 100% !important
 
