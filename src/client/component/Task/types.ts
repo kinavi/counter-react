@@ -23,22 +23,22 @@ export type ViewModePropsType = {
     rightIcon: JSX.Element;
     onChange(task: ITask): void;
     onPlay(): void;
+    onClick(): void ;
 } & ITask
 
 export type WithModePropsType = {
     isReadonly: boolean;
     onSave(): void;
-    onPlay(): void;
-    onChange: typeof updateTask;
     onRemove(): void;
-} & ITask
+} & ITask & ViewModePropsType
 
 export type ComponentType = {
-    view: (props: ViewModePropsType) => JSX.Element;
-    edit: (props: EditModePropsType) => JSX.Element;
+    View: (props: ViewModePropsType) => JSX.Element;
+    Edit: (props: EditModePropsType) => JSX.Element;
 }
 
 export type WithTracksPropsType = {
+    onStop(id: string): void;
     tracks: ITrack[];
     mix: string;
 } & WithModePropsType

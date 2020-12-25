@@ -5,6 +5,6 @@ import { WithTracks } from './hocs/WithTracks';
 import './style/index.sass';
 
 export const Task = WithTracks(WithMode({
-  view: ViewMode,
-  edit: EditMode,
+  View: ViewMode,
+  Edit: EditMode,
 }));

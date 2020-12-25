@@ -27,9 +27,9 @@ export const EditMode = (props: EditModePropsType) => {
   };
 
   return (
-    <>
+    <div className="task__body task__body_edit">
       <Button
-        mix="task__left-button task__button"
+        mix="task__button task__left-button task__left-button_edit"
         onClick={handleCancel}
       >
         {leftIcon}
@@ -42,6 +42,6 @@ export const EditMode = (props: EditModePropsType) => {
         onSave={onSave}
         onRemove={onRemove}
       />
-    </>
+    </div>
   );
 };

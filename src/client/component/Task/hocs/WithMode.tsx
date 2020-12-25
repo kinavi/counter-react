@@ -12,7 +12,7 @@ export const WithMode = (Component: ComponentType) => (props: WithModePropsType)
 
   return isReadonly
     ? (
-      <Component.view // eslint-disable-line
+      <Component.View
         {...propsComponent}
         isReadonly={isReadonly}
         leftIcon={Icons.note}
@@ -21,7 +21,7 @@ export const WithMode = (Component: ComponentType) => (props: WithModePropsType)
       />
     )
     : (
-      <Component.edit // eslint-disable-line
+      <Component.Edit
         {...propsComponent}
         isReadonly={isReadonly}
         leftIcon={Icons.cross}

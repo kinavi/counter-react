@@ -7,24 +7,30 @@ export const WithTracks = (
   Component: (props: WithModePropsType) => JSX.Element,
 ) => (props: WithTracksPropsType) => {
   const {
-    tracks, mix, isReadonly, ...componentProps
+    tracks, mix, isReadonly, onStop, ...componentProps
   } = props;
 
   const [isShowTracks, setIsShowTracks] = useState(false);
 
   return (
     <div
-      className={classnames(mix, 'task__container')}
-      onClick={() => setIsShowTracks(!isShowTracks)}
+      className={classnames(
+        'task__container',
+        mix,
+      )}
     >
-      <div className="task__body">
-        <Component isReadonly={isReadonly} {...componentProps} tracks={tracks} />
-      </div>
+      <Component
+        {...componentProps}
+        tracks={tracks}
+        isReadonly={isReadonly}
+        onClick={() => setIsShowTracks(!isShowTracks)}
+      />
       { isReadonly
       && isShowTracks
       && tracks.map((track) => (
         <Track
           key={`track-item_${track.id}`}
+          onStop={() => onStop(track.id)}
           {...track}
         />
       ))}
