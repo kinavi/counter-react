@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { RegisterForm } from '../../component/Forms/Register';
 import { LoginForm } from '../../component/Forms/Login';
 import * as ActionsCreator from '../../redux/actions/ActionsCreator';
+import * as ThunkActions from '../../redux/actions/ThunkActions';
 import {
   IErrors, IFieldsForm, IState,
 } from '../../redux/types';
@@ -14,7 +15,7 @@ interface IAuthentionPageStateProps {
 
 type AuthentionPagePropsType = {
 
-} & typeof ActionsCreator & IAuthentionPageStateProps
+} & typeof ActionsCreator & IAuthentionPageStateProps & typeof ThunkActions
 
 // TODO: Валидация
 const AuthentionPage = (props: AuthentionPagePropsType) => {
@@ -44,7 +45,6 @@ const AuthentionPage = (props: AuthentionPagePropsType) => {
             onRegister={register}
             onSwitch={handleSwitch}
             {...commonPropsForm}
-
           />
         )
         : (
@@ -64,4 +64,4 @@ const mapStateToProps = (state: IState): IAuthentionPageStateProps => ({
   fields: state.form.fields,
 });
 
-export const AuthentionPageWithState = connect(mapStateToProps, { ...ActionsCreator })(AuthentionPage);
+export const AuthentionPageWithState = connect(mapStateToProps, { ...ActionsCreator, ...ThunkActions })(AuthentionPage);

@@ -10,10 +10,11 @@ import { StatusType } from '../container/types';
 export interface ITask {
     id: string;
     label: string;
-    timeTotal: string;
+    timeTotal: number;
     tracks: ITrack[];
     snapshot: string;
     isReadonly: boolean;
+    hasActiveTrack: boolean;
 }
 
 export interface ITrack {

@@ -40,7 +40,7 @@ export const validateForm = (fields: IFieldsForm | null): IValidateResult => {
       repeatPassword: validateRepeatPassword(fields.repeatPassword),
     };
     return {
-      isValide: errors.login === ''
+      isValidate: errors.login === ''
         || errors.email === ''
         || errors.password === ''
         || errors.repeatPassword === '',
@@ -48,7 +48,7 @@ export const validateForm = (fields: IFieldsForm | null): IValidateResult => {
     };
   }
   return ({
-    isValide: false,
+    isValidate: false,
     errors: {
       password: 'Поле не заполнено',
       login: 'Поле не заполнено',
