@@ -1,7 +1,5 @@
-import { Request, Response, Router } from 'express';
+import { Router } from 'express';
 import { IModels } from '../mongoose/types';
-import { VIEWS } from '../ViewController';
-import { Store } from '../../client/redux/store';
 import {
   createTask,
   initial,
@@ -12,6 +10,10 @@ import {
   stopTrack,
   updateTask,
 } from './api';
+import {
+  auth,
+  main,
+} from './map';
 
 export class RouterController {
     private readonly _router: Router;
@@ -25,16 +27,17 @@ export class RouterController {
     }
 
     public InitialRouters = (authenticate: any, models: IModels) => {
-      this._router.get('/', authenticate, (req: Request, res: Response) => {
-        res.send(VIEWS.renderMainPage(Store, req.url));
-      });
+      // private
+      this._router.get('/', authenticate, main);
 
-      this._router.get('/auth', (req: Request, res: Response) => {
-        res.send(VIEWS.renderAuthForm(Store, req.url));
-      });
+      // public
+      this._router.get('/auth', auth);
 
+      // auth form
       this._router.post('/api/login', login(models));
       this._router.post('/api/register', register(models));
+
+      // counter
       this._router.get('/api/initial', authenticate, initial(models));
       this._router.post('/api/createTask', authenticate, createTask(models));
       this._router.post('/api/updateTask', authenticate, updateTask(models));
