@@ -1,14 +1,19 @@
 # About counter-react
-A module for keeping track of the time you spend.
+A module for keeping track of the time you spend.   
 
+v.2     
+![Main](/images/timer-v2.png)
+
+v.1    
 ![Main](/images/countermain.png)
 
 # How it works? 
 First add the skill you want to develop. Then note the time spent on it. The more time you spend, the greater the level
 
+v.1    
 ![Main](/images/countercount.png)
 
-Only 10 levels
+Only 10 levels (1 version)
 1. 0
 2. 25h
 3. 50h
@@ -37,10 +42,10 @@ PS. The list may change as the project develops.
 You must have installed [mongoDB](https://docs.mongodb.com/manual/administration/install-community/)
 
 url - `mongodb://localhost:27017/counter-react`
-
-client build - `npm run build:client`
-server build - `npm run build:server`
-client start - `npm start`
+ 
+client build - `npm run build:client`   
+server build - `npm run build:server`   
+client start - `npm start`   
 
 
 
