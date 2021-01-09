@@ -1,7 +1,9 @@
-import { main } from './main';
+import { timeManager } from './main';
 import { auth } from './auth';
+import { order } from './order';
 
 export {
-  main,
+  timeManager,
   auth,
+  order,
 };

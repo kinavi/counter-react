@@ -1,4 +1,5 @@
-import { Router } from 'express';
+import express, { Router } from 'express';
+import path from 'path';
 import { IModels } from '../mongoose/types';
 import {
   createTask,
@@ -12,7 +13,8 @@ import {
 } from './api';
 import {
   auth,
-  main,
+  timeManager,
+  order,
 } from './map';
 
 export class RouterController {
@@ -28,10 +30,15 @@ export class RouterController {
 
     public InitialRouters = (authenticate: any, models: IModels) => {
       // private
-      this._router.get('/', authenticate, main);
+      this._router.get('/time-manager', authenticate, timeManager);
 
       // public
       this._router.get('/auth', auth);
+      this._router.get('/order*',
+        // express.static(path.resolve(`./dist/public`)),
+        order);
+      // this._router.get('/order/web', order);
+      // this._router.get('/order/mobile', order);
 
       // auth form
       this._router.post('/api/login', login(models));
