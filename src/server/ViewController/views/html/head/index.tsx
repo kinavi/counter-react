@@ -1,16 +1,13 @@
 import React from 'react';
-
-type HeadPropsType = {
-    title: string;
-    children?: JSX.Element | Array<JSX.Element>
-}
+import { HeadPropsType } from './types';
 
 const Head = (props: HeadPropsType): JSX.Element => {
   const {
-    title, children,
+    title, children, style,
   } = props;
   const renderTitle = () => <title>{title}</title>;
-  const renderStyle = () => <link rel="stylesheet" href="style.css" />;
+  const renderStyle = () => <link rel="stylesheet" href="/static/style.css" />;
+
   return (
     <head>
       <meta charSet="UTF-8" />
@@ -18,6 +15,9 @@ const Head = (props: HeadPropsType): JSX.Element => {
       <link href="https://fonts.googleapis.com/css?family=Quantico&display=swap" rel="stylesheet" />
       {renderTitle()}
       {renderStyle()}
+      <style>
+        {style}
+      </style>
       {children}
     </head>
   );

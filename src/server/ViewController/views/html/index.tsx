@@ -1,25 +1,22 @@
 import React from 'react';
-
 import Head from './head';
 import Body from './body';
+import { HtmlPropsType } from './types';
 
-type HtmlPropsType = {
-    children?: JSX.Element | Array<JSX.Element>
-}
-
-const Html = (props: HtmlPropsType): JSX.Element => {
+export const Html = (props: HtmlPropsType): JSX.Element => {
   const {
-    children,
+    children, styleTags,
   } = props;
   return (
   // <!DOCTYPE html>
     <html lang="en">
-      <Head title="Hello" />
+      <Head
+        title="Hello"
+        style={styleTags}
+      />
       <Body reactId="root">
         {children}
       </Body>
     </html>
   );
 };
-
-export default Html;

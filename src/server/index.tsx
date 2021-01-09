@@ -59,7 +59,7 @@ export class Server {
       this._app.use(cookieParser());
       this._app.use(Passport.initialize());
       this._app.use(Passport.session());
-      this._app.use(express.static(this._pathStatic));
+      this._app.use('/static', express.static(this._pathStatic));
       this._app.use('/', Router);
 
       this._app.listen(
@@ -76,7 +76,6 @@ export class Server {
       });
   }
 }
-
-const server = new Server(ENV.PORT, path.resolve('./dist/public'));
+const server = new Server(ENV.PORT, path.resolve(`./dist/public`));
 
 server.Run();

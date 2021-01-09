@@ -3,7 +3,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom';
 import { ServerStyleSheet } from 'styled-components';
-import Html from './views/html';
+import { Html } from './views/html';
 import { AppWithState } from '../../client/container/App';
 import { AuthentionPageWithState } from '../../client/pages/Authention';
 import { Order } from '../../client/pages/Order';
