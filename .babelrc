@@ -6,6 +6,12 @@
   ],
   "plugins": [
     "@babel/plugin-transform-runtime",
+    ["babel-plugin-styled-components", {
+      "ssr": false,
+      "displayName": false,
+      "pure": true,
+      "namespace": "timer-app"
+    }],
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
     ["@babel/plugin-proposal-class-properties", { "loose" : true }]
   ]
