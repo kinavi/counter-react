@@ -14,27 +14,20 @@ module.exports = {
         use: 'babel-loader',
       },
       {
-        test: /\.(gif|png|jpe?g|svg)$/i,
-        loader: 'file-loader',
-        options: {
-          name: 'public/[contenthash].[ext]',
-          // outputPath: 'public',
-        },
-        //   'file-loader',
-        //   // {
-        //   //   loader: 'image-webpack-loader',
-        //   //   options: {
-        //   //     // bypassOnDebug: true, // webpack@1.x
-        //   //     // disable: true, // webpack@2.x and newer
-        //   //     // name: 'public/[contenthash].[ext]',
-        //   //     // outputPath: 'public',
-        //   //   },
-        //   // },
-        // ],
-      },
-      {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'fonts/',
+            },
+          },
+        ],
       },
     ],
   },

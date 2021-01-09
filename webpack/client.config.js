@@ -20,6 +20,16 @@ module.exports = merge(baseConfig, {
           use: ['css-loader', 'sass-loader'],
         }),
       },
+      {
+        test: /\.(gif|png|jpe?g|svg)$/i,
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]', // 'public/[contenthash].[ext]',
+            outputPath: './',
+          },
+        }],
+      },
     ],
   },
   plugins: [
