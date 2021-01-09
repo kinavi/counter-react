@@ -3,14 +3,34 @@ import { IconContext } from 'react-icons';
 import {
   FaRegArrowAltCircleLeft,
   FaRegCircle,
-  FaPlay,
   FaTimesCircle,
-  FaStop,
+  FaClipboardList,
 } from 'react-icons/fa';
 import { RiErrorWarningLine } from 'react-icons/ri';
 import {
-  CgProfile, CgMail, CgLock, CgClose,
+  CgProfile, CgMail, CgLock,
 } from 'react-icons/cg';
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import { WithSize } from './hocs/WithSize';
+import { Shop } from './Icons/Shop';
+import { ShoppingBag } from './Icons/ShoppingBag';
+import { Task } from './Icons/Task';
+import { Desktop } from './Icons/Desktop';
+import { LogOut } from './Icons/LogOut';
+import { Phone } from './Icons/Phone';
+import { Tablet } from './Icons/Tablet';
+import { OrderLogo } from './Icons/OrderLogo';
+import { User } from './Icons/User';
+
+export const NoPhoto = () => (
+  <svg width="160.58mm" height="103.72mm" version="1.1" viewBox="0 0 160.58 103.72" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(-21.742 -19.544)">
+      <rect x="23.742" y="21.544" width="156.58" height="99.717" ry="19.3" fill="none" stroke="#6C5070" strokeLinejoin="round" strokeWidth="4" />
+      <ellipse transform="scale(1,-1)" cx="58.033" cy="-53.161" rx="14.525" ry="14.062" stroke="#6C5070" />
+      <path d="m43.938 119.76 36.804-45.497 12.348 19.695 32.648-42.529 34.148 68.314z" stroke="#6C5070" strokeLinejoin="round" strokeWidth="6.4" />
+    </g>
+  </svg>
+);
 
 const IconWithContext = (Icon: JSX.Element): JSX.Element => (
   <IconContext.Provider value={{ style: { width: '20px', height: '20px' } }}>
@@ -91,4 +111,17 @@ export const Icons = {
   check: check(),
   trash: trash(),
   stop: stop(),
+  NoPhoto: NoPhoto(),
+  Board: IconWithContext(<FaClipboardList />),
+  OrderLogo: WithSize(OrderLogo),
+  Back: IconWithContext(<IoIosArrowBack />),
+  Forward: IconWithContext(<IoIosArrowForward />),
+  Desktop: WithSize(Desktop),
+  Phone: WithSize(Phone),
+  Tablet: WithSize(Tablet),
+  Task: WithSize(Task),
+  ShoppingBag: WithSize(ShoppingBag),
+  Shop: WithSize(Shop),
+  LogOut: WithSize(LogOut),
+  User: WithSize(User),
 };
