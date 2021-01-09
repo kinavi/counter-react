@@ -56,7 +56,7 @@ export const Track = (props: TrackPropsType): JSX.Element => {
       <div className="track__container">
         <div className="track__group">
           <div className="track__date">
-            {moment(dateStart).format('MM-DD-YYYY')}
+            {moment(dateStart).format('DD.MM.YYYY')}
           </div>
           <div>
             {convertCountToMinutes(limit)}
