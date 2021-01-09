@@ -1,0 +1,20 @@
+<svg width="107.73mm" height="114.06mm" version="1.1" viewBox="0 0 107.73 114.06" xmlns="http://www.w3.org/2000/svg">
+ <g transform="translate(-24.298 -40.517)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5">
+  <path d="m30.963 48.49h94.041z" style="paint-order:markers fill stroke"/>
+  <path d="m125 48.491v65.592" style="paint-order:markers fill stroke"/>
+  <path d="m30.963 114.08h94.041z" style="paint-order:markers fill stroke"/>
+  <path d="m30.963 48.491v65.592" style="paint-order:markers fill stroke"/>
+  <path d="m31.319 48.49h-5.049z" style="paint-order:stroke fill markers"/>
+  <path d="m130.05 48.49h-5.049z" style="paint-order:stroke fill markers"/>
+  <path d="m78.213 47.136v-4.647z"/>
+  <path d="m78.213 149.36v-35.17z"/>
+  <path d="m78.504 138.76-23.932 13.828z"/>
+  <path d="m78.504 138.76 23.932 13.828z"/>
+  <path d="m42.935 62.2 5.3344 6.4463 6.2991-10.14"/>
+  <path d="m65.887 63.492h48.051"/>
+  <path d="m42.536 79.329 5.3344 6.4463 6.2991-10.14"/>
+  <path d="m65.488 80.621h48.051"/>
+  <path d="m43.008 97.233 5.3344 6.4463 6.2991-10.14"/>
+  <path d="m65.959 98.525h48.051"/>
+ </g>
+</svg>
