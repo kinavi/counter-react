@@ -10,6 +10,7 @@ export const Button = (props: ButtonPropsType): JSX.Element => {
     children,
     isHidden,
     isBlocked,
+    className,
   } = props;
 
   const [isHover, setIsHover] = useState(false);
@@ -31,7 +32,7 @@ export const Button = (props: ButtonPropsType): JSX.Element => {
       'native-button_hover': !isBlocked && isHover,
       'native-button_hidden': isHidden,
     },
-    mix,
+    className || mix,
   );
 
   const handleClick = () => {

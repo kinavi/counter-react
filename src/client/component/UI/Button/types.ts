@@ -4,4 +4,5 @@ export type ButtonPropsType = {
     isHidden?: boolean;
     isBlocked?: boolean;
     mix?: string;
+    className?: string;
 }
